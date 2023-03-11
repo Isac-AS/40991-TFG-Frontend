@@ -1,0 +1,25 @@
+.sidenav .mat-toolbar {
+    background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.sidenav-container {
+    flex: 1;
+}
+
+#home-page-list-item {
+    font-weight: bold;
+}
+
+mat-panel-title {
+    font-size: 1.2em;
+}
+
+.current-page-name {
+    padding-left: 1em;
+}

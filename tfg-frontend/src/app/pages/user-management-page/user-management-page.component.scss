@@ -1,0 +1,72 @@
+#tab-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 3em 2em;
+}
+
+#table-wrapper {
+    width: 95%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 1.2em;
+    width: 90%;
+}
+
+td,
+th {
+    width: 16%;
+}
+
+#user-information-card {
+    margin: 3em 2em;
+}
+
+// User modification tab
+// @use '@angular/material' as mat;
+
+#modification-banner {
+    justify-self: center;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    margin: 3em 25% 1em 25%;
+    padding-bottom: 1em;
+}
+
+.user-form-card {
+    margin: 3em 25% 2em 25%;
+    padding-bottom: 1em;
+}
+
+.user-form-content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+    gap: 1em;
+}
+
+mat-form-field {
+    width: stretch;
+}
+
+#submit-card-actions {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+}
+
+.error-form-card {
+    margin: 3em 25% 2em 25%;
+    padding-bottom: 1em;
+    background-color: rgba(239, 113, 113, 0.525);
+}

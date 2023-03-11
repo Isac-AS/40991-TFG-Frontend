@@ -1,0 +1,81 @@
+<mat-card id="welcome-section" color="primary">
+  <h1>Ping</h1>
+  <h2>Ping al servidor</h2>
+  <button mat-raised-button (click)="ping()">
+    Ping
+</button>
+</mat-card>
+
+<div class="card-wrapper">
+  <div class="row">
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Comprobar usuario</h1>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            Usuario actual
+            <mat-list-item>Nombre: {{currentUser.username}}</mat-list-item>
+            <mat-list-item>Correo: {{currentUser.email}}</mat-list-item>
+            <mat-list-item>Contraseña: {{currentUser.password}}</mat-list-item>
+            <mat-list-item>Rol: {{currentUser.role}}</mat-list-item>
+            <mat-list-item>Is_admin: {{currentUser.is_admin}}</mat-list-item>
+          </mat-list>
+          Mensaje: {{currentUserMessage}}
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="fetchCurrentUserData()">
+            <span>Buscar info</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Hay un usuario que haya iniciado sesión</h1>
+        </mat-card-header>
+        <mat-card-content>
+          <h3>{{currentUserMessage}}</h3>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="isAuthenticated()">
+            Comprobar sesion
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Logout</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="logOut()">
+            <span>LogOut</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Perform test function</h1>
+        </mat-card-header>
+        <mat-card-content>
+          <h3>Test</h3>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="test()">
+            <span>Test</span>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
