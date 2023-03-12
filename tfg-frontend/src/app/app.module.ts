@@ -32,6 +32,7 @@ import { FooterComponent } from './components/common/footer/footer.component';
 import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
 import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
 import { PipelineTableComponent } from './components/pipeline-table/pipeline-table.component';
+import { StrategyTableComponent } from './components/strategy-table/strategy-table.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -44,6 +45,7 @@ import { UserApiService } from './services/user-api.service';
 import { HeathRecordAPIService } from './services/health-record-api.service';
 import { PipelineAPIService } from './services/pipepile-api.service';
 import { StrategyAPIService } from './services/strategy-api.service';
+import { FileAPIService } from './services/file.service';
 
 
 @NgModule({
@@ -55,6 +57,7 @@ import { StrategyAPIService } from './services/strategy-api.service';
     ThemePickerComponent,
     AudioRecorderComponent,
     PipelineTableComponent,
+    StrategyTableComponent,
     
     // Pages
     HomePageComponent,
@@ -93,7 +96,8 @@ import { StrategyAPIService } from './services/strategy-api.service';
     UserApiService,
     HeathRecordAPIService,
     PipelineAPIService,
-    StrategyAPIService
+    StrategyAPIService,
+    FileAPIService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,13 +5,13 @@
   </mat-form-field>
 
   <div class="mat-elevation-z8" id="table-wrapper">
-    <mat-radio-group [(ngModel)]="selectedPipeline">
+    <mat-radio-group [(ngModel)]="selectedStrategy">
       <table mat-table [dataSource]="dataSource" [hidden]="!dataSource.data" matSort>
 
         <!-- Selected Column -->
         <ng-container matColumnDef="selected">
           <th mat-header-cell *matHeaderCellDef>
-            Pipeline seleccionado:<br /><b>{{ selectedPipeline.name }}</b>
+            Estrategia seleccionada:<br /><b>{{ selectedStrategy.name }}</b>
           </th>
           <td mat-cell *matCellDef="let element">
             <mat-radio-button [value]="element"></mat-radio-button>
@@ -24,10 +24,22 @@
           <td mat-cell *matCellDef="let row"> {{row.name}} </td>
         </ng-container>
 
-        <!-- Description Column -->
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
-          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+        <!-- Input-type Column -->
+        <ng-container matColumnDef="input_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Entrada </th>
+          <td mat-cell *matCellDef="let row"> {{row.input_type}} </td>
+        </ng-container>
+
+        <!-- Output-type Column -->
+        <ng-container matColumnDef="output_type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Salida </th>
+          <td mat-cell *matCellDef="let row"> {{row.output_type}} </td>
+        </ng-container>
+
+        <!-- Stage by Column -->
+        <ng-container matColumnDef="stage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Etapa </th>
+          <td mat-cell *matCellDef="let row"> {{row.stage}} </td>
         </ng-container>
 
         <!-- Created by Column -->
@@ -42,20 +54,10 @@
           <td mat-cell *matCellDef="let row"> {{row.last_modified_by}} </td>
         </ng-container>
 
-        <!-- Last modified by Column -->
-        <ng-container matColumnDef="strategies">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Estrategias </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-list>
-              <mat-list-item *ngFor="let shortStrategy of row.strategies; index as i">{{i}}: {{shortStrategy.name}}</mat-list-item>
-            </mat-list>
-          </td>
-        </ng-container>
-
         <!-- Delete Column -->
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef>
-            Eliminar pipeline
+            Eliminar estrategia
           </th>
           <td mat-cell *matCellDef="let element">
             <button mat-mini-fab color="warn" [value]="element" (click)="openDeletionDialog(element.id)">

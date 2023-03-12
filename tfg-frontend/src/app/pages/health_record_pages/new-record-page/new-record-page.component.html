@@ -16,18 +16,25 @@
       Selecciona un pipeline
     </ng-template>
     <app-pipeline-table></app-pipeline-table>
-    <button mat-raised-button matStepperPrevious color="accent">
-      Anterior
-    </button>
-    <button mat-raised-button matStepperNext color="accent">
-      Siguiente
-    </button>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+      <button mat-raised-button matStepperNext color="accent">
+        Siguiente
+      </button>
+    </div>
   </mat-step>
   <!--Third step: wait for processing-->
   <mat-step>
     <ng-template matStepLabel>
       Espera los resultados
     </ng-template>
+    <div class="last-step-container">
+      <button mat-raised-button color="primary" (click)="createRecord()">
+        Crear Registro
+      </button>
+    </div>
     <button mat-raised-button matStepperPrevious color="accent">
       Anterior
     </button>

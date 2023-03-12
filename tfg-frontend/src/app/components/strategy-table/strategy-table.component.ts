@@ -6,28 +6,29 @@ import { GlobalService } from 'src/app/services/global.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Pipeline, ShortStrategy } from 'src/app/models/pipeline.model';
-import { PipelineAPIService } from 'src/app/services/pipepile-api.service';
+import { Strategy } from 'src/app/models/strategy.model';
+import { StrategyAPIService } from 'src/app/services/strategy-api.service';
 import { EntryDeletionDialogComponent } from '../entry-deletion-dialog/entry-deletion-dialog.component';
 
 @Component({
-  selector: 'app-pipeline-table',
-  templateUrl: './pipeline-table.component.html',
-  styleUrls: ['./pipeline-table.component.scss']
+  selector: 'app-strategy-table',
+  templateUrl: './strategy-table.component.html',
+  styleUrls: ['./strategy-table.component.scss']
 })
-export class PipelineTableComponent {
+export class StrategyTableComponent {
 
-  pipelineList: Pipeline[] = [];
-  displayedColumns: string[] = ['selected', 'name', 'description', 'created_by', 'last_modified_by', 'strategies', 'delete']
-  dataSource: MatTableDataSource<Pipeline>;
+  strategyList: Strategy[] = [];
+  displayedColumns: string[] = ['selected', 'name', 'input_type', 'output_type', 'stage', 'created_by', 'last_modified_by', 'delete']
+  dataSource: MatTableDataSource<Strategy>;
 
-  selectedPipeline: Pipeline = {
+  selectedStrategy: Strategy = {
     name: 'Ninguno',
     description: '',
-    strategies: [{
-      id: -1,
-      name: ''
-    }],
+    python_file_path: '',
+    env_path: '',
+    input_type: '',
+    output_type: '',
+    stage: '',
 
     id: -1,
     updated_at: '',
@@ -44,11 +45,11 @@ export class PipelineTableComponent {
   @ViewChild(MatSort) sort: any = MatSort;
 
   constructor(
-    private pipelineAPI: PipelineAPIService,
+    private strategyAPI: StrategyAPIService,
     public dialog: MatDialog,
   ) { 
-    this.dataSource = new MatTableDataSource(this.pipelineList);
-    this.fetchPipelines();
+    this.dataSource = new MatTableDataSource(this.strategyList);
+    this.fetchStrategies();
   }
 
   applyFilter(event: Event) {
@@ -60,35 +61,35 @@ export class PipelineTableComponent {
     }
   }
 
-  fetchPipelines() {
-    this.pipelineAPI.getAllPipelines().subscribe({
-      next: (pipelines) => {
-        console.log(pipelines)
-        this.pipelineList = pipelines;
-        this.dataSource = new MatTableDataSource(this.pipelineList);
+  fetchStrategies() {
+    this.strategyAPI.getAllStrategies().subscribe({
+      next: (strategies) => {
+        console.log(strategies)
+        this.strategyList = strategies;
+        this.dataSource = new MatTableDataSource(this.strategyList);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
     })
   }
 
-  openDeletionDialog(pipeline_id: number) {
+  openDeletionDialog(strategy_id: number) {
     const dialogRef = this.dialog.open(EntryDeletionDialogComponent)
     dialogRef.afterClosed().subscribe(
       result => {
         if (result == true) {
-          this.deletePipeline(pipeline_id)
+          this.deleteStrategy(strategy_id)
         }
         console.log(result)
       }
     )
   }
 
-  deletePipeline(pipeline_id: number) {
-    this.pipelineAPI.deletePipeline(pipeline_id).subscribe(
+  deleteStrategy(strategy_id: number) {
+    this.strategyAPI.deleteStrategy(strategy_id).subscribe(
       (response) => {
         console.log(response)
-        this.fetchPipelines();
+        this.fetchStrategies();
       }
     )
   }

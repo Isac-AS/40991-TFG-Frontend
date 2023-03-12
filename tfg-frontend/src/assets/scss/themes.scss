@@ -5,8 +5,8 @@
 $dark-theme: mat.define-dark-theme(
   (
   color: (
-    primary: mat.define-palette(mat.$purple-palette),
-    accent: mat.define-palette(mat.$green-palette, 500, A100),
+    primary: mat.define-palette(mat.$indigo-palette),
+    accent: mat.define-palette(mat.$orange-palette),
     ),
       // Only include `typography` and `density` in the default dark theme.
       typography: mat.define-typography-config(),
@@ -16,8 +16,8 @@ $dark-theme: mat.define-dark-theme(
 // Light theme definition
 $light-theme: mat.define-light-theme((
   color: (
-    primary: mat.define-palette(mat.$indigo-palette),
-    accent: mat.define-palette(mat.$pink-palette),
+    primary: mat.define-palette(mat.$green-palette, 300),
+    accent: mat.define-palette(mat.$orange-palette),
     ),
 ));
 
@@ -29,11 +29,11 @@ $light-theme: mat.define-light-theme((
 }
 
 .header-and-footer-light-mode-background-color {
-  background-color: #1A237E
+  //https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors
+  // Purple 800
+  background-color: #1B5E20
 }
 
 .header-and-footer-dark-mode-background-color {
-  //https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colors
-  // Purple 800
-  background-color: #6A1B9A
+  background-color: #1A237E
 }

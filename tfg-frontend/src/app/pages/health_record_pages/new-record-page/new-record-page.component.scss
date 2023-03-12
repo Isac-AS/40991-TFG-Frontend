@@ -1,0 +1,16 @@
+.stepper-action-buttons button{
+    margin: 0.5em 2em;
+}
+
+.last-step-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.last-step-container button{
+    font-size: 1.5em;
+    padding: 1em;
+    margin: 0.5em;
+}
