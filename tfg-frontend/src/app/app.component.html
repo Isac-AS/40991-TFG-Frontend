@@ -19,7 +19,19 @@
                     <a mat-list-item routerLink="/view_records">Ver Registros</a>
                 </mat-nav-list>
             </mat-expansion-panel>
-            <!--Desarrollo-->
+            <!--Pipelines-->
+            <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="currentLoggedUserRole >= '2'">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Pipelines
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-nav-list>
+                    <a mat-list-item routerLink="/new_pipeline">Nuevo pipeline</a>
+                    <a mat-list-item routerLink="/view_pipelines">Ver Pipelines</a>
+                </mat-nav-list>
+            </mat-expansion-panel>
+            <!--Estrategias-->
             <mat-expansion-panel [class.mat-elevation-z0]="true" *ngIf="currentLoggedUserRole >= '2'">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -27,8 +39,6 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-nav-list>
-                    <a mat-list-item routerLink="/new_pipeline">Nuevo pipeline</a>
-                    <a mat-list-item routerLink="/view_pipelines">Ver Pipelines</a>
                     <a mat-list-item routerLink="/new_strategy">Nueva Estrategia</a>
                     <a mat-list-item routerLink="/view_strategies">Ver Estrategias</a>
                 </mat-nav-list>

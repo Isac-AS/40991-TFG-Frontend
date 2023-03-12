@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-view-records-page',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewRecordsPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public globalService: GlobalService,
+  ) {
+    this.globalService.pageName.next({
+      currentPageName: 'Ver Registros'
+    })
+   }
 
   ngOnInit() {
   }

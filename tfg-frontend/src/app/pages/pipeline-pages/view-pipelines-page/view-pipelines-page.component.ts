@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-view-pipelines-page',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewPipelinesPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public globalService: GlobalService,
+  ) {
+    this.globalService.pageName.next({
+      currentPageName: 'Ver Pipelines'
+    })
+   }
 
   ngOnInit() {
   }
