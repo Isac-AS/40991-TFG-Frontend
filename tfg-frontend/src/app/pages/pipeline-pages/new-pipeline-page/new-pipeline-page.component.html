@@ -1,3 +1,143 @@
-<p>
-  new-pipeline-page works!
-</p>
+<mat-stepper>
+  <!--First step: inputting name and description-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Realiza la grabación
+    </ng-template>
+    <form [formGroup]="pipelineForm">
+      <mat-card class="stepper-card">
+        <mat-card-header>
+          <mat-card-title>
+            Información acerca del pipeline
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="pipeline-info-form">
+          <mat-form-field>
+            <input matInput placeholder="Nombre del pipeline" formControlName="name">
+            <mat-error *ngIf="pipelineForm.controls['name'].hasError('required')">
+              El nombre del pipeline es <strong>obligatorio</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput placeholder="Descripción" formControlName="description"></textarea>
+            <mat-error *ngIf="pipelineForm.controls['description'].hasError('required')">
+              La descripción es <strong>obligatoria</strong>
+            </mat-error>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </form>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperNext color="accent" [disabled]="!pipelineForm.valid">
+        Continuar
+      </button>
+    </div>
+  </mat-step>
+  <!--Second step: strategies selection-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Selecciona las estrategias que conforman el pipeline
+    </ng-template>
+    <mat-card class="stepper-card">
+      <mat-card-header>
+        <mat-card-title>
+          Selección de estrategias
+        </mat-card-title>
+        <mat-card-subtitle>
+          Seleccione las estrategias que conformarán el pipeline en su orden de ejecución
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="strategy-selection-content">
+
+        <!-- Show list of selected strategies and let user delete them -->
+        <mat-list>
+          <mat-list-item *ngFor="let strategy of selectedStrategies; index as i" style="height: 6em;">
+            <div class="selected-strategies-list-item-wrapper">
+              <div class="selected-strategies-list-item">
+                <span>{{i+1}}. - Estrategia: {{strategy.name}}</span>
+                <button (click)="removeStrategy(strategy.id!)" mat-mini-fab color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              <mat-icon>south</mat-icon>
+            </div>
+          </mat-list-item>
+        </mat-list>
+
+        <!-- Form to add new strategy -->
+        <form (ngSubmit)="addStrategy()" class="strategy-addition-form">
+          <mat-form-field [color]="'accent'">
+            <mat-label>Estrategia</mat-label>
+            <input type="text" aria-label="Estrategia" matInput [matAutocomplete]="auto"
+              [formControl]="newStrategyControl">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
+              <mat-option *ngFor="let strategy of filteredOptions | async" [value]="strategy">
+                {{strategy.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button type="submit" mat-raised-button color="accent">
+            Agregar estrategia
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+      <button mat-raised-button matStepperNext color="accent" (click)="updateBuiltPipeline()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+  <!--Third step: wait for processing-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Creación del pipeline
+    </ng-template>
+    <div class="last-step-container">
+      <mat-card class="stepper-card">
+        <mat-card-header>
+          <mat-card-title>
+            Se creará el siguiente pipeline
+          </mat-card-title>
+          <mat-card-subtitle>
+            Asegúrese que los datos del nuevo pipeline son correctos
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>Nombre:</span>
+              <span matListItemLine>{{builtPipeline.name}}</span>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>Descripción:</span>
+              <p matListItemLine style="word-wrap: break-word; max-width: 700px;">{{builtPipeline.description}}</p>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>Estrategias:</span>
+              <mat-list>
+                <div *ngFor="let shortStrategy of builtPipeline.strategies; index as i">
+                  <mat-list-item matListItemLine>
+                    {{i+1}} - {{shortStrategy.name}}
+                  </mat-list-item>
+                </div>
+              </mat-list>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+
+      <button mat-raised-button color="primary" (click)="createPipeline()">
+        Crear pipeline
+      </button>
+    </div>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

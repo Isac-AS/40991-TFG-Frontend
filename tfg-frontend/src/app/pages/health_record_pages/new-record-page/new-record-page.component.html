@@ -15,7 +15,7 @@
     <ng-template matStepLabel>
       Selecciona un pipeline
     </ng-template>
-    <app-pipeline-table></app-pipeline-table>
+    <app-pipeline-table (selectedPipelineEmitter)="updateSelectedPipeline($event)"></app-pipeline-table>
     <div class="stepper-action-buttons">
       <button mat-raised-button matStepperPrevious color="accent">
         Anterior

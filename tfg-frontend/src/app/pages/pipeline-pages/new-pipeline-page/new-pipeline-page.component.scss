@@ -1,0 +1,57 @@
+.stepper-action-buttons button {
+    margin: 0.5em 2em;
+}
+
+.last-step-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.last-step-container button {
+    font-size: 1.5em;
+    padding: 1em;
+    margin: 0.5em;
+}
+
+.pipeline-info-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    padding: 2em;
+}
+
+.stepper-card {
+    margin: 2em;
+}
+
+.strategy-selection-content {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 2em;
+    justify-content: center;
+}
+
+.selected-strategies-list-item-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-strategies-list-item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    width: 50%;
+}
+
+
+.strategy-addition-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+}

@@ -11,6 +11,8 @@ import { HeathRecordAPIService } from 'src/app/services/health-record-api.servic
 export class NewRecordPageComponent {
 
   teste: any;
+  pipelineId: any = 1;
+  pipelineName: any;
 
   constructor(
     public globalService: GlobalService,
@@ -27,12 +29,20 @@ export class NewRecordPageComponent {
     console.log("TESTE in parent: ", this.teste)
   }
 
+  updateSelectedPipeline(pipeline: any) {
+    this.pipelineId = pipeline.id;
+    this.pipelineName = pipeline.name;
+    console.log("pipeline received in parent: ", pipeline)
+  }
+
   createRecord() {
     let formData = new FormData();
     formData.append('audio', this.teste.blob, this.teste.title)
+    // First upload file
     this.fileService.uploadFile('/health_records/save_audio', formData).subscribe({
+      // Then create record
       next: audio_saving_response => {
-        this.ehrAPIService.createRecordFromAudio(audio_saving_response.audio_file_path, 0).subscribe(
+        this.ehrAPIService.createRecordFromAudio(audio_saving_response.audio_file_path, this.pipelineId).subscribe(
           health_record_response => {
             console.log(health_record_response)
           }

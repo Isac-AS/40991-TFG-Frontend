@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -16,6 +16,8 @@ import { EntryDeletionDialogComponent } from '../entry-deletion-dialog/entry-del
   styleUrls: ['./pipeline-table.component.scss']
 })
 export class PipelineTableComponent {
+
+  @Output() selectedPipelineEmitter:any = new EventEmitter<any>()
 
   pipelineList: Pipeline[] = [];
   displayedColumns: string[] = ['selected', 'name', 'description', 'created_by', 'last_modified_by', 'strategies', 'delete']
@@ -91,6 +93,10 @@ export class PipelineTableComponent {
         this.fetchPipelines();
       }
     )
+  }
+
+  emitPipeline(pipeline: any) {
+    this.selectedPipelineEmitter.emit(pipeline)
   }
 
 }

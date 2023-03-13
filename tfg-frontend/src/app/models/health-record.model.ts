@@ -16,9 +16,27 @@ export class HealthRecord {
 }
 
 export interface IndividualOutput {
-    strategy_id: number
-    strategy_name: string
-    output: any
+    strategy_id: number,
+    strategy_name: string,
+    output: ConcreteStrategyOutput,
+}
+
+export interface ConcreteStrategyOutput {
+    output: any,
+    ner?: NamedEntityRecognition[],
+    other?: any
+}
+
+export interface NamedEntityRecognition {
+    name: string,
+    result: any,
+    tags: NamedEntityRecognitionTags[]
+}
+
+export interface NamedEntityRecognitionTags {
+    name: string,
+    description: string,
+    detected_entities?: string[]
 }
 
 export interface HealthRecordRelatedResponse {
