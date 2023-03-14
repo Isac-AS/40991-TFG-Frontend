@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { BackendAPIService } from 'src/app/services/backend.service';
 import { GlobalService } from 'src/app/services/global.service';
+import { TestingService } from 'src/app/services/testing.service';
 import { UserApiService } from 'src/app/services/user-api.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class TestingPageComponent implements OnInit {
   constructor(
     private backendService: BackendAPIService,
     public globalService: GlobalService,
-    private userAPIService: UserApiService
+    private userAPIService: UserApiService,
+    private testingService: TestingService
   ) {
     this.globalService.pageName.next({
       currentPageName: 'Página de pruebas'
@@ -43,7 +45,7 @@ export class TestingPageComponent implements OnInit {
   }
 
   test() {
-    this.backendService.test().subscribe({
+    this.testingService.test().subscribe({
       next: (res: any) => {
         console.log(res)
       }
@@ -86,6 +88,38 @@ export class TestingPageComponent implements OnInit {
           this.currentUser.password = ''
           this.currentUser.is_admin = false;
         }
+      }
+    })
+  }
+
+  speech_to_text() {
+    this.testingService.speechToText().subscribe({
+      next: (res: any) => {
+        console.log(res)
+      }
+    })
+  }
+
+  spell_checking() {
+    this.testingService.spellChecking().subscribe({
+      next: (res: any) => {
+        console.log(res)
+      }
+    })
+  }
+
+  default_ehr() {
+    this.testingService.defaultEHR().subscribe({
+      next: (res: any) => {
+        console.log(res)
+      }
+    })
+  }
+
+  add_electronic_health_record() {
+    this.testingService.add_electronic_health_record().subscribe({
+      next: (res: any) => {
+        console.log(res)
       }
     })
   }

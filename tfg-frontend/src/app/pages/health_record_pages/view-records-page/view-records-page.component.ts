@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HealthRecord, IndividualOutput } from 'src/app/models/health-record.model';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -6,7 +7,20 @@ import { GlobalService } from 'src/app/services/global.service';
   templateUrl: './view-records-page.component.html',
   styleUrls: ['./view-records-page.component.scss']
 })
-export class ViewRecordsPageComponent implements OnInit {
+export class ViewRecordsPageComponent {
+
+  selectedRecord: HealthRecord = {
+    recording_path: '',
+    transcription: '',
+    health_record: '',
+    processing_outputs: [],
+
+    id: -1,
+    updated_at: '',
+    created_at: '',
+    created_by: '',
+    last_modified_by: '',
+  }
 
   constructor(
     public globalService: GlobalService,
@@ -14,9 +28,10 @@ export class ViewRecordsPageComponent implements OnInit {
     this.globalService.pageName.next({
       currentPageName: 'Ver Registros'
     })
-   }
+  }
 
-  ngOnInit() {
+  updateSelectedRecord(record: any) {
+    this.selectedRecord = record
   }
 
 }

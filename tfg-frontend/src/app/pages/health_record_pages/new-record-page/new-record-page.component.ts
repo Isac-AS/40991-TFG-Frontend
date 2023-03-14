@@ -13,6 +13,8 @@ export class NewRecordPageComponent {
   teste: any;
   pipelineId: any = 1;
   pipelineName: any;
+  isProcessing: boolean = false;
+  isFinished: boolean = false;
 
   constructor(
     public globalService: GlobalService,
@@ -42,11 +44,16 @@ export class NewRecordPageComponent {
     this.fileService.uploadFile('/health_records/save_audio', formData).subscribe({
       // Then create record
       next: audio_saving_response => {
-        this.ehrAPIService.createRecordFromAudio(audio_saving_response.audio_file_path, this.pipelineId).subscribe(
-          health_record_response => {
+        this.isProcessing = true;
+        this.ehrAPIService.createRecordFromAudio(audio_saving_response.audio_file_path, this.pipelineId).subscribe({
+          next: (health_record_response) => {
             console.log(health_record_response)
+            if (health_record_response.result == true) {
+              this.isFinished = true
+            }
+            this.isProcessing = false;
           }
-        )
+        })
       }
     })
   }

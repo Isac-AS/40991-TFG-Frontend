@@ -14,3 +14,10 @@
     padding: 1em;
     margin: 0.5em;
 }
+
+.wait-for-results {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}

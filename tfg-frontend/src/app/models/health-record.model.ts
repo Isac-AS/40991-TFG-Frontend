@@ -3,7 +3,6 @@ export class HealthRecord {
         public recording_path: string,
         public transcription: string,
         public health_record: string,
-        public named_entity_recognition: any,
         public processing_outputs: IndividualOutput[],
         
         public id?: number,
@@ -18,7 +17,7 @@ export class HealthRecord {
 export interface IndividualOutput {
     strategy_id: number,
     strategy_name: string,
-    output: ConcreteStrategyOutput,
+    strategy_output: ConcreteStrategyOutput,
 }
 
 export interface ConcreteStrategyOutput {

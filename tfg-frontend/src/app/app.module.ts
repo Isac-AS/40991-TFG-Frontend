@@ -33,6 +33,8 @@ import { ThemePickerComponent } from './components/theme-picker/theme-picker.com
 import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
 import { PipelineTableComponent } from './components/pipeline-table/pipeline-table.component';
 import { StrategyTableComponent } from './components/strategy-table/strategy-table.component';
+import { EhrTableComponent } from './components/ehr-table/ehr-table.component';
+import { ViewEhrComponent } from './components/view-ehr/view-ehr.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -46,6 +48,7 @@ import { HeathRecordAPIService } from './services/health-record-api.service';
 import { PipelineAPIService } from './services/pipepile-api.service';
 import { StrategyAPIService } from './services/strategy-api.service';
 import { FileAPIService } from './services/file.service';
+import { TestingService } from './services/testing.service';
 
 
 @NgModule({
@@ -58,6 +61,8 @@ import { FileAPIService } from './services/file.service';
     AudioRecorderComponent,
     PipelineTableComponent,
     StrategyTableComponent,
+    EhrTableComponent,
+    ViewEhrComponent,
     
     // Pages
     HomePageComponent,
@@ -97,7 +102,8 @@ import { FileAPIService } from './services/file.service';
     HeathRecordAPIService,
     PipelineAPIService,
     StrategyAPIService,
-    FileAPIService
+    FileAPIService,
+    TestingService
   ],
   bootstrap: [AppComponent]
 })

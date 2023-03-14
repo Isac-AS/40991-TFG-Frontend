@@ -1,12 +1,33 @@
-<mat-card id="welcome-section" color="primary">
-  <h1>Ping</h1>
-  <h2>Ping al servidor</h2>
-  <button mat-raised-button (click)="ping()">
-    Ping
-</button>
-</mat-card>
-
 <div class="card-wrapper">
+  <div class="row">
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Ping al servidor</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="ping()">
+            <span>Ping</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Perform test function</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="test()">
+            <span>Test</span>
+            <mat-icon>bug_report</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <!-- User property testing -->
   <div class="row">
     <div class="column">
       <mat-card>
@@ -35,7 +56,7 @@
     <div class="column">
       <mat-card>
         <mat-card-header>
-          <h1>Hay un usuario que haya iniciado sesión</h1>
+          <h1>¿Hay un usuario que haya iniciado sesión?</h1>
         </mat-card-header>
         <mat-card-content>
           <h3>{{currentUserMessage}}</h3>
@@ -48,15 +69,76 @@
       </mat-card>
     </div>
   </div>
+  <mat-divider></mat-divider>
+  <!-- Strategy related testing -->
   <div class="row">
     <div class="column">
       <mat-card>
         <mat-card-header>
-          <h1>Logout</h1>
+          <h1>Test speech to text</h1>
         </mat-card-header>
         <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="logOut()">
-            <span>LogOut</span>
+          <button mat-raised-button color="primary" (click)="speech_to_text()">
+            <span>Test</span>
+            <mat-icon>bug_report</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Test spell checking</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="spell_checking()">
+            <span>Test</span>
+            <mat-icon>bug_report</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Add 3 strategies manually</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="ping()">
+            <span>Test</span>
+            <mat-icon>bug_report</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Test default EHR building</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="default_ehr()">
+            <span>Test</span>
+            <mat-icon>bug_report</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <!-- Record related testing -->
+  <div class="row">
+    <div class="column">
+      <mat-card>
+        <mat-card-header>
+          <h1>Agregar registro de prueba</h1>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="add_electronic_health_record()">
+            <span>Test</span>
+            <mat-icon>bug_report</mat-icon>
           </button>
         </mat-card-actions>
       </mat-card>
@@ -66,16 +148,14 @@
         <mat-card-header>
           <h1>Perform test function</h1>
         </mat-card-header>
-        <mat-card-content>
-          <h3>Test</h3>
-        </mat-card-content>
         <mat-card-actions>
           <button mat-raised-button color="primary" (click)="test()">
             <span>Test</span>
-            <mat-icon>edit</mat-icon>
+            <mat-icon>bug_report</mat-icon>
           </button>
         </mat-card-actions>
       </mat-card>
     </div>
   </div>
+  <mat-divider></mat-divider>
 </div>
