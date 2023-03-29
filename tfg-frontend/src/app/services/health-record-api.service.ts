@@ -33,10 +33,22 @@ export class HeathRecordAPIService {
             { withCredentials: true });
     }
 
-    createRecordFromRecord(parentHealthRecord: HealthRecord, pipelineId: number, skipSteps: number): Observable<HealthRecordRelatedResponse> {
+    createRecordFromRecord(
+        parentHealthRecordId: number,
+        parentHealthRecordRecordingPath: string,
+        strategyInput: any,
+        pipelineId: number,
+        skipSteps: number
+    ): Observable<HealthRecordRelatedResponse> {
         return this.http.post<HealthRecordRelatedResponse>(
             `${API_URL}/health_records/create_from_record`,
-            { 'parent_health_record': parentHealthRecord, 'pipeline_id': pipelineId, 'skip_steps': skipSteps },
+            {
+                'parent_health_record_id': parentHealthRecordId,
+                'parent_health_record_recording_path': parentHealthRecordRecordingPath,
+                'strategy_input': strategyInput,
+                'pipeline_id': pipelineId,
+                'skip_steps': skipSteps
+            },
             { withCredentials: true })
     }
 

@@ -17,7 +17,7 @@ export class EhrTableComponent {
   @Output() selectedRecordEmitter: any = new EventEmitter<any>()
 
   recordList: HealthRecord[] = [];
-  displayedColumns: string[] = ['selected', 'transcription', 'health_record', 'created_by', 'last_modified_by', 'delete']
+  displayedColumns: string[] = ['selected', 'created_at', 'transcription', 'health_record', 'created_by', 'last_modified_by', 'delete']
   dataSource: MatTableDataSource<HealthRecord>;
 
   selectedRecord: HealthRecord = {

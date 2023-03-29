@@ -1,0 +1,14 @@
+<div id="component-wrapper">
+  <mat-radio-group [(ngModel)] = "newRecordInput">
+    <div *ngFor="let strategy of selectedRecord.processing_outputs; let last=last">
+      <div class="possible-input" *ngIf="!last">
+        <div class="possible-input-header">
+          <mat-radio-button value="strategy.strategy_output.output" (click)="emitNewRecordInput(strategy.strategy_output.output)"></mat-radio-button>
+          <h4>Tomar como datos de entrada la salida de la estrategia: "{{strategy.strategy_name}}"</h4>
+        </div>
+        <p>{{strategy.strategy_output.output}}</p>
+      </div>
+      <mat-divider style="width: 25%;"></mat-divider>
+    </div>
+  </mat-radio-group>
+</div>

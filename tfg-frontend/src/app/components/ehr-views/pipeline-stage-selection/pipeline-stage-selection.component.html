@@ -1,0 +1,13 @@
+<div id="component-wrapper">
+  <mat-radio-group>
+    <div *ngFor="let strategy of selectedPipeline.strategies; let i=index; let first=first">
+      <div class="possible-input" *ngIf="!first">
+        <div class="possible-input-header">
+          <mat-radio-button value="strategy.strategy_output.output" (click)="emitNewStage(i)"></mat-radio-button>
+          <h4>Realizar el procesamiento a partir de la estrategia: "{{strategy.name}}"</h4>
+        </div>
+      </div>
+      <mat-divider style="width: 25%;"></mat-divider>
+    </div>
+  </mat-radio-group>
+</div>

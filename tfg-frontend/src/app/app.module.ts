@@ -24,6 +24,7 @@ import { NewStrategyPageComponent } from './pages/strategy-pages/new-strategy-pa
 import { ViewStrategiesPageComponent } from './pages/strategy-pages/view-strategies-page/view-strategies-page.component';
 import { NewRecordPageComponent } from './pages/health_record_pages/new-record-page/new-record-page.component';
 import { ViewRecordsPageComponent } from './pages/health_record_pages/view-records-page/view-records-page.component';
+import { NewRecordFromRecordPageComponent } from './pages/health_record_pages/new-record-from-record-page/new-record-from-record-page.component';
 
 // Components
 import { AppComponent } from './app.component';
@@ -35,6 +36,9 @@ import { PipelineTableComponent } from './components/pipeline-table/pipeline-tab
 import { StrategyTableComponent } from './components/strategy-table/strategy-table.component';
 import { EhrTableComponent } from './components/ehr-table/ehr-table.component';
 import { ViewEhrComponent } from './components/view-ehr/view-ehr.component';
+import { NerViewComponent } from './components/ehr-views/ner-view/ner-view.component';
+import { RecordContentSelectionComponent } from './components/ehr-views/record-content-selection/record-content-selection.component';
+import { PipelineStageSelectionComponent } from './components/ehr-views/pipeline-stage-selection/pipeline-stage-selection.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -52,7 +56,7 @@ import { TestingService } from './services/testing.service';
 
 
 @NgModule({
-  declarations: [		
+  declarations: [
     // Components
     AppComponent,
     HeaderComponent,
@@ -63,7 +67,10 @@ import { TestingService } from './services/testing.service';
     StrategyTableComponent,
     EhrTableComponent,
     ViewEhrComponent,
-    
+    NerViewComponent,
+    RecordContentSelectionComponent,
+    PipelineStageSelectionComponent,
+
     // Pages
     HomePageComponent,
     TestingPageComponent,
@@ -78,13 +85,14 @@ import { TestingService } from './services/testing.service';
     ViewStrategiesPageComponent,
     NewRecordPageComponent,
     ViewRecordsPageComponent,
+    NewRecordFromRecordPageComponent,
 
     // Dialogs
     UserDeletionDialogContent,
     EntryDeletionDialogComponent,
-      AudioRecorderComponent,
-      EntryDeletionDialogComponent
-   ],
+    AudioRecorderComponent,
+    EntryDeletionDialogComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

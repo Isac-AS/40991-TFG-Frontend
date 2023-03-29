@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NewRecordFromRecordPageComponent } from './pages/health_record_pages/new-record-from-record-page/new-record-from-record-page.component';
 import { NewRecordPageComponent } from './pages/health_record_pages/new-record-page/new-record-page.component';
 import { ViewRecordsPageComponent } from './pages/health_record_pages/view-records-page/view-records-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: "new_record",
     component: NewRecordPageComponent
+  },
+  {
+    path: "new_record_from_record",
+    component: NewRecordFromRecordPageComponent
   },
   {
     path: "view_records",

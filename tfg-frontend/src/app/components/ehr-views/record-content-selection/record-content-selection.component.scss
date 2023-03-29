@@ -1,0 +1,15 @@
+#component-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.possible-input{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.possible-input-header {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}

@@ -22,7 +22,7 @@ export class NewRecordPageComponent {
     private fileService: FileAPIService
   ) {
     this.globalService.pageName.next({
-      currentPageName: 'Nuevo registro'
+      currentPageName: 'Nuevo registro de audio'
     })
   }
 

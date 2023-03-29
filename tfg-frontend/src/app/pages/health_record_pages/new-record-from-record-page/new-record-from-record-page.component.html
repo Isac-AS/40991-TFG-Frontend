@@ -1,0 +1,92 @@
+<mat-stepper>
+  <!--First step: recording audio-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Selecciona un Registro
+    </ng-template>
+    <app-ehr-table (selectedRecordEmitter)="updateSelectedRecord($event)"></app-ehr-table>
+    <button mat-raised-button matStepperNext color="accent">
+      Continuar
+    </button>
+  </mat-step>
+  <!--Second step: pipeline selection-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Selecciona un pipeline
+    </ng-template>
+    <app-pipeline-table (selectedPipelineEmitter)="updateSelectedPipeline($event)"></app-pipeline-table>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+      <button mat-raised-button matStepperNext color="accent">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+  <!--Third step: wait for processing-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Seleccion de etapa del pipeline y datos de entrada
+    </ng-template>
+    <!-- Input data selection -->
+    <mat-card class="data-selection-card">
+      <mat-card-header>
+        <mat-card-title>
+          Selección del los datos de entrada
+        </mat-card-title>
+        <mat-card-subtitle>
+          Seleción de los datos del registro existente que servirán como entrada para el pipeline
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="data-selection-card-content">
+        <app-record-content-selection [selectedRecord]="selectedRecord" (selectedInputEmitter)="updateNewRecordInput($event)"></app-record-content-selection>
+      </mat-card-content>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <!-- Pipeline stage selection -->
+    <mat-card class="data-selection-card">
+      <mat-card-header>
+        <mat-card-title>
+          Selección de la etapa del pipeline
+        </mat-card-title>
+        <mat-card-subtitle>
+          Seleción de la etapa del pipeline a partir de la cual se realizará el procesamiento. 
+          Al tratarse de un registro a partir de otro, siempre se excluye la transcripción.
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="data-selection-card-content">
+        <app-pipeline-stage-selection [selectedPipeline]="selectedPipeline" (selectedStageEmitter)="updateNewStage($event)"></app-pipeline-stage-selection>
+      </mat-card-content>
+    </mat-card>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+      <button mat-raised-button matStepperNext color="accent">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+  <!--Fourth step: wait for processing-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Creación del registro
+    </ng-template>
+    <div class="last-step-container">
+      <button mat-raised-button color="primary" (click)="createRecord()" *ngIf="!isProcessing && !isFinished">
+        Crear Registro
+      </button>
+      <div class="wait-for-results" *ngIf="isProcessing">
+        <h2>Procesando...</h2>
+        <mat-spinner></mat-spinner>
+      </div>
+      <button mat-raised-button color="primary" routerLink="/view_records" *ngIf="!isProcessing && isFinished">
+        Ver Registro
+      </button>
+    </div>
+    <button mat-raised-button matStepperPrevious color="accent">
+      Anterior
+    </button>
+  </mat-step>
+</mat-stepper>
