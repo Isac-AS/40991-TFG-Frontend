@@ -36,6 +36,7 @@ export class HeathRecordAPIService {
     createRecordFromRecord(
         parentHealthRecordId: number,
         parentHealthRecordRecordingPath: string,
+        parentHealthRecordTranscription: string,
         strategyInput: any,
         pipelineId: number,
         skipSteps: number
@@ -45,6 +46,7 @@ export class HeathRecordAPIService {
             {
                 'parent_health_record_id': parentHealthRecordId,
                 'parent_health_record_recording_path': parentHealthRecordRecordingPath,
+                'parent_health_record_transcription':parentHealthRecordTranscription,
                 'strategy_input': strategyInput,
                 'pipeline_id': pipelineId,
                 'skip_steps': skipSteps

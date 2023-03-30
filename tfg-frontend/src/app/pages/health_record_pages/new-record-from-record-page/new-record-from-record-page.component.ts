@@ -51,6 +51,7 @@ export class NewRecordFromRecordPageComponent {
     this.ehrAPIService.createRecordFromRecord(
       this.selectedRecord.id,
       this.selectedRecord.recording_path,
+      this.selectedRecord.transcription,
       this.strategyInput,
       this.selectedPipeline.id,
       this.pipelineStage
