@@ -1,7 +1,7 @@
 <div class="view-record-wrapper">
   <!--Electronic health record-->
   <h3>Representación en su formato de historia clínica electrónica</h3>
-  <span>{{selectedRecord.health_record}}</span>
+  <app-ehr-message-view [healthRecordMessage]="selectedRecord.health_record"></app-ehr-message-view>
   <mat-divider></mat-divider>
   <!--Transcription-->
   <h3>Transcripción</h3>
@@ -13,13 +13,16 @@
   <mat-divider></mat-divider>
   <!--Ouput-->
   <h3>Salidas de las estrategias</h3>
-  <div *ngFor="let strategy of selectedRecord.processing_outputs">
+  <div *ngFor="let strategy of selectedRecord.processing_outputs; let last = last; let index = index">
     <h4>Estrategia: {{strategy.strategy_name}}</h4>
     <h5>Salida:</h5>
-    <span>{{strategy.strategy_output.output}}</span>
-    <mat-divider style="width: 25%;"></mat-divider>
+    <span *ngIf="!last">{{strategy.strategy_output.output}}</span>
+    <app-ehr-message-view [healthRecordMessage]="strategy.strategy_output.output" *ngIf="last"></app-ehr-message-view>
+    <mat-divider *ngIf="strategy.strategy_output.ner" style="width: 10%;"></mat-divider>
+    <app-ner-view *ngIf="strategy.strategy_output.ner" [ner]="strategy.strategy_output.ner"
+      [text]="selectedRecord.processing_outputs[index-1].strategy_output.output"></app-ner-view>
+    <mat-divider style="width: 25%;" *ngIf="!last"></mat-divider>
   </div>
-  <span>{{selectedRecord.processing_outputs}}</span>
   <mat-divider></mat-divider>
   <!--Created by-->
   <h3>Creado por</h3>
@@ -34,7 +37,7 @@
   <span>{{selectedRecord.created_at}}</span>
   <mat-divider></mat-divider>
   <!--Las by-->
-  <h3>fecha de última modificación</h3>
+  <h3>Fecha de última modificación</h3>
   <span>{{selectedRecord.updated_at}}</span>
   <mat-divider></mat-divider>
 </div>

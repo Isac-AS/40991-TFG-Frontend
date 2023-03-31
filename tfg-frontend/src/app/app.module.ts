@@ -39,6 +39,7 @@ import { ViewEhrComponent } from './components/view-ehr/view-ehr.component';
 import { NerViewComponent } from './components/ehr-views/ner-view/ner-view.component';
 import { RecordContentSelectionComponent } from './components/ehr-views/record-content-selection/record-content-selection.component';
 import { PipelineStageSelectionComponent } from './components/ehr-views/pipeline-stage-selection/pipeline-stage-selection.component';
+import { EhrMessageViewComponent } from './components/ehr-views/ehr-message-view/ehr-message-view.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -70,6 +71,7 @@ import { TestingService } from './services/testing.service';
     NerViewComponent,
     RecordContentSelectionComponent,
     PipelineStageSelectionComponent,
+    EhrMessageViewComponent,
 
     // Pages
     HomePageComponent,

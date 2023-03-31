@@ -1,3 +1,69 @@
-<p>
-  ner-view works!
-</p>
+<h4>NER: Reconocimiento de la entidad nombrada</h4>
+<mat-card class="top-card">
+  <mat-card-header>
+    <mat-card-title>
+      Resultado
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div style="display: flex; flex-flow: row; align-items: center;">
+      <div *ngFor="let taggedText of nerText">
+        <button mat-flat-button matTooltip="{{taggedText.tag}}" *ngIf="taggedText.tag != 'None'"
+          [ngStyle]="{'background-color': taggedText.backgroundColor}"
+          class="highlighted-text">{{taggedText.text}}</button>
+        <p class="highlighted-text" *ngIf="taggedText.tag == 'None'">{{taggedText.text}}</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<!-- Legend -->
+<mat-card class="top-card">
+  <mat-card-header>
+    <mat-card-title>
+      Leyenda
+    </mat-card-title>
+    <mat-card-subtitle>
+      Para más detalles, pulse el botón bajo la leyenda.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div style="display: flex; flex-flow: row; align-items: center;">
+      <div *ngFor="let tag of tags">
+        <button mat-flat-button [ngStyle]="{'background-color': tag.backgroundColor}"
+          class="highlighted-text">{{tag.name}}</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<button mat-raised-button color="primary" (click)="toggleTags()">Mostrar etiquetas y detecciones</button>
+<!-- Tags and entities -->
+<div *ngIf="showTags">
+  <div *ngFor="let recognition of ner">
+    <mat-card class="recognition-card">
+      <mat-card-header>
+        <mat-card-title>{{recognition.name}} NER</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngFor="let tag of recognition.tags">
+          <mat-card class="tag-card">
+            <mat-card-header>
+              <mat-card-title>
+                {{tag.name}}
+              </mat-card-title>
+              <mat-card-subtitle>
+                {{tag.description}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <div *ngFor="let detectedEntity of tag.detected_entities">
+                  <mat-list-item>{{detectedEntity}}</mat-list-item>
+                </div>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
