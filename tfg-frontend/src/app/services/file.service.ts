@@ -10,4 +10,8 @@ export class FileAPIService {
     uploadFile(path: string, audioFile: FormData): Observable<any> {
         return this.http.post(`${API_URL}${path}`, audioFile, { withCredentials: true})
     }
+
+    getRecordAudio(audioFilePath: string) {
+        return this.http.post(`${API_URL}/health_records/retrieve_audio`, {'audio_file_path': audioFilePath}, { responseType: 'blob', withCredentials: true})
+    }
 }

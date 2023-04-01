@@ -9,7 +9,11 @@
   <mat-divider></mat-divider>
   <!--Audio-->
   <h3>Audio</h3>
-  <span>Todavía falta ver como se hace esto</span>
+  <div *ngIf="audioURL">
+    <audio controls>
+      <source [src]="audioURL" type="audio/wav">
+    </audio>
+  </div>
   <mat-divider></mat-divider>
   <!--Ouput-->
   <h3>Salidas de las estrategias</h3>

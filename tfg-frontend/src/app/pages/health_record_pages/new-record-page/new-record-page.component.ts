@@ -28,7 +28,7 @@ export class NewRecordPageComponent {
 
   updateTeste(teste: any) {
     this.teste = teste;
-    console.log("TESTE in parent: ", this.teste)
+    //console.log("TESTE in parent: ", this.teste)
   }
 
   updateSelectedPipeline(pipeline: any) {

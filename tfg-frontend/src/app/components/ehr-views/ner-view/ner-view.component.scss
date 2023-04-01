@@ -2,18 +2,14 @@
     margin: 0.5em
 }
 
-.top-card {
-    margin: 1em
+.top-card, .text-card, .tag-card{
+    margin: 1em;
 }
 
 .top-card mat-card-content{
     margin: 1em
 }
 
-.text-card{
-    margin: 1em;
-}
-
 .highlighted-text {
-    margin: 0 3px;
+    margin: 3px 3px;
 }

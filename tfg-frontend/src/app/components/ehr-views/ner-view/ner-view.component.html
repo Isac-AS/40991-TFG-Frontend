@@ -6,7 +6,7 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div style="display: flex; flex-flow: row; align-items: center;">
+    <div style="display: flex; flex-flow: row wrap; align-items: center;">
       <div *ngFor="let taggedText of nerText">
         <button mat-flat-button matTooltip="{{taggedText.tag}}" *ngIf="taggedText.tag != 'None'"
           [ngStyle]="{'background-color': taggedText.backgroundColor}"
