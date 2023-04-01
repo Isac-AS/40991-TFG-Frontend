@@ -14,13 +14,12 @@ export class ViewEhrComponent implements OnChanges {
   @Input() selectedRecord!: HealthRecord;
 
   audioURL: any;
-  hasAudio: boolean;
 
   constructor(
     private fileAPI: FileAPIService,
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef
-  ) { this.hasAudio = false }
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     console.log("Cambios en ventana")
@@ -32,7 +31,6 @@ export class ViewEhrComponent implements OnChanges {
           this.audioURL = this.sanitizer.bypassSecurityTrustUrl(
             URL.createObjectURL(blob)
           );
-          this.hasAudio = true;
           this.cdRef.detectChanges();
         }
       )

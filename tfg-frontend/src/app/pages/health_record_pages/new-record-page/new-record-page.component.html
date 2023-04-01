@@ -31,16 +31,50 @@
       Espera los resultados
     </ng-template>
     <div class="last-step-container">
-      <button mat-raised-button color="primary" (click)="createRecord()" *ngIf="!isProcessing && !isFinished">
-        Crear Registro
-      </button>
+      <!-- Before record creating process -->
+      <div class="before-processing-container" *ngIf="!isProcessing && !isFinished">
+        <h2 style="margin-top: 1em;">Audio grabado</h2>
+        <div *ngIf="blobURL">
+          <audio controls>
+            <source [src]="blobURL" type="audio/webm">
+          </audio>
+        </div>
+        <h2 *ngIf="pipeline" style="margin-top: 1em;">Estrategias que se emplearán en el procesamiento</h2>
+        <div *ngIf="pipeline" class="strategy-name-container">
+          <div *ngFor="let strategy of pipeline.strategies; let last = last">
+            <div class="strategy-pair">
+              <span>{{strategy.name}}</span>
+              <mat-icon *ngIf="!last" style="margin: 0, 3px;">arrow_forward</mat-icon>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="blobURL && pipeline">
+          <button mat-raised-button color="primary" (click)="createRecord()" *ngIf="!isProcessing && !isFinished">
+            Crear Registro
+          </button>
+        </div>
+      </div>
+      <!-- Processing spinner -->
       <div class="wait-for-results" *ngIf="isProcessing">
         <h2>Procesando...</h2>
         <mat-spinner></mat-spinner>
       </div>
-      <button mat-raised-button color="primary" routerLink="/view_records" *ngIf="!isProcessing && isFinished">
-        Ver Registro
-      </button>
+      <!-- Final record -->
+      <div *ngIf="!isProcessing && isFinished" class="finished-recording">
+        <mat-card class="record-card">
+          <mat-card-header>
+            <mat-card-title>
+              Información detallada sobre la historia clínica electrónica creada
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-view-ehr [selectedRecord]="createdRecord"></app-view-ehr>
+          </mat-card-content>
+        </mat-card>
+        <button mat-raised-button color="primary" routerLink="/view_records">
+          Ver Registros
+        </button>
+      </div>
     </div>
     <button mat-raised-button matStepperPrevious color="accent">
       Anterior

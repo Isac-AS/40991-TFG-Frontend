@@ -40,7 +40,8 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="data-selection-card-content">
-        <app-record-content-selection [selectedRecord]="selectedRecord" (selectedInputEmitter)="updateNewRecordInput($event)"></app-record-content-selection>
+        <app-record-content-selection [selectedRecord]="selectedRecord"
+          (selectedInputEmitter)="updateNewRecordInput($event)"></app-record-content-selection>
       </mat-card-content>
     </mat-card>
     <mat-divider></mat-divider>
@@ -51,12 +52,13 @@
           Selección de la etapa del pipeline
         </mat-card-title>
         <mat-card-subtitle>
-          Seleción de la etapa del pipeline a partir de la cual se realizará el procesamiento. 
+          Seleción de la etapa del pipeline a partir de la cual se realizará el procesamiento.
           Al tratarse de un registro a partir de otro, siempre se excluye la transcripción.
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="data-selection-card-content">
-        <app-pipeline-stage-selection [selectedPipeline]="selectedPipeline" (selectedStageEmitter)="updateNewStage($event)"></app-pipeline-stage-selection>
+        <app-pipeline-stage-selection [selectedPipeline]="selectedPipeline"
+          (selectedStageEmitter)="updateNewStage($event)"></app-pipeline-stage-selection>
       </mat-card-content>
     </mat-card>
     <div class="stepper-action-buttons">
@@ -74,16 +76,48 @@
       Creación del registro
     </ng-template>
     <div class="last-step-container">
-      <button mat-raised-button color="primary" (click)="createRecord()" *ngIf="!isProcessing && !isFinished">
-        Crear Registro
-      </button>
+      <!-- Before record creating process -->
+      <div class="before-processing-container" *ngIf="!isProcessing && !isFinished">
+        <h2 style="margin-top: 1em;">Transcripción</h2>
+        <div *ngIf="selectedRecord">
+          <span>{{selectedRecord.transcription}}</span>
+        </div>
+        <h2 *ngIf="selectedPipeline" style="margin-top: 1em;">Estrategias que se emplearán en el procesamiento</h2>
+        <div *ngIf="selectedPipeline" class="strategy-name-container">
+          <div *ngFor="let strategy of processingSteps; let last = last">
+            <div class="strategy-pair">
+              <span>{{strategy.name}}</span>
+              <mat-icon *ngIf="!last" style="margin: 0, 3px;">arrow_forward</mat-icon>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="selectedRecord && selectedPipeline">
+          <button mat-raised-button color="primary" (click)="createRecord()" *ngIf="!isProcessing && !isFinished">
+            Crear Registro
+          </button>
+        </div>
+      </div>
+      <!-- Processing spinner -->
       <div class="wait-for-results" *ngIf="isProcessing">
         <h2>Procesando...</h2>
         <mat-spinner></mat-spinner>
       </div>
-      <button mat-raised-button color="primary" routerLink="/view_records" *ngIf="!isProcessing && isFinished">
-        Ver Registro
-      </button>
+      <!-- Final record -->
+      <div *ngIf="!isProcessing && isFinished" class="finished-recording">
+        <mat-card class="record-card">
+          <mat-card-header>
+            <mat-card-title>
+              Información detallada sobre la historia clínica electrónica creada
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <app-view-ehr [selectedRecord]="createdRecord"></app-view-ehr>
+          </mat-card-content>
+        </mat-card>
+        <button mat-raised-button color="primary" routerLink="/view_records">
+          Ver Registros
+        </button>
+      </div>
     </div>
     <button mat-raised-button matStepperPrevious color="accent">
       Anterior

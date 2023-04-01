@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HealthRecord } from 'src/app/models/health-record.model';
 import { GlobalService } from 'src/app/services/global.service';
 import { HeathRecordAPIService } from 'src/app/services/health-record-api.service';
 
@@ -16,6 +17,8 @@ export class NewRecordFromRecordPageComponent {
   pipelineName: any;
   isProcessing: boolean = false;
   isFinished: boolean = false;
+  createdRecord: any;
+  processingSteps: any;
 
   constructor(
     public globalService: GlobalService,
@@ -43,6 +46,7 @@ export class NewRecordFromRecordPageComponent {
 
   updateNewStage(pipelineStage: any) {
     this.pipelineStage = pipelineStage;
+    this.processingSteps = this.selectedPipeline.strategies.slice(pipelineStage);
     console.log("new pipeline stage in parent: ", pipelineStage)
   }
 
@@ -62,6 +66,7 @@ export class NewRecordFromRecordPageComponent {
           this.isFinished = true
         }
         this.isProcessing = false;
+        this.createdRecord = health_record_response.healthRecord;
       }
     })
   }
