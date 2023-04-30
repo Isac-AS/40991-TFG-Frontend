@@ -39,7 +39,6 @@ export class LoginPageComponent {
     .subscribe({
       next: (res) => {
         if (res.result == true) {
-          console.log(res)
           this._snackBar.open("¡Inicio de sesión correcto!", "Continuar", {duration: 3000});
           this.globalService.loggedInfo.next({
             isLoggedIn: true,

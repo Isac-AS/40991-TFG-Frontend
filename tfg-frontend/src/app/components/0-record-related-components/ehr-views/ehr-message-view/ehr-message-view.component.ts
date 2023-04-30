@@ -19,8 +19,6 @@ export class EhrMessageViewComponent implements OnChanges {
     if (updatedHealthRecordMessageValue != "") {
       this.segments = updatedHealthRecordMessageValue.split("\r")
     }
-    //console.log(changes['healthRecordMessage'].currentValue)
-    //console.log(this.segments)
   }
   
 }

@@ -41,13 +41,20 @@ export class UserManagementPageComponent {
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
 
+  debug: boolean = false;
+
   constructor(
     public globalService: GlobalService,
     private userApi: UserApiService,
     public dialog: MatDialog,
     private fb: FormBuilder,
     private _snackBar: MatSnackBar
-    ) {
+  ) {
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
     this.globalService.pageName.next({
       currentPageName: 'Gestión de usuarios'
     })
@@ -67,7 +74,11 @@ export class UserManagementPageComponent {
   fetchUsers() {
     this.userApi.getUsers().subscribe({
       next: (users) => {
-        console.log(users)
+        if (this.debug) {
+          console.log("[DEBUG] - [USER-MANAGEMENT-PAGE]: Received Users:");
+          console.log(users);
+          console.log("*---*")
+        }
         this.userList = users;
         this.dataSource = new MatTableDataSource(this.userList);
         this.dataSource.paginator = this.paginator;
@@ -78,8 +89,8 @@ export class UserManagementPageComponent {
 
   // User modification
   possibleRoles = [
-    {name: 'Personal sanitario', databaseName: '1'},
-    {name: 'Científico de datos/Desarrollador', databaseName: '2'},
+    { name: 'Personal sanitario', databaseName: '1' },
+    { name: 'Científico de datos/Desarrollador', databaseName: '2' },
   ]
   invalidAnswerFromBackend: boolean = false;
   backendMessage: string = ''
@@ -111,11 +122,11 @@ export class UserManagementPageComponent {
       .subscribe({
         next: (res) => {
           if (res.result == true) {
-            this._snackBar.open("¡Usuario modificado con éxito!", "Continuar", {duration: 5000});
+            this._snackBar.open("¡Usuario modificado con éxito!", "Continuar", { duration: 5000 });
             this.invalidAnswerFromBackend = false;
             this.userForm.markAsUntouched()
           } else if (res.result == false) {
-            this._snackBar.open("Error con la modificación usuario", "Continuar", {duration: 5000});
+            this._snackBar.open("Error con la modificación usuario", "Continuar", { duration: 5000 });
             this.invalidAnswerFromBackend = true;
             this.backendMessage = res.message;
           }
@@ -131,7 +142,11 @@ export class UserManagementPageComponent {
         if (result == true) {
           this.deleteUser(user_id)
         }
-        console.log(result)
+        if (this.debug) {
+          console.log("[DEBUG] - [USER-MANAGEMENT-PAGE]: User deletion dialog result:");
+          console.log(result);
+          console.log("*---*")
+        }
       }
     )
   }
@@ -139,7 +154,11 @@ export class UserManagementPageComponent {
   deleteUser(user_id: number) {
     this.userApi.deleteUser(user_id).subscribe(
       (response) => {
-        console.log(response)
+        if (this.debug) {
+          console.log("[DEBUG] - [USER-MANAGEMENT-PAGE]: User deletion response:");
+          console.log(response);
+          console.log("*---*")
+        }
         this.fetchUsers();
       }
     )
@@ -151,10 +170,10 @@ export class UserManagementPageComponent {
   templateUrl: 'delete-user-dialog.html',
   styleUrls: ['./user-management-page.component.scss']
 })
-export class UserDeletionDialogContent{
+export class UserDeletionDialogContent {
   constructor(
     public dialogRef: MatDialogRef<UserDeletionDialogContent>,
-  ){}
+  ) { }
   onNoClick(): void {
     this.dialogRef.close(false)
   }

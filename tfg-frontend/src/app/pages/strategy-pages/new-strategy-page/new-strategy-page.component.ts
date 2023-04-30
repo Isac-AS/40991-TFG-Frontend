@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -6,7 +6,9 @@ import { GlobalService } from 'src/app/services/global.service';
   templateUrl: './new-strategy-page.component.html',
   styleUrls: ['./new-strategy-page.component.scss']
 })
-export class NewStrategyPageComponent implements OnInit {
+export class NewStrategyPageComponent {
+
+  debug: boolean = false;
 
   constructor(
     public globalService: GlobalService,
@@ -14,9 +16,11 @@ export class NewStrategyPageComponent implements OnInit {
     this.globalService.pageName.next({
       currentPageName: 'Nueva Estrategia'
     })
-   }
-
-  ngOnInit() {
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
 }

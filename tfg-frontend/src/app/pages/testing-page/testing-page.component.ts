@@ -21,6 +21,7 @@ export class TestingPageComponent implements OnInit {
   }
 
   currentUserMessage: string = 'No hay un usuario que haya iniciado sesión'
+  debug: boolean = true;
 
   constructor(
     private backendService: BackendAPIService,
@@ -31,7 +32,7 @@ export class TestingPageComponent implements OnInit {
     this.globalService.pageName.next({
       currentPageName: 'Página de pruebas'
     })
-   }
+  }
 
   ngOnInit() {
   }
@@ -39,7 +40,11 @@ export class TestingPageComponent implements OnInit {
   ping() {
     this.backendService.ping().subscribe({
       next: (res: any) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Ping response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -47,7 +52,11 @@ export class TestingPageComponent implements OnInit {
   test() {
     this.testingService.test().subscribe({
       next: (res: any) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Test response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -55,8 +64,11 @@ export class TestingPageComponent implements OnInit {
   logOut() {
     this.userAPIService.logOut().subscribe({
       next: res => {
-        console.log(res)
-        console.log("Sesión cerrada con éxito")
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: LogOut response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -65,7 +77,11 @@ export class TestingPageComponent implements OnInit {
     this.userAPIService.idAuthenticated().subscribe({
       next: res => {
         this.currentUserMessage = res.message
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Is Authenticated response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -73,7 +89,11 @@ export class TestingPageComponent implements OnInit {
   fetchCurrentUserData() {
     this.userAPIService.getCurrentUserData().subscribe({
       next: res => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Current User Data response:");
+          console.log(res);
+          console.log("*---*")
+        }
         if (res.result == true) {
           this.currentUser.email = res.user.email;
           this.currentUser.role = res.user.role;
@@ -95,7 +115,11 @@ export class TestingPageComponent implements OnInit {
   speech_to_text() {
     this.testingService.speechToText().subscribe({
       next: (res: any) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Speech To Text response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -103,7 +127,11 @@ export class TestingPageComponent implements OnInit {
   spell_checking() {
     this.testingService.spellChecking().subscribe({
       next: (res: any) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Spell Checking response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -111,7 +139,11 @@ export class TestingPageComponent implements OnInit {
   default_ehr() {
     this.testingService.defaultEHR().subscribe({
       next: (res: any) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Default EHR response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
@@ -119,9 +151,12 @@ export class TestingPageComponent implements OnInit {
   add_electronic_health_record() {
     this.testingService.add_electronic_health_record().subscribe({
       next: (res: any) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [TESTING-PAGE]: Add EHR response:");
+          console.log(res);
+          console.log("*---*")
+        }
       }
     })
   }
-
 }

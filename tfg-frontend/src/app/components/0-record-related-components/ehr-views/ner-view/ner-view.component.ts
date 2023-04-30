@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges } from '@angular/core';
 import { NamedEntityRecognition } from 'src/app/models/health-record.model';
+import { GlobalService } from 'src/app/services/global.service';
 
 interface TaggedText {
   text: string,
@@ -28,9 +29,19 @@ export class NerViewComponent {
   tags: Tag[] = [];
   showTags: boolean = false;
   backgroundColors: string[] = ["#8E24AA", "#3F51B5", "#D32F2F", "#66BB6A", "#FF9800", "#8034f3", "#26A69A", "#29B6F6",
-   "#897efa", "#922b22", "#1b7b70", "#e85e13"];
+    "#897efa", "#922b22", "#1b7b70", "#e85e13"];
 
-  constructor() { }
+  debug: boolean = false;
+
+  constructor(
+    public globalService: GlobalService
+  ) {
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
+  }
 
   getIndicesOf(searchStr: string, str: string, caseSensitive: boolean) {
     var searchStrLen = searchStr.length;
@@ -50,7 +61,11 @@ export class NerViewComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
+    if (this.debug) {
+      console.log("[DEBUG] - [NER-VIEW-COMPONENT]: Detected Changes:");
+      console.log(changes);
+      console.log("*---*");
+    }
     let updatedNERValue: NamedEntityRecognition[] = changes['ner'].currentValue;
     let text: string = changes['text'].currentValue;
     let tags: Tag[] = []
@@ -116,7 +131,11 @@ export class NerViewComponent {
     // Assign to component variable
     this.nerText = auxTaggedText;
     this.nerText.sort((a, b) => a.startIndex - b.startIndex)
-    console.log(this.nerText)
+    if (this.debug) {
+      console.log("[DEBUG] - [NER-VIEW-COMPONENT]: Ner Text produced:");
+      console.log(this.nerText);
+      console.log("*---*");
+    }
   }
 
   toggleTags() {

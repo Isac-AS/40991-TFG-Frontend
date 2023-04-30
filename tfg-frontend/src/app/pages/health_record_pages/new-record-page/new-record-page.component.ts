@@ -14,6 +14,7 @@ export class NewRecordPageComponent {
 
   teste: any;
   blobURL: any;
+  blob: any;
 
   pipelineId: any = 1;
   pipelineName: any;
@@ -34,6 +35,8 @@ export class NewRecordPageComponent {
     last_modified_by: '',
   }
 
+  debug: boolean = false;
+
   constructor(
     public globalService: GlobalService,
     private ehrAPIService: HeathRecordAPIService,
@@ -44,23 +47,37 @@ export class NewRecordPageComponent {
     this.globalService.pageName.next({
       currentPageName: 'Nuevo registro de audio'
     })
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
   updateTeste(teste: any) {
     this.blobURL = null;
     this.teste = teste;
+    this.blob = this.teste.blob
     this.blobURL = this.sanitizer.bypassSecurityTrustUrl(
       URL.createObjectURL(teste.blob)
     );
     this.cdRef.detectChanges();
-    console.log("TESTE in parent: ", this.teste)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-RECORD-PAGE]: TESTE recieved from AUDIO-RECORDER-COMPONENT:");
+      console.log(this.teste)
+      console.log("*---*");
+    }
   }
 
   updateSelectedPipeline(pipeline: any) {
     this.pipelineId = pipeline.id;
     this.pipelineName = pipeline.name;
     this.pipeline = pipeline;
-    console.log("pipeline received in parent: ", pipeline)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-RECORD-PAGE]: Pipeline recieved from PIPELINE-TABLE-COMPONENT:");
+      console.log(pipeline);
+      console.log("*---*");
+    }
   }
 
   createRecord() {
@@ -73,7 +90,11 @@ export class NewRecordPageComponent {
         this.isProcessing = true;
         this.ehrAPIService.createRecordFromAudio(audio_saving_response.audio_file_path, this.pipelineId).subscribe({
           next: (health_record_response) => {
-            console.log(health_record_response)
+            if (this.debug) {
+              console.log("[DEBUG] - [NEW-RECORD-PAGE]: Health Record Creation response:");
+              console.log(health_record_response)
+              console.log("*---*");
+            }
             if (health_record_response.result == true) {
               this.isFinished = true
             }

@@ -17,7 +17,7 @@ import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-
 })
 export class PipelineTableComponent {
 
-  @Output() selectedPipelineEmitter:any = new EventEmitter<any>()
+  @Output() selectedPipelineEmitter: any = new EventEmitter<any>()
 
   pipelineList: Pipeline[] = [];
   displayedColumns: string[] = ['selected', 'name', 'description', 'created_by', 'last_modified_by', 'strategies', 'delete']
@@ -45,12 +45,20 @@ export class PipelineTableComponent {
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
 
+  debug: boolean = false;
+
   constructor(
     private pipelineAPI: PipelineAPIService,
     public dialog: MatDialog,
-  ) { 
+    public globalService: GlobalService
+  ) {
     this.dataSource = new MatTableDataSource(this.pipelineList);
     this.fetchPipelines();
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
   applyFilter(event: Event) {
@@ -65,7 +73,11 @@ export class PipelineTableComponent {
   fetchPipelines() {
     this.pipelineAPI.getAllPipelines().subscribe({
       next: (pipelines) => {
-        console.log(pipelines)
+        if (this.debug) {
+          console.log("[DEBUG] - [PIPELINE-TABLE-COMPONENT]: Pipelines fetched response:");
+          console.log(pipelines);
+          console.log("*---*");
+        }
         this.pipelineList = pipelines;
         this.dataSource = new MatTableDataSource(this.pipelineList);
         this.dataSource.paginator = this.paginator;
@@ -81,7 +93,11 @@ export class PipelineTableComponent {
         if (result == true) {
           this.deletePipeline(pipeline_id)
         }
-        console.log(result)
+        if (this.debug) {
+          console.log("[DEBUG] - [PIPELINE-TABLE-COMPONENT]: Pipeline deletion dialog result:");
+          console.log(result);
+          console.log("*---*");
+        }
       }
     )
   }
@@ -89,7 +105,11 @@ export class PipelineTableComponent {
   deletePipeline(pipeline_id: number) {
     this.pipelineAPI.deletePipeline(pipeline_id).subscribe(
       (response) => {
-        console.log(response)
+        if (this.debug) {
+          console.log("[DEBUG] - [PIPELINE-TABLE-COMPONENT]: Pipeline deletion response:");
+          console.log(response);
+          console.log("*---*");
+        }
         this.fetchPipelines();
       }
     )

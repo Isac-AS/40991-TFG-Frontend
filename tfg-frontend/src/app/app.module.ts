@@ -31,7 +31,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/common/header/header.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
-import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
+import { AudioRecorderComponent } from './components/2-0-audio-related-components/audio-recorder/audio-recorder.component';
 import { PipelineTableComponent } from './components/1-0-pipeline-related-components/pipeline-table/pipeline-table.component';
 import { StrategyTableComponent } from './components/1-1-strategy-related-components/strategy-table/strategy-table.component';
 import { EhrTableComponent } from './components/0-record-related-components/ehr-table/ehr-table.component';
@@ -40,6 +40,7 @@ import { NerViewComponent } from './components/0-record-related-components/ehr-v
 import { RecordContentSelectionComponent } from './components/0-record-related-components/ehr-views/record-content-selection/record-content-selection.component';
 import { PipelineStageSelectionComponent } from './components/0-record-related-components/ehr-views/pipeline-stage-selection/pipeline-stage-selection.component';
 import { EhrMessageViewComponent } from './components/0-record-related-components/ehr-views/ehr-message-view/ehr-message-view.component';
+import { AudioPlayerComponent } from './components/2-0-audio-related-components/audio-player/audio-player.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -72,6 +73,7 @@ import { TestingService } from './services/testing.service';
     RecordContentSelectionComponent,
     PipelineStageSelectionComponent,
     EhrMessageViewComponent,
+    AudioPlayerComponent,
 
     // Pages
     HomePageComponent,

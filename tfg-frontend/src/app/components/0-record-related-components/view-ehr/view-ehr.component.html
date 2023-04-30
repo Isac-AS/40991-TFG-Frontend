@@ -9,10 +9,8 @@
   <mat-divider></mat-divider>
   <!--Audio-->
   <h3>Audio</h3>
-  <div *ngIf="audioURL">
-    <audio controls>
-      <source [src]="audioURL" type="audio/wav">
-    </audio>
+  <div *ngIf="audioBlob">
+    <app-audio-player [audioBlob]="audioBlob"></app-audio-player>
   </div>
   <mat-divider></mat-divider>
   <!--Ouput-->

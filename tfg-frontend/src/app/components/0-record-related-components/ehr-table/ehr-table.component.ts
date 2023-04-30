@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HealthRecord } from 'src/app/models/health-record.model';
 import { HeathRecordAPIService } from 'src/app/services/health-record-api.service';
 import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-deletion-dialog.component';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-ehr-table',
@@ -40,12 +41,20 @@ export class EhrTableComponent {
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
 
+  debug: boolean = false;
+
   constructor(
     private healthRecordAPI: HeathRecordAPIService,
     public dialog: MatDialog,
+    public globalService: GlobalService
   ) {
     this.dataSource = new MatTableDataSource(this.recordList);
     this.fetchRecords();
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
   applyFilter(event: Event) {
@@ -60,7 +69,11 @@ export class EhrTableComponent {
   fetchRecords() {
     this.healthRecordAPI.getAllRecords().subscribe({
       next: (records) => {
-        console.log(records)
+        if (this.debug) {
+          console.log("[DEBUG] - [RECORD-TABLE-COMPONENT]: Records fetched response:");
+          console.log(records);
+          console.log("*---*");
+        }
         this.recordList = records;
         this.dataSource = new MatTableDataSource(this.recordList);
         this.dataSource.paginator = this.paginator;
@@ -76,7 +89,11 @@ export class EhrTableComponent {
         if (result == true) {
           this.deleteRecord(record_id)
         }
-        console.log(result)
+        if (this.debug) {
+          console.log("[DEBUG] - [RECORD-TABLE-COMPONENT]: Record deletion dialog result:");
+          console.log(result);
+          console.log("*---*");
+        }
       }
     )
   }
@@ -84,7 +101,11 @@ export class EhrTableComponent {
   deleteRecord(record_id: number) {
     this.healthRecordAPI.deleteHealthRecord(record_id).subscribe(
       (response) => {
-        console.log(response)
+        if (this.debug) {
+          console.log("[DEBUG] - [RECORD-TABLE-COMPONENT]: Record deletion response:");
+          console.log(response);
+          console.log("*---*");
+        }
         this.fetchRecords();
       }
     )

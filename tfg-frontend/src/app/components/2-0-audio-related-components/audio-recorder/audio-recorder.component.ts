@@ -73,6 +73,4 @@ export class AudioRecorderComponent implements OnDestroy{
     link.download = this.teste.title;
     link.click();
   }
-
-
 }

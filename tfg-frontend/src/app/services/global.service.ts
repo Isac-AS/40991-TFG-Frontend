@@ -19,4 +19,6 @@ export class GlobalService {
     public darkThemeActive = new BehaviorSubject<any>({
         isDarkThemeActive: true,
     });
+
+    public debug = new BehaviorSubject<boolean>(true);
 }

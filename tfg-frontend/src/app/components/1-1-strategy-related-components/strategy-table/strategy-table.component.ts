@@ -44,12 +44,20 @@ export class StrategyTableComponent {
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort: any = MatSort;
 
+  debug: boolean = false;
+
   constructor(
     private strategyAPI: StrategyAPIService,
     public dialog: MatDialog,
-  ) { 
+    public globalService: GlobalService
+  ) {
     this.dataSource = new MatTableDataSource(this.strategyList);
     this.fetchStrategies();
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
   applyFilter(event: Event) {
@@ -64,7 +72,11 @@ export class StrategyTableComponent {
   fetchStrategies() {
     this.strategyAPI.getAllStrategies().subscribe({
       next: (strategies) => {
-        console.log(strategies)
+        if (this.debug) {
+          console.log("[DEBUG] - [STRATEGY-TABLE-COMPONENT]: Strategies fetched response:");
+          console.log(strategies);
+          console.log("*---*");
+        }
         this.strategyList = strategies;
         this.dataSource = new MatTableDataSource(this.strategyList);
         this.dataSource.paginator = this.paginator;
@@ -80,7 +92,11 @@ export class StrategyTableComponent {
         if (result == true) {
           this.deleteStrategy(strategy_id)
         }
-        console.log(result)
+        if (this.debug) {
+          console.log("[DEBUG] - [STRATEGY-TABLE-COMPONENT]: Strategy deletion dialog result:");
+          console.log(result)
+          console.log("*---*");
+        }
       }
     )
   }
@@ -88,7 +104,11 @@ export class StrategyTableComponent {
   deleteStrategy(strategy_id: number) {
     this.strategyAPI.deleteStrategy(strategy_id).subscribe(
       (response) => {
-        console.log(response)
+        if (this.debug) {
+          console.log("[DEBUG] - [STRATEGY-TABLE-COMPONENT]: Strategy deletion response:");
+          console.log(response)
+          console.log("*---*");
+        }
         this.fetchStrategies();
       }
     )

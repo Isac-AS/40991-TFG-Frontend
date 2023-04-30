@@ -34,10 +34,8 @@
       <!-- Before record creating process -->
       <div class="before-processing-container" *ngIf="!isProcessing && !isFinished">
         <h2 style="margin-top: 1em;">Audio grabado</h2>
-        <div *ngIf="blobURL">
-          <audio controls>
-            <source [src]="blobURL" type="audio/webm">
-          </audio>
+        <div *ngIf="blob">
+          <app-audio-player [audioBlob]="blob"></app-audio-player>
         </div>
         <h2 *ngIf="pipeline" style="margin-top: 1em;">Estrategias que se emplearán en el procesamiento</h2>
         <div *ngIf="pipeline" class="strategy-name-container">

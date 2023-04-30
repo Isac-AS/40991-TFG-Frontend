@@ -20,6 +20,8 @@ export class NewRecordFromRecordPageComponent {
   createdRecord: any;
   processingSteps: any;
 
+  debug: boolean = false;
+
   constructor(
     public globalService: GlobalService,
     private ehrAPIService: HeathRecordAPIService,
@@ -27,27 +29,48 @@ export class NewRecordFromRecordPageComponent {
     this.globalService.pageName.next({
       currentPageName: 'Nuevo registro a partir de otro registro'
     })
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
   updateSelectedRecord(record: any) {
     this.selectedRecord = record;
-    console.log("record received in parent: ", record)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-RECORD-FROM-RECORD-PAGE]: Record recieved in parent:");
+      console.log(record);
+      console.log("*---*");
+    }
   }
 
   updateSelectedPipeline(pipeline: any) {
     this.selectedPipeline = pipeline;
-    console.log("pipeline received in parent: ", pipeline)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-RECORD-FROM-RECORD-PAGE]: Pipeline recieved in parent:");
+      console.log(pipeline);
+      console.log("*---*");
+    }
   }
-  
+
   updateNewRecordInput(strategyInput: any) {
     this.strategyInput = strategyInput;
-    console.log("new input received in parent: ", strategyInput)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-RECORD-FROM-RECORD-PAGE]: Strategy Input recieved in parent:");
+      console.log(strategyInput);
+      console.log("*---*");
+    }
   }
 
   updateNewStage(pipelineStage: any) {
     this.pipelineStage = pipelineStage;
     this.processingSteps = this.selectedPipeline.strategies.slice(pipelineStage);
-    console.log("new pipeline stage in parent: ", pipelineStage)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-RECORD-FROM-RECORD-PAGE]: Pipeline Stage Recieved in parent:");
+      console.log(pipelineStage);
+      console.log("*---*");
+    }
   }
 
   createRecord() {
@@ -61,7 +84,11 @@ export class NewRecordFromRecordPageComponent {
       this.pipelineStage
     ).subscribe({
       next: (health_record_response) => {
-        console.log(health_record_response)
+        if (this.debug) {
+          console.log("[DEBUG] - [NEW-RECORD-FROM-RECORD-PAGE]: Record creation response:");
+          console.log(health_record_response)
+          console.log("*---*");
+        }
         if (health_record_response.result == true) {
           this.isFinished = true
         }

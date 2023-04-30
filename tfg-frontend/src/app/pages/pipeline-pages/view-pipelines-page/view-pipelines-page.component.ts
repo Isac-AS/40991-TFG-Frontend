@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -6,7 +6,9 @@ import { GlobalService } from 'src/app/services/global.service';
   templateUrl: './view-pipelines-page.component.html',
   styleUrls: ['./view-pipelines-page.component.scss']
 })
-export class ViewPipelinesPageComponent implements OnInit {
+export class ViewPipelinesPageComponent {
+
+  debug: boolean = false;
 
   constructor(
     public globalService: GlobalService,
@@ -14,9 +16,11 @@ export class ViewPipelinesPageComponent implements OnInit {
     this.globalService.pageName.next({
       currentPageName: 'Ver Pipelines'
     })
-   }
-
-  ngOnInit() {
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
+    })
   }
 
 }

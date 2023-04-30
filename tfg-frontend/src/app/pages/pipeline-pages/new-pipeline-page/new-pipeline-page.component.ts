@@ -32,6 +32,8 @@ export class NewPipelinePageComponent {
   newStrategyControl = new FormControl<string | Strategy>('');
   filteredOptions: Observable<Strategy[]> | undefined;
 
+  debug: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     public globalService: GlobalService,
@@ -40,6 +42,11 @@ export class NewPipelinePageComponent {
   ) {
     this.globalService.pageName.next({
       currentPageName: 'Nuevo Pipeline'
+    })
+    this.globalService.debug.subscribe({
+      next: newValue => {
+        this.debug = newValue;
+      }
     })
     this.fetchStrategies();
   }
@@ -58,7 +65,7 @@ export class NewPipelinePageComponent {
     const filterValue = name.toLowerCase();
     return this.strategyList.filter(option => option.name.toLowerCase().includes(filterValue));
   }
-  
+
   displayName(strategy: Strategy): string {
     return strategy && strategy.name ? strategy.name : '';
   }
@@ -66,7 +73,11 @@ export class NewPipelinePageComponent {
   fetchStrategies() {
     this.strategyAPI.getAllStrategies().subscribe({
       next: (strategies) => {
-        console.log(strategies)
+        if (this.debug) {
+          console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: GetAllStrategies response:");
+          console.log(strategies);
+          console.log("*---*");
+        }
         this.strategyList = strategies;
         this.filterOptions()
       }
@@ -81,7 +92,11 @@ export class NewPipelinePageComponent {
     this.selectedStrategies.push(<Strategy>this.newStrategyControl.value!)
     this.newStrategyControl.reset()
     this.newStrategyControl.markAsUntouched()
-    console.log(this.selectedStrategies)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: Selected strategies after adding strategy:");
+      console.log(this.selectedStrategies)
+      console.log("*---*");
+    }
   }
 
   updateBuiltPipeline() {
@@ -95,13 +110,21 @@ export class NewPipelinePageComponent {
       }
       this.builtPipeline.strategies.push(shortStrategy);
     });
-    console.log(this.builtPipeline)
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: Updated pipeline:");
+      console.log(this.builtPipeline);
+      console.log("*---*");
+    }
   }
 
   createPipeline() {
     this.pipelineAPI.createPipeline(this.builtPipeline).subscribe({
       next: (res) => {
-        console.log(res)
+        if (this.debug) {
+          console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: Pipeline Creation response:");
+          console.log(res);
+          console.log("*---*");
+        }
       }
     })
   }

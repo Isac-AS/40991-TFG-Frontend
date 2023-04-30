@@ -10,7 +10,7 @@ export class BackendAPIService {
 
     // GET: Ping the backend
     ping(): any {
-        console.log("Request: ping")
+        console.log("[DEBUG] - [BACKEND-SERVICE]: Request: ping")
         return this.http.post(`${API_URL}/api/ping`, {'': ''})
     }
 }

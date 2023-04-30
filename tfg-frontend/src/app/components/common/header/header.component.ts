@@ -42,7 +42,6 @@ export class HeaderComponent {
   logOut() {
     this.userAPI.logOut().subscribe({
       next: res => {
-        //console.log(res)
         this._snackBar.open("Sesión cerrada con éxito", "Continuar", { duration: 5000 });
       }
     })
