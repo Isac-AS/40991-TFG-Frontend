@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Strategy } from 'src/app/models/strategy.model';
+import { FileAPIService } from 'src/app/services/file.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { StrategyAPIService } from 'src/app/services/strategy-api.service';
 
@@ -38,10 +39,18 @@ export class NewStrategyPageComponent {
   requirementsFile: FormData | undefined;
   requirementsFileName: string | undefined;
 
+  canCreate: boolean = true;
+  waitingResult: boolean = false;
+  finishedWaiting: boolean = false;
+  result: boolean = false;
+  errorMessage: string = "";
+  errorStage: string = "";
+
   constructor(
     private fb: FormBuilder,
     public globalService: GlobalService,
     private strategyAPI: StrategyAPIService,
+    private fileService: FileAPIService
   ) {
     this.globalService.pageName.next({
       currentPageName: 'Nueva Estrategia'
@@ -89,6 +98,97 @@ export class NewStrategyPageComponent {
       console.log(this.requirementsFile);
       console.log("*---*")
     }
+
+    this.canCreate = false;
+    this.waitingResult = true;
+    
+
+    // Attempt to create strategy
+    this.strategyAPI.setupStrategyCreation(this.strategy).subscribe({
+      next: res => {
+        if (this.debug) {
+          console.log("[DEBUG] - [NEW-STRATEGY-PAGE]: Strategy creation upload:");
+          console.log(res);
+          console.log("*---*")
+        }
+        // If successfull attempt to upload files
+        if (res.result) {
+          // Extract path info
+          let strategy_dir = res.message;
+          let python_file_path = res.strategy.python_file_path;
+          if (this.pythonFile) {
+            // Add information to FormData
+            this.pythonFile.append("python_file_path", python_file_path)
+            console.log(this.pythonFile)
+            // Attempt to upload python file
+            this.fileService.uploadFile("/strategies/upload_python_file", this.pythonFile).subscribe({
+              next: res => {
+                if (this.debug) {
+                  console.log("[DEBUG] - [NEW-STRATEGY-PAGE]: Python File upload res:");
+                  console.log(res);
+                  console.log("*---*")
+                }
+                if (res.result) {
+                  if (this.requirementsFile) {
+                    // Attempt to upload requirements file
+                    this.requirementsFile.append("strategy_dir", strategy_dir)
+                    this.fileService.uploadFile("/strategies/upload_requirements_file", this.requirementsFile).subscribe({
+                      next: res => {
+                        if (this.debug) {
+                          console.log("[DEBUG] - [NEW-STRATEGY-PAGE]: Requirements File upload res:");
+                          console.log(res);
+                          console.log("*---*")
+                        }
+                        if (res.result) {
+                          this.strategyAPI.createStrategy(this.strategy).subscribe({
+                            next: res => {
+                              if (this.debug) {
+                                console.log("[DEBUG] - [NEW-STRATEGY-PAGE]: Strategy creation res:");
+                                console.log(res);
+                                console.log("*---*")
+                              }
+                              this.result = res.result;
+                              this.finishedWaiting = true;
+                              this.waitingResult = false;
+                              if (!res.result) {
+                                this.abortCreation("Bad strategy creation step (last step).", res.message);
+                              }
+                            }
+                          })
+                        } else {
+                          this.abortCreation("Bad response from requirements file upload.", res.message);
+                        }
+                      }
+                    });
+                  } else {
+                    this.abortCreation("No or undefined requirements file.", res.message);
+                  }
+                } else {
+                  this.abortCreation("Bad response from python file upload.", res.message);
+                }
+              }
+            })
+          } else {
+            this.abortCreation("No or undefined python file.", res.message);
+          }
+        } else {
+          this.abortCreation("Bad response from strategy setup request.", res.message);
+        }
+      }
+    })
   }
 
+  abortCreation(stage: string, message: string) {
+    if (this.debug) {
+      console.log("[DEBUG] - [NEW-STRATEGY-PAGE]: Something went wrong, undoing strategy creation:");
+      console.log(stage);
+      console.log("*---*")
+    }
+    this.canCreate = true;
+    this.waitingResult = false;
+    this.finishedWaiting = true;
+    this.result = false;
+    this.errorStage = stage;
+    this.errorMessage = message;
+  }
 }

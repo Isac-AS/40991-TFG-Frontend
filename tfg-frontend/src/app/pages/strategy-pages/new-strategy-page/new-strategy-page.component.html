@@ -127,7 +127,21 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="file-upload-tab-card-content">
-        <div class="file-uploading-stage">
+        <!-- Results -->
+        <div *ngIf="finishedWaiting">
+          <div *ngIf="result" class="wait-for-results">
+            <a mat-raised-button color="primary" routerLink="/view_strategies">Estrategia agregada con éxito!</a>
+          </div>
+          <div *ngIf="!result" class="wait-for-results">
+            <button mat-raised-button color="warn">Error agregando la estrategia:</button>
+            <button mat-raised-button color="warn">{{ errorMessage }}</button>
+            <mat-divider></mat-divider>
+            <button mat-raised-button color="warn">Error en la etapa:</button>
+            <button mat-raised-button color="warn">{{ errorStage }}</button>
+          </div>
+        </div>
+        <!-- File uploading stage with strategy info and files -->
+        <div class="file-uploading-stage" *ngIf="canCreate && !waitingResult">
           <!-- Strategy Info -->
           <mat-card>
             <mat-card-header>
@@ -181,6 +195,11 @@
             [disabled]="!strategyForm.valid || pythonFile === undefined || requirementsFile === undefined">
             Crear estrategia
           </button>
+        </div>
+        <!-- Waiting for backend stage -->
+        <div class="wait-for-results" *ngIf="waitingResult">
+          <h2>Procesando...</h2>
+          <mat-spinner></mat-spinner>
         </div>
       </mat-card-content>
     </mat-card>

@@ -46,3 +46,14 @@
     margin: 2em;
     padding: 1em;
 }
+
+.wait-for-results {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.wait-for-results button{
+    margin: 2em;
+}

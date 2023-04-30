@@ -28,6 +28,10 @@ export class StrategyAPIService {
         return this.http.post<StrategyRelatedResponse>(`${API_URL}/strategies/create`, { 'strategy': strategy }, { withCredentials: true })
     }
 
+    setupStrategyCreation(strategy: Strategy): Observable<StrategyRelatedResponse> {
+        return this.http.post<StrategyRelatedResponse>(`${API_URL}/strategies/setup_creation`, { 'strategy': strategy }, { withCredentials: true })
+    }
+
     updateStrategy(strategy: Strategy): Observable<StrategyRelatedResponse> {
         return this.http.post<StrategyRelatedResponse>(`${API_URL}/strategies/update`, { 'strategy': strategy }, { withCredentials: true })
     }

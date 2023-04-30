@@ -29,7 +29,7 @@ export class FileUploaderComponent {
     if (file) {
       this.fileName = file.name;
       const formData = new FormData();
-      formData.append("thumbnail", file);
+      formData.append("file", file);
       this.fileEmitter.emit(formData);
       this.fileNameEmitter.emit(this.fileName);
     }
