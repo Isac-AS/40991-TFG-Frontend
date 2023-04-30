@@ -1,0 +1,48 @@
+.stepper-action-buttons button {
+    margin: 0.5em 2em;
+}
+
+.last-step-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.last-step-container button {
+    font-size: 1.5em;
+    padding: 1em;
+    margin: 0.5em;
+}
+
+.strategy-info-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    padding: 2em;
+}
+
+.stepper-card {
+    margin: 2em;
+}
+
+.file-upload-tab-card-content mat-card{
+    margin: 1em;
+}
+
+.file-upload-card-content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 2em;
+}
+
+.file-uploading-stage mat-card{
+    margin: 1em;
+}
+
+.file-uploading-stage button {
+    font-size: 1.5em;
+    margin: 2em;
+    padding: 1em;
+}

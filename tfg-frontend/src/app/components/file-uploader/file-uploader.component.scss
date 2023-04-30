@@ -1,0 +1,13 @@
+.file-input {
+    display: none;
+}
+
+.file-upload {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.file-upload button{
+    margin-left: 1em;
+}

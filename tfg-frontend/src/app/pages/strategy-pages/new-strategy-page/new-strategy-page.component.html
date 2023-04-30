@@ -1,3 +1,193 @@
-<p>
-  new-strategy-page works!
-</p>
+<mat-stepper>
+  <!--First step: inputting name and description-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Información
+    </ng-template>
+    <form [formGroup]="strategyForm">
+      <mat-card class="stepper-card">
+        <mat-card-header>
+          <mat-card-title>
+            Información acerca de la estrategia
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="strategy-info-form">
+          <!-- Name -->
+          <mat-form-field>
+            <input matInput placeholder="Nombre de la estrategia" formControlName="name">
+            <mat-error *ngIf="strategyForm.controls['name'].hasError('required')">
+              El nombre de la estrategia es <strong>obligatorio</strong>.
+            </mat-error>
+          </mat-form-field>
+          <!-- Description -->
+          <mat-form-field>
+            <textarea matInput placeholder="Descripción" formControlName="description"></textarea>
+            <mat-error *ngIf="strategyForm.controls['description'].hasError('required')">
+              La descripción es <strong>obligatoria</strong>.
+            </mat-error>
+          </mat-form-field>
+          <!-- Input data type -->
+          <mat-form-field>
+            <input matInput placeholder="Dato de entrada de la función" formControlName="inputType">
+            <mat-error *ngIf="strategyForm.controls['inputType'].hasError('required')">
+              El tipo de dato de entrada es <strong>obligatorio</strong>.
+            </mat-error>
+          </mat-form-field>
+          <!-- Output data type -->
+          <mat-form-field>
+            <input matInput placeholder="Dato de salida de la función" formControlName="outputType">
+            <mat-error *ngIf="strategyForm.controls['inputType'].hasError('required')">
+              El tipo de dato de salida es <strong>obligatorio</strong>.
+            </mat-error>
+          </mat-form-field>
+          <!-- Stage -->
+          <mat-form-field>
+            <mat-select placeholder="Etapa" formControlName="stage">
+              <mat-option *ngFor="let stage of possibleStages" [value]="stage">
+                {{ stage }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="strategyForm.controls['stage'].hasError('required')">
+              La etapa es <strong>obligatoria</strong>.
+            </mat-error>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </form>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperNext color="accent" [disabled]="!strategyForm.valid"
+        (click)="updateStrategyInfo()">
+        Continuar
+      </button>
+    </div>
+  </mat-step>
+  <!--Second step: strategies selection-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Subida de archivos
+    </ng-template>
+    <mat-card class="stepper-card">
+      <mat-card-header>
+        <mat-card-title>
+          Subida de archivos
+        </mat-card-title>
+        <mat-card-subtitle>
+          Suba los dos archivos necesarios para crear la estrategia
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="file-upload-tab-card-content">
+        <!-- .py File -->
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Fichero con extensión ".py"</mat-card-title>
+            <mat-card-subtitle>Fichero con extensión ".py" con el formato especificado en la guía</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="file-upload-card-content">
+            <app-file-uploader 
+            (fileEmitter)="updatePythonFile($event)"
+            (fileNameEmitter)="updatePythonFileName($event)"></app-file-uploader>
+          </mat-card-content>
+        </mat-card>
+        <!-- requirements.txt File-->
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Fichero "requirements.txt"</mat-card-title>
+            <mat-card-subtitle>Fichero con las dependencias, obtenido tras la ejecución de "pip freeze >
+              requirements.txt"</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="file-upload-card-content">
+            <app-file-uploader 
+            (fileEmitter)="updateRequirementsFile($event)"
+            (fileNameEmitter)="updateRequirementsFileName($event)"></app-file-uploader>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+      <button mat-raised-button matStepperNext color="accent">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+  <!--Third step: review information-->
+  <mat-step>
+    <ng-template matStepLabel>
+      Creación de la estrategia
+    </ng-template>
+    <mat-card class="stepper-card">
+      <mat-card-header>
+        <mat-card-title>
+          Creación de la estrategia
+        </mat-card-title>
+        <mat-card-subtitle>
+          Verifique que la información introducida y los archivos son correctos.
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="file-upload-tab-card-content">
+        <div class="file-uploading-stage">
+          <!-- Strategy Info -->
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Información de la estrategia</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item>
+                  <span matListItemTitle>Nombre</span>
+                  <span matListItemLine>{{strategy.name}}</span>
+                </mat-list-item>
+                <mat-list-item>
+                  <span matListItemTitle>Descripción</span>
+                  <span matListItemLine>{{strategy.description}}</span>
+                </mat-list-item>
+                <mat-list-item>
+                  <span matListItemTitle>Tipo de dato de entrada</span>
+                  <span matListItemLine>{{strategy.input_type}}</span>
+                </mat-list-item>
+                <mat-list-item>
+                  <span matListItemTitle>Tipo de dato de entrada</span>
+                  <span matListItemLine>{{strategy.output_type}}</span>
+                </mat-list-item>
+                <mat-list-item>
+                  <span matListItemTitle>Etapa</span>
+                  <span matListItemLine>{{strategy.stage}}</span>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+          <!-- File names -->
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Ficheros subidos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-list>
+                <mat-list-item>
+                  <span matListItemTitle>Fichero ".py"</span>
+                  <span matListItemLine>{{pythonFileName || "Ninguno"}}</span>
+                </mat-list-item>
+                <mat-list-item>
+                  <span matListItemTitle>Fichero "requirements.txt"</span>
+                  <span matListItemLine>{{requirementsFileName || "Ninguno"}}</span>
+                </mat-list-item>
+              </mat-list>
+            </mat-card-content>
+          </mat-card>
+          <!-- Submit button -->
+          <button mat-raised-button color="primary" (click)="createStrategy()"
+            [disabled]="!strategyForm.valid || pythonFile === undefined || requirementsFile === undefined">
+            Crear estrategia
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <div class="stepper-action-buttons">
+      <button mat-raised-button matStepperPrevious color="accent">
+        Anterior
+      </button>
+    </div>
+  </mat-step>
+</mat-stepper>

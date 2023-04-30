@@ -41,6 +41,7 @@ import { RecordContentSelectionComponent } from './components/0-record-related-c
 import { PipelineStageSelectionComponent } from './components/0-record-related-components/ehr-views/pipeline-stage-selection/pipeline-stage-selection.component';
 import { EhrMessageViewComponent } from './components/0-record-related-components/ehr-views/ehr-message-view/ehr-message-view.component';
 import { AudioPlayerComponent } from './components/2-0-audio-related-components/audio-player/audio-player.component';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -74,6 +75,7 @@ import { TestingService } from './services/testing.service';
     PipelineStageSelectionComponent,
     EhrMessageViewComponent,
     AudioPlayerComponent,
+    FileUploaderComponent,
 
     // Pages
     HomePageComponent,

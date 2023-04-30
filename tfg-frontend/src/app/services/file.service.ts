@@ -7,8 +7,8 @@ import { Observable } from "rxjs";
 export class FileAPIService {
     constructor(private http: HttpClient) {}
 
-    uploadFile(path: string, audioFile: FormData): Observable<any> {
-        return this.http.post(`${API_URL}${path}`, audioFile, { withCredentials: true})
+    uploadFile(path: string, file: FormData): Observable<any> {
+        return this.http.post(`${API_URL}${path}`, file, { withCredentials: true})
     }
 
     getRecordAudio(audioFilePath: string) {
