@@ -21,7 +21,12 @@
     <span *ngIf="!last">{{strategy.strategy_output.output}}</span>
     <app-ehr-message-view [healthRecordMessage]="strategy.strategy_output.output" *ngIf="last"></app-ehr-message-view>
     <mat-divider *ngIf="strategy.strategy_output.ner" style="width: 10%;"></mat-divider>
-    <app-ner-view *ngIf="strategy.strategy_output.ner" [ner]="strategy.strategy_output.ner"
+    <!-- Case in which there is only one processing output -->
+    <app-ner-view *ngIf="strategy.strategy_output.ner && selectedRecord.processing_outputs.length == 1"
+      [ner]="strategy.strategy_output.ner" [text]="selectedRecord.transcription"></app-ner-view>
+    <!-- Rest of cases -->
+    <app-ner-view *ngIf="strategy.strategy_output.ner && selectedRecord.processing_outputs.length > 1"
+      [ner]="strategy.strategy_output.ner"
       [text]="selectedRecord.processing_outputs[index-1].strategy_output.output"></app-ner-view>
     <mat-divider style="width: 25%;" *ngIf="!last"></mat-divider>
   </div>
