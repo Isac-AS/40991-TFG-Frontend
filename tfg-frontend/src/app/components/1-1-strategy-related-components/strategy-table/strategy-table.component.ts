@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Strategy } from 'src/app/models/strategy.model';
 import { StrategyAPIService } from 'src/app/services/strategy-api.service';
-import { EntryDeletionDialogComponent } from '../entry-deletion-dialog/entry-deletion-dialog.component';
+import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-deletion-dialog.component';
 
 @Component({
   selector: 'app-strategy-table',

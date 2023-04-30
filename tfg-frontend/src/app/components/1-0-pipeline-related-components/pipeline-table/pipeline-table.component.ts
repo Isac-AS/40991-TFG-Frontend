@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Pipeline, ShortStrategy } from 'src/app/models/pipeline.model';
 import { PipelineAPIService } from 'src/app/services/pipepile-api.service';
-import { EntryDeletionDialogComponent } from '../entry-deletion-dialog/entry-deletion-dialog.component';
+import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-deletion-dialog.component';
 
 @Component({
   selector: 'app-pipeline-table',

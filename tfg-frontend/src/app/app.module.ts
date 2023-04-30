@@ -32,14 +32,14 @@ import { HeaderComponent } from './components/common/header/header.component';
 import { FooterComponent } from './components/common/footer/footer.component';
 import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
 import { AudioRecorderComponent } from './components/audio-recorder/audio-recorder.component';
-import { PipelineTableComponent } from './components/pipeline-table/pipeline-table.component';
-import { StrategyTableComponent } from './components/strategy-table/strategy-table.component';
-import { EhrTableComponent } from './components/ehr-table/ehr-table.component';
-import { ViewEhrComponent } from './components/view-ehr/view-ehr.component';
-import { NerViewComponent } from './components/ehr-views/ner-view/ner-view.component';
-import { RecordContentSelectionComponent } from './components/ehr-views/record-content-selection/record-content-selection.component';
-import { PipelineStageSelectionComponent } from './components/ehr-views/pipeline-stage-selection/pipeline-stage-selection.component';
-import { EhrMessageViewComponent } from './components/ehr-views/ehr-message-view/ehr-message-view.component';
+import { PipelineTableComponent } from './components/1-0-pipeline-related-components/pipeline-table/pipeline-table.component';
+import { StrategyTableComponent } from './components/1-1-strategy-related-components/strategy-table/strategy-table.component';
+import { EhrTableComponent } from './components/0-record-related-components/ehr-table/ehr-table.component';
+import { ViewEhrComponent } from './components/0-record-related-components/view-ehr/view-ehr.component';
+import { NerViewComponent } from './components/0-record-related-components/ehr-views/ner-view/ner-view.component';
+import { RecordContentSelectionComponent } from './components/0-record-related-components/ehr-views/record-content-selection/record-content-selection.component';
+import { PipelineStageSelectionComponent } from './components/0-record-related-components/ehr-views/pipeline-stage-selection/pipeline-stage-selection.component';
+import { EhrMessageViewComponent } from './components/0-record-related-components/ehr-views/ehr-message-view/ehr-message-view.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
