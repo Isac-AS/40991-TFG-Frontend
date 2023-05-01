@@ -1,0 +1,22 @@
+.strategy-info-form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    padding: 2em;
+}
+
+.stepper-card {
+    margin: 2em;
+}
+
+
+.submit-stage-section {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}
+
+.submit-stage-section button{
+    align-self: center;
+    width: 35%;
+}

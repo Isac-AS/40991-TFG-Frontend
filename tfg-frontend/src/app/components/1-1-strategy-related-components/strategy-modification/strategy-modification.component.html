@@ -1,3 +1,66 @@
-<p>
-  strategy-modification works!
-</p>
+<form [formGroup]="strategyForm" (ngSubmit)="modifyStrategy()">
+  <mat-card class="stepper-card">
+    <mat-card-header>
+      <mat-card-title>
+        Datos de la estrategia
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="strategy-info-form">
+      <!-- Name -->
+      <mat-form-field>
+        <input matInput placeholder="Nombre de la estrategia" formControlName="name">
+        <mat-error *ngIf="strategyForm.controls['name'].hasError('required')">
+          El nombre de la estrategia es <strong>obligatorio</strong>.
+        </mat-error>
+      </mat-form-field>
+      <!-- Description -->
+      <mat-form-field>
+        <textarea matInput placeholder="Descripción" formControlName="description"></textarea>
+        <mat-error *ngIf="strategyForm.controls['description'].hasError('required')">
+          La descripción es <strong>obligatoria</strong>.
+        </mat-error>
+      </mat-form-field>
+      <!-- Input data type -->
+      <mat-form-field>
+        <input matInput placeholder="Dato de entrada de la función" formControlName="inputType">
+        <mat-error *ngIf="strategyForm.controls['inputType'].hasError('required')">
+          El tipo de dato de entrada es <strong>obligatorio</strong>.
+        </mat-error>
+      </mat-form-field>
+      <!-- Output data type -->
+      <mat-form-field>
+        <input matInput placeholder="Dato de salida de la función" formControlName="outputType">
+        <mat-error *ngIf="strategyForm.controls['inputType'].hasError('required')">
+          El tipo de dato de salida es <strong>obligatorio</strong>.
+        </mat-error>
+      </mat-form-field>
+      <!-- Stage -->
+      <mat-form-field>
+        <mat-select placeholder="Etapa" formControlName="stage">
+          <mat-option *ngFor="let stage of possibleStages" [value]="stage">
+            {{ stage }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="strategyForm.controls['stage'].hasError('required')">
+          La etapa es <strong>obligatoria</strong>.
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+  <!-- Submit button -->
+  <div class="submit-stage-section">
+    <!-- First stage modification button -->
+    <button mat-raised-button color="accent" type="submit" [disabled]="!strategyForm.valid"
+      *ngIf="usageStage == '1'">Modificar estrategia</button>
+
+    <!-- Second stage progress bar -->
+    <app-progress-bar-section [text]="'Modificando registro...'" *ngIf="usageStage == '2'"></app-progress-bar-section>
+
+    <!-- Third stage modification button -->
+    <button mat-raised-button color="accent" type="submit" [disabled]="!strategyForm.valid"
+      *ngIf="usageStage == '3'">Volver a modificar la estrategia</button>
+    <app-backend-results-section *ngIf="usageStage == '3'" [result]="result" [errorMessage]="backendErrorMessage"
+      [successfullText]="'Estrategia modificada correctamente!'"
+      [unsuccessfullText]="'Error modificando la estrategia.'"></app-backend-results-section>
+  </div>
+</form>
