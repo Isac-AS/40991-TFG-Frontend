@@ -18,7 +18,7 @@ export class StrategyTableComponent {
   @Output() selectedStrategyEmitter: any = new EventEmitter<any>()
 
   strategyList: Strategy[] = [];
-  displayedColumns: string[] = ['selected', 'name', 'input_type', 'output_type', 'stage', 'created_by', 'last_modified_by', 'delete']
+  displayedColumns: string[] = ['selected', 'name', 'created_at', 'updated_at', 'stage', 'created_by', 'last_modified_by', 'delete']
   dataSource: MatTableDataSource<Strategy>;
 
   selectedStrategy: Strategy = {
