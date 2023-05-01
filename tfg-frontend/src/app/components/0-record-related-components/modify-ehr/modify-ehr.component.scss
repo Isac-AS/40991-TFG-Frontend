@@ -1,0 +1,37 @@
+.ehr-form-content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}
+
+.ehr-form-content button {
+    margin-top: 2em;
+    width: 35%;
+    align-self: center;
+}
+
+.ehr-card-content {
+    width: 80%;
+    margin: 1em;
+}
+
+.ehr-card-form-field {
+    width: 100%;
+    margin: 1em;
+}
+
+.ehr-card-form-field textarea {
+    margin: 1em;
+    width: 100%;
+}
+
+.ehr-card-form-field input {
+    margin: 1em;
+    width: 100%;
+}
+
+.submit-stage-section {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}

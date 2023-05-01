@@ -4,6 +4,7 @@ export class HealthRecord {
         public transcription: string,
         public health_record: string,
         public processing_outputs: IndividualOutput[],
+        public parent_id: any,
         
         public id?: number,
         public updated_at?: string,

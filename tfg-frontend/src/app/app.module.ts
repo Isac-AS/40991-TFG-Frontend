@@ -42,6 +42,9 @@ import { PipelineStageSelectionComponent } from './components/0-record-related-c
 import { EhrMessageViewComponent } from './components/0-record-related-components/ehr-views/ehr-message-view/ehr-message-view.component';
 import { AudioPlayerComponent } from './components/2-0-audio-related-components/audio-player/audio-player.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { ModifyEhrComponent } from './components/0-record-related-components/modify-ehr/modify-ehr.component';
+import { ProgressBarSectionComponent } from './components/3-0-user-feedback-related-components/progress-bar-section/progress-bar-section.component';
+import { BackendResultsSectionComponent } from './components/3-0-user-feedback-related-components/backend-results-section/backend-results-section.component';
 
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
@@ -76,6 +79,9 @@ import { TestingService } from './services/testing.service';
     EhrMessageViewComponent,
     AudioPlayerComponent,
     FileUploaderComponent,
+    ModifyEhrComponent,
+    ProgressBarSectionComponent,
+    BackendResultsSectionComponent,
 
     // Pages
     HomePageComponent,

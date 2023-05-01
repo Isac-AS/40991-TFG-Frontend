@@ -27,6 +27,7 @@ export class NewRecordPageComponent {
     transcription: '',
     health_record: '',
     processing_outputs: [],
+    parent_id: null,
 
     id: -1,
     updated_at: '',

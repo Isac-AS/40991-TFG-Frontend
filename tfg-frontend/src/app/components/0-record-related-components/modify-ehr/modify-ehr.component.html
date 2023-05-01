@@ -1,0 +1,60 @@
+<form [formGroup]="ehrForm" (ngSubmit)="modifyRecord()">
+  <div class="ehr-form-content">
+    <!-- EHR -->
+    <mat-card class="stepper-card">
+      <mat-card-header>
+        <mat-card-title>
+          Historia clínica electrónica en formato HL7.
+        </mat-card-title>
+        <mat-card-subtitle>
+          Modifique la historia clínica electrónica. Tenga en cuenta que los segmentos serán identificados según los
+          saltos de línea.
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="ehr-card-content">
+        <mat-form-field class="ehr-card-form-field">
+          <textarea rows="6" matInput placeholder="Historia clínica electrónica" formControlName="ehr"></textarea>
+          <mat-error *ngIf="ehrForm.controls['ehr'].hasError('required')">
+            La historia es <strong>obligatoria</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    <!-- Transcription -->
+    <mat-card class="stepper-card">
+      <mat-card-header>
+        <mat-card-title>
+          Transcripción generada.
+        </mat-card-title>
+        <mat-card-subtitle>
+          Modifique la transcripción. Tenga en cuenta que puede generar otro registro a partir de la modificación de
+          esta transcripción.
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="ehr-card-content">
+        <mat-form-field class="ehr-card-form-field">
+          <input matInput placeholder="Transcripción" formControlName="transcription">
+          <mat-error *ngIf="ehrForm.controls['transcription'].hasError('required')">
+            La transcripción es <strong>obligatoria</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    <!-- Submit button -->
+    <div class="submit-stage-section">
+      <!-- First stage modification button -->
+      <button mat-raised-button color="accent" type="submit" [disabled]="!ehrForm.valid"
+        *ngIf="usageStage == '1'">Modificar historia</button>
+
+      <!-- Second stage progress bar -->
+      <app-progress-bar-section [text]="'Modificando registro...'" *ngIf="usageStage == '2'"></app-progress-bar-section>
+
+      <!-- Third stage modification button -->
+      <button mat-raised-button color="accent" type="submit" [disabled]="!ehrForm.valid"
+        *ngIf="usageStage == '3'">Volver a modificar la historia</button>
+      <app-backend-results-section *ngIf="usageStage == '3'" [result]="result" [errorMessage]="backendErrorMessage"
+        [successfullText]="'¡Historia modificada correctamente!'"
+        [unsuccessfullText]="'Error modificando la historia.'"></app-backend-results-section>
+    </div>
+  </div>
+</form>

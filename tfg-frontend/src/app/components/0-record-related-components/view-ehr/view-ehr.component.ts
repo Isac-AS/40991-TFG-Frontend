@@ -1,5 +1,4 @@
 import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { HealthRecord } from 'src/app/models/health-record.model';
 import { FileAPIService } from 'src/app/services/file.service';
 import { GlobalService } from 'src/app/services/global.service';
@@ -16,11 +15,12 @@ export class ViewEhrComponent implements OnChanges {
   audioURL: any;
   audioBlob: any;
 
+  hasBeenModified: boolean = false;
+
   debug: boolean = false;
 
   constructor(
     private fileAPI: FileAPIService,
-    private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef,
     public globalService: GlobalService
   ) {
@@ -37,7 +37,8 @@ export class ViewEhrComponent implements OnChanges {
       console.log(changes)
       console.log("*---*")
     }
-    let updatedRecord: HealthRecord = changes['selectedRecord'].currentValue
+    let updatedRecord: HealthRecord = changes['selectedRecord'].currentValue;
+    this.selectedRecord = updatedRecord;
     if (updatedRecord.id != -1) {
       this.fileAPI.getRecordAudio(updatedRecord.recording_path).subscribe(
         blob => {
@@ -45,6 +46,7 @@ export class ViewEhrComponent implements OnChanges {
           this.cdRef.detectChanges();
         }
       )
+      this.hasBeenModified = this.selectedRecord.created_at != this.selectedRecord.updated_at
     }
   }
 }

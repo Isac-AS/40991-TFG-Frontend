@@ -14,6 +14,7 @@ export class ViewRecordsPageComponent {
     transcription: '',
     health_record: '',
     processing_outputs: [],
+    parent_id: null,
 
     id: -1,
     updated_at: '',
@@ -33,5 +34,4 @@ export class ViewRecordsPageComponent {
   updateSelectedRecord(record: any) {
     this.selectedRecord = record
   }
-
 }

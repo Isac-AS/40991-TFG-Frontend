@@ -1,4 +1,8 @@
 <div class="view-record-wrapper">
+  <!--Modifications-->
+  <mat-divider *ngIf="hasBeenModified"></mat-divider>
+  <h2 *ngIf="hasBeenModified">Aviso: Esta historia ha sido modificada</h2>
+  <mat-divider *ngIf="hasBeenModified"></mat-divider>
   <!--Electronic health record-->
   <h3>Representación en su formato de historia clínica electrónica</h3>
   <app-ehr-message-view [healthRecordMessage]="selectedRecord.health_record"></app-ehr-message-view>
