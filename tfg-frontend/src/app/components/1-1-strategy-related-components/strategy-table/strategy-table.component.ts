@@ -1,11 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalService } from 'src/app/services/global.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { Strategy } from 'src/app/models/strategy.model';
 import { StrategyAPIService } from 'src/app/services/strategy-api.service';
 import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-deletion-dialog.component';
@@ -16,6 +14,8 @@ import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-
   styleUrls: ['./strategy-table.component.scss']
 })
 export class StrategyTableComponent {
+
+  @Output() selectedStrategyEmitter: any = new EventEmitter<any>()
 
   strategyList: Strategy[] = [];
   displayedColumns: string[] = ['selected', 'name', 'input_type', 'output_type', 'stage', 'created_by', 'last_modified_by', 'delete']
@@ -112,6 +112,10 @@ export class StrategyTableComponent {
         this.fetchStrategies();
       }
     )
+  }
+
+  emitStrategy(strategy: any) {
+    this.selectedStrategyEmitter.emit(strategy)
   }
 
 }

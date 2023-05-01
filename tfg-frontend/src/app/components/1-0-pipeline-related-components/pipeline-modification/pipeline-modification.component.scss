@@ -1,0 +1,37 @@
+.pipeline-form-content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}
+
+.pipeline-form-content button {
+    margin-top: 2em;
+    width: 35%;
+    align-self: center;
+}
+
+.pipeline-card-content {
+    width: 80%;
+    margin: 1em;
+}
+
+.pipeline-card-form-field {
+    width: 100%;
+    margin: 1em;
+}
+
+.pipeline-card-form-field textarea {
+    margin: 1em;
+    width: 100%;
+}
+
+.pipeline-card-form-field input {
+    margin: 1em;
+    width: 100%;
+}
+
+.submit-stage-section {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}

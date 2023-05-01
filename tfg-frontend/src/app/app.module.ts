@@ -26,6 +26,21 @@ import { NewRecordPageComponent } from './pages/health_record_pages/new-record-p
 import { ViewRecordsPageComponent } from './pages/health_record_pages/view-records-page/view-records-page.component';
 import { NewRecordFromRecordPageComponent } from './pages/health_record_pages/new-record-from-record-page/new-record-from-record-page.component';
 
+// Dialogs
+import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
+import { EntryDeletionDialogComponent } from './components/entry-deletion-dialog/entry-deletion-dialog.component';
+
+// Services
+import { BackendAPIService } from './services/backend.service';
+import { AudioRecordingService } from './services/audio-recording.service';
+import { UserApiService } from './services/user-api.service';
+import { HeathRecordAPIService } from './services/health-record-api.service';
+import { PipelineAPIService } from './services/pipepile-api.service';
+import { StrategyAPIService } from './services/strategy-api.service';
+import { FileAPIService } from './services/file.service';
+import { TestingService } from './services/testing.service';
+
+
 // Components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/common/header/header.component';
@@ -45,20 +60,11 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
 import { ModifyEhrComponent } from './components/0-record-related-components/modify-ehr/modify-ehr.component';
 import { ProgressBarSectionComponent } from './components/3-0-user-feedback-related-components/progress-bar-section/progress-bar-section.component';
 import { BackendResultsSectionComponent } from './components/3-0-user-feedback-related-components/backend-results-section/backend-results-section.component';
-
-// Dialogs
-import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
-import { EntryDeletionDialogComponent } from './components/entry-deletion-dialog/entry-deletion-dialog.component';
-
-// Services
-import { BackendAPIService } from './services/backend.service';
-import { AudioRecordingService } from './services/audio-recording.service';
-import { UserApiService } from './services/user-api.service';
-import { HeathRecordAPIService } from './services/health-record-api.service';
-import { PipelineAPIService } from './services/pipepile-api.service';
-import { StrategyAPIService } from './services/strategy-api.service';
-import { FileAPIService } from './services/file.service';
-import { TestingService } from './services/testing.service';
+import { PipelineModificationComponent } from './components/1-0-pipeline-related-components/pipeline-modification/pipeline-modification.component';
+import { PipelineViewComponent } from './components/1-0-pipeline-related-components/pipeline-view/pipeline-view.component';
+import { StrategyArrayViewComponent } from './components/1-0-pipeline-related-components/strategy-array-view/strategy-array-view.component';
+import { StrategyViewComponent } from './components/1-1-strategy-related-components/strategy-view/strategy-view.component';
+import { StrategyModificationComponent } from './components/1-1-strategy-related-components/strategy-modification/strategy-modification.component';
 
 
 @NgModule({
@@ -82,6 +88,11 @@ import { TestingService } from './services/testing.service';
     ModifyEhrComponent,
     ProgressBarSectionComponent,
     BackendResultsSectionComponent,
+    PipelineModificationComponent,
+    PipelineViewComponent,
+    StrategyArrayViewComponent,
+    StrategyViewComponent,
+    StrategyModificationComponent,
 
     // Pages
     HomePageComponent,

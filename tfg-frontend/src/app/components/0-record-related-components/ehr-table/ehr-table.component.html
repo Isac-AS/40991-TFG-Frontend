@@ -25,6 +25,12 @@
           <td mat-cell *matCellDef="let row"> {{row.created_at}} </td>
         </ng-container>
 
+        <!-- Date Column -->
+        <ng-container matColumnDef="updated_at">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de modificación </th>
+          <td mat-cell *matCellDef="let row"> {{row.updated_at}} </td>
+        </ng-container>
+
         <!-- Transcription Column -->
         <ng-container matColumnDef="transcription">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Transcripción </th>
@@ -45,7 +51,7 @@
 
         <!-- Last modified by Column -->
         <ng-container matColumnDef="last_modified_by">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Última modificación por </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Modificado por </th>
           <td mat-cell *matCellDef="let row"> {{row.last_modified_by}} </td>
         </ng-container>
 

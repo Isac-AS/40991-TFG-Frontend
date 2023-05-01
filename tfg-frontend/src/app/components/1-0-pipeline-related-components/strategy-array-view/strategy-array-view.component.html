@@ -1,0 +1,7 @@
+<mat-list>
+  <div *ngFor="let shortStrategy of strategies; index as i">
+    <mat-list-item matListItemLine>
+      {{i+1}} - {{shortStrategy.name}}
+    </mat-list-item>
+  </div>
+</mat-list>

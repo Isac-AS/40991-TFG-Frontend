@@ -1,0 +1,30 @@
+<div class="view-record-wrapper">
+  <!--Name-->
+  <h3>Nombre</h3>
+  <span>{{selectedPipeline.name}}</span>
+  <mat-divider></mat-divider>
+  <!--Description-->
+  <h3>Descripción</h3>
+  <span>{{selectedPipeline.description}}</span>
+  <mat-divider></mat-divider>
+  <!--Strategies-->
+  <h3>Estrategias</h3>
+  <app-strategy-array-view [strategies]="selectedPipeline.strategies"></app-strategy-array-view>
+  <mat-divider></mat-divider>
+  <!--Created by-->
+  <h3>Creado por</h3>
+  <span>{{selectedPipeline.created_by}}</span>
+  <mat-divider></mat-divider>
+  <!--Last modified by-->
+  <h3>Última modificación por</h3>
+  <span>{{selectedPipeline.last_modified_by}}</span>
+  <mat-divider></mat-divider>
+  <!--Created at-->
+  <h3>Fecha de creación</h3>
+  <span>{{selectedPipeline.created_at}}</span>
+  <mat-divider></mat-divider>
+  <!--Las by-->
+  <h3>Fecha de última modificación</h3>
+  <span>{{selectedPipeline.updated_at}}</span>
+  <mat-divider></mat-divider>
+</div>

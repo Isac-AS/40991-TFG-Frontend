@@ -32,6 +32,6 @@ export class ViewRecordsPageComponent {
   }
 
   updateSelectedRecord(record: any) {
-    this.selectedRecord = record
+    this.selectedRecord = record;
   }
 }

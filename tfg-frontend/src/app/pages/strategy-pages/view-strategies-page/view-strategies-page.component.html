@@ -1,1 +1,39 @@
-<app-strategy-table></app-strategy-table>
+<mat-tab-group>
+    <!-- Strategy Table -->
+    <mat-tab label="Tabla de estrategias">
+        <app-strategy-table (selectedStrategyEmitter)="updateSelectedStrategy($event)"></app-strategy-table>
+    </mat-tab>
+
+    <!-- Strategy View -->
+    <mat-tab label="Ver estrategia">
+        <mat-card class="record-card">
+            <mat-card-header>
+                <mat-card-title>
+                    Información detallada sobre la estrategia
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <app-strategy-view [selectedStrategy]="selectedStrategy"></app-strategy-view>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+
+    <!-- Strategy Modification -->
+    <mat-tab label="Modificar estrategia">
+        <mat-card class="record-card">
+            <mat-card-header>
+                <mat-card-title>
+                    Modificación de los datos de la estrategia.
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Sólo se puede modificar el fichero .py que conforma la estrategia. En caso de cambiar las
+                    dependencias, es necesario eliminar y volver a crear la estrategia.
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content style="margin-top: 1em;">
+                <app-strategy-modification [selectedStrategy]="selectedStrategy"
+                    (updatedStrategyEmmiter)="updateSelectedStrategy($event)"></app-strategy-modification>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+</mat-tab-group>

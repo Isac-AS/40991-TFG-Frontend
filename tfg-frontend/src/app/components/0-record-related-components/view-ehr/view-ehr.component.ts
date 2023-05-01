@@ -46,7 +46,7 @@ export class ViewEhrComponent implements OnChanges {
           this.cdRef.detectChanges();
         }
       )
-      this.hasBeenModified = this.selectedRecord.created_at != this.selectedRecord.updated_at
+      this.hasBeenModified = this.selectedRecord.created_at != this.selectedRecord.updated_at;
     }
   }
 }
