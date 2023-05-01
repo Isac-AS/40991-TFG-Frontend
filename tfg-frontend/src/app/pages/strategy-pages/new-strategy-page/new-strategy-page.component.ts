@@ -39,12 +39,11 @@ export class NewStrategyPageComponent {
   requirementsFile: FormData | undefined;
   requirementsFileName: string | undefined;
 
-  canCreate: boolean = true;
-  waitingResult: boolean = false;
-  finishedWaiting: boolean = false;
+  usageStage: "1" | "2" | "3" = "1";
   result: boolean = false;
-  errorMessage: string = "";
-  errorStage: string = "";
+  backendErrorMessage: string = "Unknown Error";
+  failureErrorStage: string = "";
+  processingStage: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -98,11 +97,8 @@ export class NewStrategyPageComponent {
       console.log(this.requirementsFile);
       console.log("*---*")
     }
-
-    this.canCreate = false;
-    this.waitingResult = true;
-    
-
+    this.usageStage = "2"
+    this.processingStage = "Acomodando directorios..."
     // Attempt to create strategy
     this.strategyAPI.setupStrategyCreation(this.strategy).subscribe({
       next: res => {
@@ -119,7 +115,8 @@ export class NewStrategyPageComponent {
           if (this.pythonFile) {
             // Add information to FormData
             this.pythonFile.append("python_file_path", python_file_path)
-            console.log(this.pythonFile)
+            // Update stage message
+            this.processingStage = "Subiendo fichero '.py'...";
             // Attempt to upload python file
             this.fileService.uploadFile("/strategies/upload_python_file", this.pythonFile).subscribe({
               next: res => {
@@ -130,6 +127,7 @@ export class NewStrategyPageComponent {
                 }
                 if (res.result) {
                   if (this.requirementsFile) {
+                    this.processingStage = "Subiendo fichero 'requirements.txt'..."
                     // Attempt to upload requirements file
                     this.requirementsFile.append("strategy_dir", strategy_dir)
                     this.fileService.uploadFile("/strategies/upload_requirements_file", this.requirementsFile).subscribe({
@@ -140,6 +138,7 @@ export class NewStrategyPageComponent {
                           console.log("*---*")
                         }
                         if (res.result) {
+                          this.processingStage = "Creando entorno virtual e instalando dependencias..."
                           this.strategyAPI.createStrategy(this.strategy).subscribe({
                             next: res => {
                               if (this.debug) {
@@ -147,9 +146,8 @@ export class NewStrategyPageComponent {
                                 console.log(res);
                                 console.log("*---*")
                               }
+                              this.usageStage = "3"
                               this.result = res.result;
-                              this.finishedWaiting = true;
-                              this.waitingResult = false;
                               if (!res.result) {
                                 this.abortCreation("Bad strategy creation step (last step).", res.message);
                               }
@@ -184,11 +182,9 @@ export class NewStrategyPageComponent {
       console.log(stage);
       console.log("*---*")
     }
-    this.canCreate = true;
-    this.waitingResult = false;
-    this.finishedWaiting = true;
+    this.usageStage = '3';
     this.result = false;
-    this.errorStage = stage;
-    this.errorMessage = message;
+    this.failureErrorStage = stage;
+    this.backendErrorMessage = message;
   }
 }

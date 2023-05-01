@@ -41,19 +41,16 @@
     margin: 1em;
 }
 
-.file-uploading-stage button {
-    font-size: 1.5em;
+.submit-stage-section {
     margin: 2em;
-    padding: 1em;
-}
-
-.wait-for-results {
+    font-size: 1.3em;
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+    gap: 1em;
 }
 
-.wait-for-results button{
-    margin: 2em;
+.submit-stage-section button{
+    align-self: center;
+    width: 35%;
 }
+
