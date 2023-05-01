@@ -65,6 +65,7 @@ import { PipelineViewComponent } from './components/1-0-pipeline-related-compone
 import { StrategyArrayViewComponent } from './components/1-0-pipeline-related-components/strategy-array-view/strategy-array-view.component';
 import { StrategyViewComponent } from './components/1-1-strategy-related-components/strategy-view/strategy-view.component';
 import { StrategyModificationComponent } from './components/1-1-strategy-related-components/strategy-modification/strategy-modification.component';
+import { PyFileModificationComponent } from './components/1-1-strategy-related-components/py-file-modification/py-file-modification.component';
 
 
 @NgModule({
@@ -93,6 +94,7 @@ import { StrategyModificationComponent } from './components/1-1-strategy-related
     StrategyArrayViewComponent,
     StrategyViewComponent,
     StrategyModificationComponent,
+    PyFileModificationComponent,
 
     // Pages
     HomePageComponent,

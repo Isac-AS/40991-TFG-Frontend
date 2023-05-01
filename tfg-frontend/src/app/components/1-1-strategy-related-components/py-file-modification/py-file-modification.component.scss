@@ -1,0 +1,27 @@
+.component-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.submit-stage-section {
+    margin-top: 2em;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}
+
+.submit-stage-section button{
+    align-self: center;
+    width: 35%;
+}
+
+.file-upload-tab-card-content mat-card{
+    margin: 1em;
+}
+
+.file-upload-card-content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 2em;
+}

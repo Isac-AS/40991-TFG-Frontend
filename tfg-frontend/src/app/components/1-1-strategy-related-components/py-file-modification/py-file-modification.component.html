@@ -1,0 +1,32 @@
+<div class="component-wrapper">
+  <!-- File upload card -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Fichero con extensión ".py"</mat-card-title>
+      <mat-card-subtitle>Fichero con extensión ".py" con el formato especificado en la guía</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="file-upload-card-content">
+      <app-file-uploader (fileEmitter)="updatePythonFile($event)"
+        (fileNameEmitter)="updatePythonFileName($event)"></app-file-uploader>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Backend communication section -->
+  <div class="submit-stage-section">
+    <!-- First stage modification button -->
+    <button mat-raised-button color="accent" [disabled]="pythonFile === undefined" (click)="uploadPythonFile()"
+      *ngIf="usageStage == '1'">Subir
+      fichero</button>
+
+    <!-- Second stage progress bar -->
+    <app-progress-bar-section [text]="'Subiendo fichero...'" *ngIf="usageStage == '2'"></app-progress-bar-section>
+
+    <!-- Third stage modification button -->
+    <button mat-raised-button color="accent" [disabled]="pythonFile === undefined" (click)="uploadPythonFile()"
+      *ngIf="usageStage == '3'">Volver a
+      subir un fichero</button>
+    <app-backend-results-section *ngIf="usageStage == '3'" [result]="result" [errorMessage]="backendErrorMessage"
+      [successfullText]="'¡Fichero subido correctamente! ¡Estrategia modificada correctamente!'"
+      [unsuccessfullText]="'Error en la subida o almacenamiento del fichero.'"></app-backend-results-section>
+  </div>
+</div>

@@ -6,7 +6,7 @@
 
     <!-- Strategy View -->
     <mat-tab label="Ver estrategia">
-        <mat-card class="record-card">
+        <mat-card class="strategy-card">
             <mat-card-header>
                 <mat-card-title>
                     Información detallada sobre la estrategia
@@ -19,8 +19,8 @@
     </mat-tab>
 
     <!-- Strategy Modification -->
-    <mat-tab label="Modificar estrategia">
-        <mat-card class="record-card">
+    <mat-tab label="Modificar información de la estrategia">
+        <mat-card class="strategy-card">
             <mat-card-header>
                 <mat-card-title>
                     Modificación de los datos de la estrategia.
@@ -33,6 +33,24 @@
             <mat-card-content style="margin-top: 1em;">
                 <app-strategy-modification [selectedStrategy]="selectedStrategy"
                     (updatedStrategyEmmiter)="updateSelectedStrategy($event)"></app-strategy-modification>
+            </mat-card-content>
+        </mat-card>
+    </mat-tab>
+
+    <!-- Strategy py_File Modification Modification -->
+    <mat-tab label='Modificar fichero ".py" de la estrategia'>
+        <mat-card class="strategy-card">
+            <mat-card-header>
+                <mat-card-title>
+                    Modificación del fichero con extensión ".py" que define la estrategia.
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Sólo se puede modificar el fichero .py que conforma la estrategia. En caso de cambiar las
+                    dependencias, es necesario eliminar y volver a crear la estrategia.
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content style="margin-top: 1em;">
+                <app-py-file-modification [selectedStrategy]="selectedStrategy"></app-py-file-modification>
             </mat-card-content>
         </mat-card>
     </mat-tab>
