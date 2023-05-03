@@ -4,9 +4,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalService } from 'src/app/services/global.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Pipeline } from 'src/app/models/pipeline.model';
+import { Pipeline, ShortStrategy } from 'src/app/models/pipeline.model';
 import { PipelineAPIService } from 'src/app/services/pipepile-api.service';
 import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-deletion-dialog.component';
+import { StrategyAPIService } from 'src/app/services/strategy-api.service';
+import { Strategy } from 'src/app/models/strategy.model';
 
 @Component({
   selector: 'app-pipeline-table',
@@ -17,7 +19,9 @@ export class PipelineTableComponent {
 
   @Output() selectedPipelineEmitter: any = new EventEmitter<any>()
 
+  strategyList: Strategy[] = [];
   pipelineList: Pipeline[] = [];
+  
   displayedColumns: string[] = ['selected', 'name', 'description', 'created_by', 'last_modified_by', 'strategies', 'delete']
   dataSource: MatTableDataSource<Pipeline>;
 
@@ -49,10 +53,12 @@ export class PipelineTableComponent {
   constructor(
     private pipelineAPI: PipelineAPIService,
     public dialog: MatDialog,
-    public globalService: GlobalService
+    public globalService: GlobalService,
+    private strategyAPI: StrategyAPIService,
   ) {
     this.dataSource = new MatTableDataSource(this.pipelineList);
     this.fetchPipelines();
+    this.fetchStrategies();
     this.globalService.debug.subscribe({
       next: newValue => {
         this.debug = newValue;
@@ -116,6 +122,24 @@ export class PipelineTableComponent {
 
   emitPipeline(pipeline: any) {
     this.selectedPipelineEmitter.emit(pipeline)
+  }
+
+  fetchStrategies() {
+    this.strategyAPI.getAllStrategies().subscribe({
+      next: (strategies) => {
+        if (this.debug) {
+          console.log("[DEBUG] - [STRATEGY-TABLE-COMPONENT]: Strategies fetched response:");
+          console.log(strategies);
+          console.log("*---*");
+        }
+        this.strategyList = strategies;
+      }
+    })
+  }
+
+  verifyPipeline(strategies: ShortStrategy[]): boolean {
+    const strategiesNotInList = strategies.filter(shortStrategy => !this.strategyList.some(strategy => shortStrategy.id === strategy.id));
+    return strategiesNotInList.length == 0;
   }
 
 }

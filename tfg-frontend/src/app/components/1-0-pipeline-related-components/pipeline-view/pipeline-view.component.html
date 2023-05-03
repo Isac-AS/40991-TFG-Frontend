@@ -1,4 +1,10 @@
 <div>
+  <!-- Integrity -->
+  <div *ngIf="!pipelineStatus">
+    <mat-divider></mat-divider>
+    <h2 class="status-warning">Aviso: Este pipeline contiene alguna(s) estrategia(s) que probablemente ha(n) sido eliminada(s).</h2>
+    <mat-divider></mat-divider>
+  </div>
   <!--Name-->
   <h3>Nombre</h3>
   <span>{{selectedPipeline.name}}</span>
