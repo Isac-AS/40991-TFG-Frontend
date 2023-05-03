@@ -1,0 +1,51 @@
+.main-card{
+    margin-bottom: 2.5em;
+}
+
+.main-card-content {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 1em;
+}
+
+.stages-card {
+    margin: 1em;
+}
+
+.stages-card-content {
+    display: flex;
+    flex-flow: row;
+    margin: 1em;
+}
+
+.stages-card-content button {
+    margin: 1em;
+    font-size: 1.5em;
+    padding: 1em
+}
+
+.selected-stages-section {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 1em;
+}
+
+.strategy-container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-pair-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-pair-container .name-button {
+    margin: 1em;
+    font-size: 1.5em;
+    padding: 1em;
+}

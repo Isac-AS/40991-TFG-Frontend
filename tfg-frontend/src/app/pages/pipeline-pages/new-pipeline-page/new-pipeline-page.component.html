@@ -48,38 +48,10 @@
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content class="strategy-selection-content">
-
-        <!-- Show list of selected strategies and let user delete them -->
-        <mat-list>
-          <mat-list-item *ngFor="let strategy of selectedStrategies; index as i" style="height: 6em;">
-            <div class="selected-strategies-list-item-wrapper">
-              <div class="selected-strategies-list-item">
-                <span>{{i+1}}. - Estrategia: {{strategy.name}}</span>
-                <button (click)="removeStrategy(strategy.id!)" mat-mini-fab color="warn">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-              <mat-icon>south</mat-icon>
-            </div>
-          </mat-list-item>
-        </mat-list>
-
-        <!-- Form to add new strategy -->
-        <form (ngSubmit)="addStrategy()" class="strategy-addition-form">
-          <mat-form-field [color]="'accent'">
-            <mat-label>Estrategia</mat-label>
-            <input type="text" aria-label="Estrategia" matInput [matAutocomplete]="auto"
-              [formControl]="newStrategyControl">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
-              <mat-option *ngFor="let strategy of filteredOptions | async" [value]="strategy">
-                {{strategy.name}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-          <button type="submit" mat-raised-button color="accent">
-            Agregar estrategia
-          </button>
-        </form>
+        <app-strategy-selection-view [strategies]="selectedStrategies"
+          (strategyDeletionEmitter)="removeStrategy($event)"></app-strategy-selection-view>
+        <app-strategy-selection-table *ngIf="selectionStage != '3'" [selectionStage]="selectionStage"
+          (selectedStrategyEmitter)="addNewStrategy($event)"></app-strategy-selection-table>
       </mat-card-content>
     </mat-card>
     <div class="stepper-action-buttons">
@@ -130,9 +102,24 @@
         </mat-card-content>
       </mat-card>
 
-      <button mat-raised-button color="primary" (click)="createPipeline()">
-        Crear pipeline
-      </button>
+      <!-- Submit button -->
+      <div class="submit-stage-section">
+        <!-- First stage modification button -->
+        <button mat-raised-button color="accent" (click)="createPipeline()" [disabled]="!pipelineForm.valid"
+          *ngIf="usageStage == '1'">Crear pipeline</button>
+
+        <!-- Second stage progress bar -->
+        <app-progress-bar-section [text]="processingStage" *ngIf="usageStage == '2'"></app-progress-bar-section>
+
+        <!-- Third stage modification button -->
+        <button mat-raised-button color="accent" (click)="createPipeline()" [disabled]="!pipelineForm.valid"
+          *ngIf="usageStage == '3' && result == false">Reintentar la creación del pipeline</button>
+        <a mat-raised-button color="accent" *ngIf="usageStage == '3' && result == true" routerLink="/view_pipelines">
+          Ver pipelines</a>
+        <app-backend-results-section *ngIf="usageStage == '3'" [result]="result" [errorMessage]="backendErrorMessage"
+          [successfullText]="'Pipeline creado correctamente!'"
+          [unsuccessfullText]="failureErrorStage"></app-backend-results-section>
+      </div>
     </div>
     <div class="stepper-action-buttons">
       <button mat-raised-button matStepperPrevious color="accent">

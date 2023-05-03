@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Observable, startWith } from 'rxjs';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Pipeline, ShortStrategy } from 'src/app/models/pipeline.model';
-import { Strategy } from 'src/app/models/strategy.model';
 import { GlobalService } from 'src/app/services/global.service';
 import { PipelineAPIService } from 'src/app/services/pipepile-api.service';
-import { StrategyAPIService } from 'src/app/services/strategy-api.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-pipeline-page',
@@ -14,8 +10,6 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./new-pipeline-page.component.scss']
 })
 export class NewPipelinePageComponent {
-
-  strategyList: Strategy[] = [];
 
   pipelineForm = this.fb.group({
     name: [null, Validators.required],
@@ -28,17 +22,21 @@ export class NewPipelinePageComponent {
     strategies: []
   }
 
-  selectedStrategies: Strategy[] = [];
-  newStrategyControl = new FormControl<string | Strategy>('');
-  filteredOptions: Observable<Strategy[]> | undefined;
+  selectedStrategies: ShortStrategy[] = [];
+  selectionStage: '1' | '2' | '3' = '1'
 
   debug: boolean = false;
+
+  usageStage: "1" | "2" | "3" = "1";
+  result: boolean = false;
+  backendErrorMessage: string = "Unknown Error";
+  failureErrorStage: string = "";
+  processingStage: string = "Creando pipeline...";
 
   constructor(
     private fb: FormBuilder,
     public globalService: GlobalService,
     private pipelineAPI: PipelineAPIService,
-    private strategyAPI: StrategyAPIService,
   ) {
     this.globalService.pageName.next({
       currentPageName: 'Nuevo Pipeline'
@@ -48,54 +46,31 @@ export class NewPipelinePageComponent {
         this.debug = newValue;
       }
     })
-    this.fetchStrategies();
   }
 
-  filterOptions() {
-    this.filteredOptions = this.newStrategyControl.valueChanges.pipe(
-      startWith(''),
-      map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.strategyList.slice();
-      }),
-    );
-  }
 
-  private _filter(name: string): Strategy[] {
-    const filterValue = name.toLowerCase();
-    return this.strategyList.filter(option => option.name.toLowerCase().includes(filterValue));
-  }
-
-  displayName(strategy: Strategy): string {
-    return strategy && strategy.name ? strategy.name : '';
-  }
-
-  fetchStrategies() {
-    this.strategyAPI.getAllStrategies().subscribe({
-      next: (strategies) => {
-        if (this.debug) {
-          console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: GetAllStrategies response:");
-          console.log(strategies);
-          console.log("*---*");
-        }
-        this.strategyList = strategies;
-        this.filterOptions()
+  addNewStrategy(strategy: any) {
+    this.selectedStrategies.push(
+      {
+        id: strategy.id,
+        name: strategy.name,
+        stage: strategy.stage
       }
-    })
+    )
+    if (this.selectionStage == "1") {
+      this.selectionStage = "2"
+    } else if (this.selectionStage == "2" && strategy.stage == "Final") {
+      this.selectionStage = "3"
+    }
   }
 
-  removeStrategy(strategy_id: number) {
-    this.selectedStrategies = this.selectedStrategies.filter(item => item.id !== strategy_id);
-  }
+  removeStrategy(strategy: ShortStrategy) {
+    this.selectedStrategies = this.selectedStrategies.filter(item => item.id !== strategy.id);
 
-  addStrategy() {
-    this.selectedStrategies.push(<Strategy>this.newStrategyControl.value!)
-    this.newStrategyControl.reset()
-    this.newStrategyControl.markAsUntouched()
-    if (this.debug) {
-      console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: Selected strategies after adding strategy:");
-      console.log(this.selectedStrategies)
-      console.log("*---*");
+    if (this.selectionStage == "2" && this.selectedStrategies.length == 0) {
+      this.selectionStage = "1"
+    } else if (this.selectionStage == "3") {
+      this.selectionStage = "2"
     }
   }
 
@@ -106,7 +81,8 @@ export class NewPipelinePageComponent {
     this.selectedStrategies.forEach(strategy => {
       let shortStrategy: ShortStrategy = {
         name: strategy.name,
-        id: strategy.id!
+        id: strategy.id!,
+        stage: strategy.stage
       }
       this.builtPipeline.strategies.push(shortStrategy);
     });
@@ -117,13 +93,20 @@ export class NewPipelinePageComponent {
     }
   }
 
+
   createPipeline() {
+    this.usageStage = '2';
     this.pipelineAPI.createPipeline(this.builtPipeline).subscribe({
       next: (res) => {
         if (this.debug) {
           console.log("[DEBUG] - [NEW-PIPELINE-PAGE]: Pipeline Creation response:");
           console.log(res);
           console.log("*---*");
+        }
+        this.usageStage = '3';
+        this.result = res.result;
+        if (!res.result) {
+          this.backendErrorMessage = res.message;
         }
       }
     })

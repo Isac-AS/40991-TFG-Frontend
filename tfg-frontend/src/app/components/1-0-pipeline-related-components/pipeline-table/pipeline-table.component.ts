@@ -3,10 +3,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalService } from 'src/app/services/global.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Pipeline, ShortStrategy } from 'src/app/models/pipeline.model';
+import { MatDialog } from '@angular/material/dialog';
+import { Pipeline } from 'src/app/models/pipeline.model';
 import { PipelineAPIService } from 'src/app/services/pipepile-api.service';
 import { EntryDeletionDialogComponent } from '../../entry-deletion-dialog/entry-deletion-dialog.component';
 
@@ -28,7 +26,8 @@ export class PipelineTableComponent {
     description: '',
     strategies: [{
       id: -1,
-      name: ''
+      name: '',
+      stage: ""
     }],
 
     id: -1,

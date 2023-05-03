@@ -1,0 +1,40 @@
+<mat-card class="main-card">
+  <mat-card-header>
+    <mat-card-title>
+      Pipeline creado
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="main-card-content">
+    <!-- Stages -->
+    <mat-card class="stages-card">
+      <mat-card-header>
+        <mat-card-title>
+          Tipos de etapas
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="stages-card-content">
+        <button mat-raised-button [style.background-color]="getBackgroundColor('Voz a texto')">Voz a texto</button>
+        <button mat-raised-button [style.background-color]="getBackgroundColor('Intermedia')">Intermedia</button>
+        <button mat-raised-button [style.background-color]="getBackgroundColor('Final')">Final</button>
+      </mat-card-content>
+    </mat-card>
+    <!-- Selected strategies -->
+    <div class="selected-stages-section">
+      <div *ngFor="let shortStrategy of strategies; let last = last">
+        <div class="strategy-container">
+          <div class="button-pair-container">
+            <button mat-raised-button class="name-button"
+            [style.background-color]="getBackgroundColor(shortStrategy.stage)">
+              {{shortStrategy.name}}
+            </button>
+            <button mat-mini-fab *ngIf="last" color="warn" [value]="shortStrategy"
+              (click)="emitStrategyDeletion(shortStrategy)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <mat-icon *ngIf="!last">south</mat-icon>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

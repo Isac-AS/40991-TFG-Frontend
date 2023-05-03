@@ -14,8 +14,9 @@ export class Pipeline {
 }
 
 export interface ShortStrategy {
-    id: number
-    name: string
+    id: number,
+    name: string,
+    stage: string
 }
 
 export interface PipelineRelatedResponse {
