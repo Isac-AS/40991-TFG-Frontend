@@ -1,0 +1,126 @@
+<div class="page-wrapper">
+  <nav>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h1>Tabla de contenidos</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ol>
+          <li><a href="/docs/introduction#section1-introduction">Introducción</a></li>
+          <li>
+            <a href="/docs/introduction#section2-concept">Concepto</a>
+            <ul>
+              <li><a href="/docs/introduction#section2-subsection1-records">Registros</a></li>
+              <li><a href="/docs/introduction#section2-subsection3-strategies">Estrategias</a></li>
+              <li><a href="/docs/introduction#section2-subsection2-pipelines">Pipelines</a></li>
+            </ul>
+          </li>
+          <li><a href="/docs/introduction#section2-concept">Resto de la documentación</a></li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+  </nav>
+
+  <main>
+    <section id="section1-introduction">
+      <h1>1. Introducción</h1>
+      <p>
+        Este proyecto consiste en el análisis, diseño y el desarrollo de un prototipo de sistema de gestión de registros
+        médicos. El objetivo es la creación de un prototipo de prueba de concepto que permita agilizar consultas
+        médicas, observar resultados de dicha consulta, y representar la interacción en un formato estandarizado.
+        El trabajo se enmarca en el proyecto OpenDx28, coordinado por el Servicio Canario de la Salud (SCS), donde el
+        Instituto Tecnológico de Canarias (ITC) se encarga de preparar y desplegar una plataforma de servicios para el
+        ámbito sanitario siguiendo las pautas de la ULPGC.
+      </p>
+      <p>
+        Se parte de un prototipo de herramienta, un núcleo, que, dado un diagnóstico verbalizado, realiza una
+        transcripción de este. Esta transcripción es posteriormente analizada utilizando técnicas de NLP (Natural
+        Language Processing) y de ella se persigue extraer y destacar información relevante como, por ejemplo, síntomas
+        o medicamentos. A partir de esta información extraída, se crea una historia clínica electrónica en un formato
+        estandarizado, como, por ejemplo, HL7.
+      </p>
+      <p>
+        El prototipo de sistema de gestión de registros será el encargado de emplear la lógica provista por la
+        herramienta mencionada. Dado el carácter sensible de las historias clínicas electrónicas, en este prototipo, se
+        trata con ejemplos y no con información real, dando al conjunto de registros un carácter de dataset sobre el que
+        mejorar la tecnología.
+      </p>
+    </section>
+    <mat-divider></mat-divider>
+    <section id="section2-concept">
+      <h1>2. Concepto</h1>
+      <p>
+        Para lograr el objetivo propuesto se identifican tres componentes fundamentales: resgistros, pipelines y
+        estrategias. El conocimiento de estas entidades es crucial para poder utilizar el sistema y saber en todo
+        momento qué es lo que está ocurriendo.
+      </p>
+      <p>
+        Para resolver el problema de la construcción de un mensaje HL7 final es necesario dividir el procesamiento en
+        distintas fases o etapas. Se distinguen tres tipos de etapas diferentes: "Voz a texto", "Intermedia", "Final".
+        La etapa "Voz a texto", como su nombre indica, es una etapa encargada de realizar la transcripción del audio
+        generado.
+        Posteriormente, pueden haber múltiples etapas intermedias de procesamiento, que, por ejemplo, pueden procesar la
+        transcripción de la etapa anterior empleando técnicas de Procesamiento del Lenguaje Natural (NLP).
+        Finalmente, se crea distingue un tipo de etapa como "Final", donde se crea el mensaje en un formato de
+        representación estandarizado.
+      </p>
+      <p>
+        A continuación, se realiza una descripción breve de los elementos.
+      </p>
+      <section id="section2-subsection1-records">
+        <h2>2.1. Registros</h2>
+        <p>
+          Los registros son entradas concretas de procesamiento. No se debe confundir con la Historia Clínica
+          Electrónica. Una Historia Clínica Electrónica es parte de un registro, más concretamente, la salida de su
+          última etapa de procesamiento.
+        </p>
+        <p>
+          Los registros pueden ser creados de dos maneras: de cero, a partir de una grabación o a partir de otro
+          registro. En ambos casos, deberá elegirse un conjunto de etapas de procesamiento por las que pasará el
+          registro. Los registros destacan la transcripción e historia clínica electrónica generadas. Adicionalmente, se
+          puede ver las etapas de procesamiento implicadas en la creación del registro y su salida.
+        </p>
+      </section>
+      <section id="section2-subsection3-strategies">
+        <h2>2.2 Estrategias</h2>
+        <p>
+          Las estrategias son implementaciones concretas de una de las etapas de procesamiento. Por ejemplo, para
+          realizar la transcripción de un audio grabado se pueden emplear múltiples tecnologías. El uso de una
+          tecnología en concreto y su implementación conforman el concepto de estrategia.
+        </p>
+      </section>
+      <section id="section2-subsection2-pipelines">
+        <h2>2.3. Pipelines</h2>
+        <p>
+          Los pipelines son conjuntos ordenados de etapas de procesamiento, o dicho de otra forma, una lista ordenada de
+          estrategias, donde dicho orden se corresponde al orden de ejecución de éstas.
+        </p>
+      </section>
+    </section>
+    <mat-divider></mat-divider>
+    <section id="section3-documentation">
+      <h1>3. Resto de la documentación</h1>
+      <p>
+        El resto de la documentación está conformado por cinco páginas tres de las cuales se corresponden con guías:
+      </p>
+      <ul>
+        <li><a routerLink="/docs/guides/record">Registros</a></li>
+        <li><a routerLink="/docs/guides/pipeline">Pipelines</a></li>
+        <li><a routerLink="/docs/guides/strategy">Estrategias</a></li>
+      </ul>
+      <p>
+        Donde para cada elemento se describe en detalle su creación, empleo, eliminación, modificación y consulta.
+      </p>
+      <p>
+        Las otras dos páginas, más técnicas, cubren aspectos destacables del código y estructura y diseño de la batería
+        de pruebas o tests respectivamente:
+      </p>
+      <ul>
+        <li><a routerLink="/docs/code">Aspectos destacables del código</a></li>
+        <li><a routerLink="/docs/tests">Implementación de una batería de pruebas</a></li>
+      </ul>
+    </section>
+  </main>
+</div>

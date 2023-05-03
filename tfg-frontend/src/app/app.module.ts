@@ -26,6 +26,14 @@ import { NewRecordPageComponent } from './pages/health_record_pages/new-record-p
 import { ViewRecordsPageComponent } from './pages/health_record_pages/view-records-page/view-records-page.component';
 import { NewRecordFromRecordPageComponent } from './pages/health_record_pages/new-record-from-record-page/new-record-from-record-page.component';
 
+// Docs
+import { IntroductionPageComponent } from './pages/documentation_pages/introduction/introduction-page/introduction-page.component';
+import { StrategyGuidePageComponent } from './pages/documentation_pages/guides/strategy-guide-page/strategy-guide-page.component';
+import { RecordsGuidePageComponent } from './pages/documentation_pages/guides/records-guide-page/records-guide-page.component';
+import { PipelineGuidePageComponent } from './pages/documentation_pages/guides/pipeline-guide-page/pipeline-guide-page.component';
+import { DocumentationTestPageComponent } from './pages/documentation_pages/code_pages/documentation-test-page/documentation-test-page.component';
+import { ImportantCodePageComponent } from './pages/documentation_pages/code_pages/important-code-page/important-code-page.component';
+
 // Dialogs
 import { UserDeletionDialogContent } from './pages/user-management-page/user-management-page.component';
 import { EntryDeletionDialogComponent } from './components/entry-deletion-dialog/entry-deletion-dialog.component';
@@ -68,6 +76,7 @@ import { StrategyModificationComponent } from './components/1-1-strategy-related
 import { PyFileModificationComponent } from './components/1-1-strategy-related-components/py-file-modification/py-file-modification.component';
 import { StrategySelectionTableComponent } from './components/1-0-pipeline-related-components/strategy-selection-table/strategy-selection-table.component';
 import { StrategySelectionViewComponent } from './components/1-0-pipeline-related-components/strategy-selection-view/strategy-selection-view.component';
+
 
 
 @NgModule({
@@ -115,6 +124,13 @@ import { StrategySelectionViewComponent } from './components/1-0-pipeline-relate
     NewRecordPageComponent,
     ViewRecordsPageComponent,
     NewRecordFromRecordPageComponent,
+    // Docs
+    IntroductionPageComponent,
+    StrategyGuidePageComponent,
+    RecordsGuidePageComponent,
+    PipelineGuidePageComponent,
+    DocumentationTestPageComponent,
+    ImportantCodePageComponent,
 
     // Dialogs
     UserDeletionDialogContent,

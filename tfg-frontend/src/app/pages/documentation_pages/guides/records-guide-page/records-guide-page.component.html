@@ -1,0 +1,188 @@
+<div class="page-wrapper">
+  <nav>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h1>Tabla de contenidos</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ol>
+          <li>
+            <a href="/docs/guides/record#1">Creación de registros</a>
+            <ul>
+              <li><a href="/docs/guides/record#1-1">Creación a partir de una grabación</a></li>
+              <li><a href="/docs/guides/record#1-2">Creación a partir de otro registro</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="/docs/guides/record#2">Vista</a>
+            <ul>
+              <li><a href="/docs/guides/record#2-1">Tabla de registros</a></li>
+              <li><a href="/docs/guides/record#2-2">Vista de un registro concreto</a></li>
+            </ul>
+          </li>
+          <li><a href="/docs/guides/record#3">Modificación de registros</a></li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+  </nav>
+
+  <main>
+    <section id="1">
+      <h1>1. Creación </h1>
+      <p>
+        Como se había adelantado en la página de introducción, existen dos formas de crear nuevos registros: a partir de
+        una grabación o empleando otro registro. A continuación, se describen los procesos de creación en detalle.
+      </p>
+      <section id="1-1">
+        <h2>1.1. Creación a partir de una grabación</h2>
+        <p>
+          Para crear un nuevo registro en primer lugar, es necesario dirigirse a la página correspondiente, "Grabar
+          audio" y observar la estructura de la página. La página está claramente dividida en tres pasos. El primero de
+          los pasos consiste en realizar la grabación de audio que será empleada.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/0-start-recording.PNG"
+          alt="Ubicación en la página de creación de registros a partir de audio">
+        <p>
+          Posteriormente, al darle al botón de grabar, el navegador solicitará permisos de uso del micrófono. Este es un
+          requisito indispensable para poder proceder.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/1-allow-microphone-permissions.PNG"
+          alt="Permitir el uso del micrófono.">
+        <p>
+          Tras finalizar la grabación, esta podrá ser reproducida de nuevo o eliminada, volviendo al paso anterior.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/2-recording-end.PNG" alt="Finalización de la grabación.">
+        <p>
+          El siguiente paso consiste en la selección de un Pipeline. La tabla se discutirá en detalle en la guía
+          relativa a los pipelines.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/3-pipeline-selection.PNG" alt="Selección de pipeline.">
+        <p>
+          Una vez se ha elegido un pipeline y se ha realizado la grabación, en la última pestaña, se presentan ambos
+          elementos y aparece el botón de creación de registro.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/4-pipeline-and-audio-used-in-record-creation.PNG"
+          alt="Última pestaña con resumen de lo hecho y botón de creación de registro.">
+        <p>
+          Tras pulsar el botón de creación de registro se procede a realizar el procesamiento.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/5-waiting-screen.png"
+          alt="La imagen muestra la barra de procesamiento indefinida del registro.">
+        <p>
+          Cuando termina el procesamiento se observa un mensaje de respuesta y un botón que nos redirige a la vista de
+          registros. Adicionalmente, aparece una vista del procesamiento realizado.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/6-record-creation.PNG"
+          alt="La imagen muestra el resultado del procesamiento.">
+        <p>
+          Esta vista del registro es la misma que se mostrará posteriormente. A continuación, se observa las salidas de
+          las etapas de procesamiento que constituyen el registro.
+        </p>
+        <img src="assets/images/1-records/0-audio-creation/7-processing-outputs.PNG"
+          alt="Salidas de las etapas de procesamiento que constituyen el registro">
+      </section>
+      <section id="1-2">
+        <h2>1.2. Creación a partir de otro registro</h2>
+        <p>
+          Para crear un registro a partir de otro registro se empieza seleccionando el registro del que se parte, o
+          registro "padre".
+        </p>
+        <img src="assets/images/1-records/1-from-record-creation/0-record-selection.PNG"
+          alt="Ubicación en la página de creación de registros a partir de audio">
+        <p>
+          A continuación, de manera análoga a la forma de creación anterior, se selecciona el pipeline que contiene las
+          etapas que se usarán en el procesamiento.
+        </p>
+        <img src="assets/images/1-records/1-from-record-creation/1-pipeline-selection.PNG"
+          alt="Permitir el uso del micrófono.">
+        <p>
+          Este tercer paso es especialmente importante. Aparecen dos secciones. En la de arriba se selecciona el dato de
+          entrada que se empleará en el procesamiento. En este caso, se trata de la salida de la transcripción o la
+          etapa intermedia de corrección ortográfica. En la sección inferior, se elige la etapa del pipeline a partir de
+          la cual se llevará a cabo el procesamiento.
+        </p>
+        <img src="assets/images/1-records/1-from-record-creation/2-output-and-stage-selection.PNG"
+          alt="Finalización de la grabación.">
+        <p>
+          Finalmente, ya aparece un resumen de lo seleccionado.
+        </p>
+        <img src="assets/images/1-records/1-from-record-creation/3-summary.PNG" alt="Selección de pipeline.">
+        <p>
+          La página de espera es similar a la anterior.
+        </p>
+        <img src="assets/images/1-records/1-from-record-creation/4-waiting.PNG"
+          alt="Última pestaña con resumen de lo hecho y botón de creación de registro.">
+        <p>
+          Por último, se muestra el resultado del procesamiento.
+        </p>
+        <img src="assets/images/1-records/1-from-record-creation/5-correct-creation.PNG"
+          alt="Vista del registro creado.">
+      </section>
+    </section>
+    <mat-divider></mat-divider>
+    <section id="2">
+      <h1>2. Vista</h1>
+      <p>
+        A continuación, se expone la forma en la que seleccionar y ver los registros.
+      </p>
+      <section id="2-1">
+        <h2>2.1. Tabla de registros</h2>
+        <p>
+          Al entrar en la página de vista de registros aparece una tabla, inicialmente no seleccionada, con la
+          información más relevante de los registros: la historia clínica electrónica generada la transcripción de la
+          que parte. La tabla permite ordenaciones por columnas, la selección del número de elementos que puede aparecer
+          en la tabla y se permite realizar un filtrado.
+        </p>
+        <img src="assets/images/1-records/3-record-view/1-table.PNG" alt="Tabla de registros.">
+      </section>
+      <section id="2-2">
+        <h2>2.2 Vista de un registro concreto</h2>
+        <p>
+          Para ver un registro concreto, es necesario seleccionar el registro haciendo click en el botón que aparece en
+          la primera columna de la tabla. Al cambiar de pestaña a "Ver historia" ya aparece la misma vista que en la
+          finalización de la creación de registros. El registro seleccionado en la imagen es el creado en el apartado
+          1.2. En la vista se observa como al principio aparece la información que se considera más relevante con
+          respecto a los objetivos y alcance del trabajo de fin de grado: la historía clínica en el formato estándar HL7
+          y la transcripción de la que parte. Adicionalmente, aparece el audio empleado y las salidas de procesamiento.
+        </p>
+        <img src="assets/images/1-records/3-record-view/2-record-view.PNG" alt="Vista de un registro.">
+        <p>
+          La siguiente imagen muestra en detalle las salidas de procesamiento. En este caso al haber ejecutado sólo una
+          estrategia, sólo hay una salida de procesamiento. Además de la salida en sí, esta muestra los resultados del
+          reconocimiento de la entidad nombrada (NER).
+        </p>
+        <img src="assets/images/1-records/3-record-view/3-processing-outputs.PNG"
+          alt="Salidas de procesamiento del último registro.">
+        <p>
+          Finalmente, se muestra información adicional relacionada al registro. El autor de la creación de éste y de su
+          última modificación. También aparecen las fechas de creación y de última modificación.
+        </p>
+        <img src="assets/images/1-records/3-record-view/4-additional-info.PNG"
+          alt="Información adicional, como creador, y fecha de creación y modificación.">
+      </section>
+    </section>
+    <mat-divider></mat-divider>
+    <section id="3">
+      <h1>3. Modificación</h1>
+      <p>
+        Por último, se comenta acerca de la modificación de registros. La última pestaña contiene un formulario con la
+        información del registro seleccionado. El formulario se puede modificar, teniendo como consecuencia la
+        modificaión de la historia clínica electrónica o la transcripción.
+      </p>
+      <img src="assets/images/1-records/4-record-modification/1-tab.PNG" alt="Pestaña de modificación de un registro.">
+      <p>
+        En este caso, se ha modificado la transcripción, agregando náusea a los síntomas. Al enviar el formulario
+        aparece un mensaje indicando el resultado de la operación.
+      </p>
+      <img src="assets/images/1-records/4-record-modification/2-modification.PNG" alt="Resultado de la modificación.">
+      <p>
+        Al volver a la vista del regsitro, aparece un mensaje indicando que éste ha sido modificado. Ahora, la nueva
+        transcripción se puede usar como base para crear otro registro a partir de éste.
+      </p>
+      <img src="assets/images/1-records/4-record-modification/3-modification-message.PNG"
+        alt="Etiquetado de registro modificado.">
+    </section>
+  </main>
+</div>

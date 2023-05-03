@@ -1,0 +1,137 @@
+<div class="page-wrapper">
+  <nav>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h1>Tabla de contenidos</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ol>
+          <li><a href="/docs/guides/pipeline#1">Creación de pipelines</a></li>
+          <li>
+            <a href="/docs/guides/pipeline#2">Vista</a>
+            <ul>
+              <li><a href="/docs/guides/pipeline#2-1">Tabla de pipelines</a></li>
+              <li><a href="/docs/guides/pipeline#2-2">Vista de un pipeline concreto</a></li>
+            </ul>
+          </li>
+          <li><a href="/docs/guides/pipeline#3">Modificación de pipelines</a></li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+  </nav>
+
+  <main>
+    <section id="1">
+      <h1>1. Creación</h1>
+      <p>
+        La creación de pipelines comienza con un breve cuestionario donde es necesario introducir el nombre del pipeline
+        y una descripción de éste.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/1-tabs-data.PNG"
+        alt="Formulario de creación de pipeline con nombre y descripción, con botón de continuar deshabilitado por estar el formulario sin contestar.">
+      <p>
+        No se podrá continuar hasta que el cuestionario no esté relleno.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/2-relleno-del-formulario.PNG"
+        alt="Formulario contestado y botón habilitado.">
+      <p>
+        A continuación, viene la parte más importante de la creación: la selección de estrategias. En un primer lugar
+        aparece la vista de estrategias que conforman el pipeline vacía. Sólo aparecen tres indicadores de los tipos de
+        estrategias segun el color de fondo de la etiqueta en la que aparecen. En la parte inferior de la página aparece
+        una tabla con las estrategias registradas. Sin embargo, la tabla está limitada a las estrategias de la etapa
+        "Voz a texto". Esto se debe a que la primera estrategia de un pipeline debe ser una estrategia de este tipo.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/3-0-seleccion-estrategia-voz-a-texto.PNG"
+        alt="Estado inicial de la selección de estrategias que conforman el pipeline. Pipeline inicailmente vacío.">
+      <p>
+        Al seleccionar una estrategia de la tabla, ésta se actualiza, mostrando ahora estrategias de tipo intermedio y
+        final. También se actualiza la vista, donde aparece la estrategia de voz a texto seleccionada, junto a un botón
+        que permite su eliminación.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/3-1-seleccion-estrategia-intermedia-o-final.PNG"
+        alt="Selección de la estrategia voz a texto en el pipeline.">
+      <p>
+        Se prosigue seleccionando una estrategia intermedia de corrección ortográfica. Se actualiza la vista.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/3-2-seleccion-intermedia.PNG"
+        alt="Selección de una estrategia intermedia.">
+      <p>
+        El pipeline se termina de formar cuando se elige una estrategia de etapa final. Entonces, la tabla de selección
+        de pipeline desaparece y se puede continuar al último paso.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/3-3-seleccion-final.PNG"
+        alt="Creación completa del pipeline y paso a la última etapa de creación.">
+      <p>
+        Por último, aparece un resumen de lo seleccionado junto a un botón de creación.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/4-resumen-creacion.PNG" alt="Resumen del pipeline construido.">
+      <p>
+        Se realiza la comunicación con el servidor de backend y se crea el pipeline. El resultado aparece en la misma
+        pestaña.
+      </p>
+      <img src="assets/images/2-pipelines/0-creacion/5-finalizacion-creacion.PNG"
+        alt="Éxito en la creación del pipeline.">
+    </section>
+    <mat-divider></mat-divider>
+    <section id="2">
+      <h1>2. Vista</h1>
+      <p>
+        A continuación, se expone la forma en la que seleccionar y ver los pipelines.
+      </p>
+      <section id="2-1">
+        <h2>2.1. Tabla de pipelines</h2>
+        <p>
+          Al entrar en la página de vista de pipelines aparece una tabla, inicialmente no seleccionada. Contiene
+          información relevante sobre los pipelines, como su nombre, descripción y etapas. El aspecto a destacar es el
+          color que aparece en torno al nombre. Puede ser verde o rojo. En caso de ser rojo implica que una de las
+          estrategias que conforman al pipeline no se ha encontrado registrada, es decir, es susceptible de haber sido
+          borrada y en consecuencia, no se debe usar ese pipeline.
+        </p>
+        <img src="assets/images/2-pipelines/1-vista/1-0-tabla-5.PNG" alt="Tabla de pipelines.">
+        <p>
+          Adicionalmente, la tabla posee en su parte inferior, una funcionalidad de selección de registros por página.
+          Por defecto está configurado a 5. En la imagen que aparece a continuación, se pone a 10 para ver como aparece
+          el pipeline creado en el apartado anterior.
+        </p>
+        <img src="assets/images/2-pipelines/1-vista/1-1-tabla-10-con-ejemplo.PNG"
+          alt="Tabla de pipelines con 10 registro por página.">
+      </section>
+      <section id="2-2">
+        <h2>2.2 Vista de un pipeline concreto</h2>
+        <p>
+          La siguiente imagen muestra en detalle los campos que conforman un pipeline.
+        </p>
+        <img src="assets/images/2-pipelines/1-vista/2-0-vista-normal.PNG" alt="Vista de un pipeline.">
+        <p>
+          Así sería la vista en caso de tratarse de un pipeline en el que una de sus estrategias no se encuentra
+          registrada. Aparece un mensaje de aviso claramente visible en la parte superior de la página.
+        </p>
+        <img src="assets/images/2-pipelines/1-vista/2-1-vista-eliminados.PNG"
+          alt="Aviso por tratarse de un pipeline en el que alguna de sus estrategias no está registrada.">
+      </section>
+    </section>
+    <mat-divider></mat-divider>
+    <section id="3">
+      <h1>3. Modificación</h1>
+      <p>
+        Por último, se comenta acerca de la modificación de pipelines. La última pestaña contiene un formulario con la
+        información del registro seleccionado. El formulario se puede modificar, teniendo como consecuencia la
+        modificaión del nombre o descripción del pipeline.
+      </p>
+      <img src="assets/images/2-pipelines/2-modificacion/1-0-modificacion-pipeline.PNG"
+        alt="Pestaña de modificación de un pipeline.">
+      <p>
+        Al modificar y seleccionar el botón aparece el resultado de la operación en la parte inferior de la pestaña.
+      </p>
+      <img src="assets/images/2-pipelines/2-modificacion/2-modificacion-correcta.PNG"
+        alt="Resultado de la modificación.">
+      <p>
+        Al volver a la vista del pipeline se pueden observar los cambios realizados.
+      </p>
+      <img src="assets/images/2-pipelines/2-modificacion/3-cambios-correctos.PNG"
+        alt="Etiquetado de registro modificado.">
+    </section>
+  </main>
+</div>

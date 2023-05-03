@@ -20,5 +20,5 @@ export class GlobalService {
         isDarkThemeActive: true,
     });
 
-    public debug = new BehaviorSubject<boolean>(true);
+    public debug = new BehaviorSubject<boolean>(false);
 }

@@ -53,7 +53,6 @@
                 </mat-expansion-panel-header>
                 <mat-nav-list>
                     <a mat-list-item routerLink="/user_management">Usuarios</a>
-                    <a mat-list-item routerLink="/">Añadir usuario</a>
                     <a mat-list-item routerLink="/testing">Pruebas</a>
                 </mat-nav-list>
             </mat-expansion-panel>
@@ -65,9 +64,24 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-nav-list>
-                    <a mat-list-item routerLink="/">Guías</a>
-                    <a mat-list-item routerLink="/">Concepto</a>
-                    <a mat-list-item routerLink="/">Código</a>
+                    <!-- Intro -->
+                    <a mat-list-item routerLink="/docs/introduction">Introducción</a>
+                    <!-- Guides -->
+                    <mat-expansion-panel [class.mat-elevation-z0]="true" class="doc-expansion-panel">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Guías
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/docs/guides/record">Registros</a>
+                            <a mat-list-item routerLink="/docs/guides/pipeline">Pipelines</a>
+                            <a mat-list-item routerLink="/docs/guides/strategy">Estrategias</a>
+                        </mat-nav-list>
+                    </mat-expansion-panel>
+                    <!-- Code -->
+                    <a mat-list-item routerLink="/docs/code">Código</a>
+                    <a mat-list-item routerLink="/docs/tests">Tests</a>
                 </mat-nav-list>
             </mat-expansion-panel>
         </mat-nav-list>

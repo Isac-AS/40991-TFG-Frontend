@@ -1,0 +1,132 @@
+<div class="page-wrapper">
+  <nav>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <h1>Tabla de contenidos</h1>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ol>
+          <li><a href="/docs/guides/strategy#1">Creación de estrategias</a></li>
+          <li>
+            <a href="/docs/guides/strategy#2">Vista</a>
+            <ul>
+              <li><a href="/docs/guides/strategy#2-1">Tabla de estrategias</a></li>
+              <li><a href="/docs/guides/strategy#2-2">Vista de una estrategia concreta</a></li>
+            </ul>
+          </li>
+          <li><a href="/docs/guides/strategy#3">Modificación de estrategias</a></li>
+        </ol>
+      </mat-card-content>
+    </mat-card>
+  </nav>
+
+  <main>
+    <section id="1">
+      <h1>1. Creación</h1>
+      <p>
+        La creación de estrategias comienza con un breve cuestionario donde es necesario introducir el nombre de la
+        estrategia, una descripción, los datos de entrada y de salida específicos de la función y la etapa a la que
+        pertenece ("Voz a texto", "Intermedia", "Final"). El botón de continuar estará deshabilitado hasta que se
+        rellene el formulario.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/1-formulario.PNG"
+        alt="Formulario de información sobre la estrategia.">
+      <p>
+        A continuación, se muestra la forma en la que se selecciona la etapa.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/2-relleno-formulario.PNG"
+        alt="Selección de la etapa a la que pertenece la estrategia.">
+      <p>
+        La siguiente pantalla muestra una interfaz donde se debe realizar la subida de los dos ficheros necesarios para
+        crear la estrategia: un fichero con extensión ".py" con el código y otro "requirements.txt" con las dependencias
+        relativas al script de Python.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/3-subidas-ficheros.PNG" alt="Subida de ficheros.">
+      <p>
+        En la imagen que aparece a continuación, se muestra el proceso de selección de un fichero.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/3-1-subiendo-ficheros.PNG"
+        alt="Selección de un fichero para la subida.">
+      <p>
+        Al seleccionar los dos ficheros, aparecerán sus nombres.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/3-2-ficheros-seleccionados.PNG" alt="Nombres de los ficheros.">
+      <p>
+        Finalmente, aparece un resumen de lo introducido en el formulario, junto con los nombres de los ficheros.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/4-0-resumen-datos.PNG"
+        alt="Resumen de lo introducido hasta el momento.">
+      <p>
+        Al seleccionar el botón de "Crear estrategia" comienza un proceso de comunicación con el backend donde, se
+        acomodan los directorios en los que estará la estrategia, se suben los ficheros, se crea el entorno virtual y se
+        instalan las dependencias.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/4-1-creacion-en-proceso.PNG"
+        alt="Barra de estado de creación de la estrategia.">
+      <p>
+        Al terminar, se comunica el resultado.
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/4-2-creacion-exitosa.PNG" alt="Creación exitosa.">
+      <p>
+        A modo de curiosidad, se muestra el conjunto de solicitudes recibidas por el backend, así como la salida de
+        haber instalado las dependencias del fichero "requirements.txt".
+      </p>
+      <img src="assets/images/3-estrategias/1-creacion/4-3-backend-output.PNG"
+        alt="Imagen con el contenido de lo que está pasando en el backend.">
+    </section>
+    <mat-divider></mat-divider>
+    <section id="2">
+      <h1>2. Vista</h1>
+      <p>
+        A continuación, se expone la forma en la que seleccionar y ver las estrategias.
+      </p>
+      <section id="2-1">
+        <h2>2.1. Tabla de estrategias</h2>
+        <p>
+          Al entrar en la página de vista de estrategias aparece una tabla, inicialmente no seleccionada. Contiene
+          información relevante sobre los estrategias, como su nombre, fecha de creación y etapa.
+        </p>
+        <img src="assets/images/3-estrategias/2-vista/1-tabla.PNG" alt="Tabla de estrategias.">
+      </section>
+      <section id="2-2">
+        <h2>2.2 Vista de una estrategia concreta</h2>
+        <p>
+          La siguiente imagen muestra en detalle los campos que conforman una.
+        </p>
+        <img src="assets/images/3-estrategias/2-vista/2-0-vista.PNG" alt="Campos que conforman una estrategia.">
+      </section>
+    </section>
+    <mat-divider></mat-divider>
+    <section id="3">
+      <h1>3. Modificación</h1>
+      <p>
+        Por último, se comenta acerca de la modificación de estrategias. Se corresponde con las últimas dos pestañas de
+        la página. La primera de las pestañas contiene un formulario donde se pueden cambiar los campos relativos a la
+        estrategia, es decir, la información como el nombre, descripción o etapa.
+      </p>
+      <img src="assets/images/3-estrategias/3-modificacion/1-0-modificacion-datos.PNG"
+        alt="Formulario para cambiar la información relativa a una estrategia.">
+      <p>
+        Al modificar y seleccionar el botón, aparece el resultado de la operación en la parte inferior de la pestaña.
+      </p>
+      <img src="assets/images/3-estrategias/3-modificacion/1-1-resultado-modificacion-datos.PNG"
+        alt="Modificación exitosa.">
+      <p>
+        La última pestaña está reservada para la subida de un fichero de Python para reemplazar al existente. La única
+        pega, es que las dependencias deben ser las mismas.
+      </p>
+      <img src="assets/images/3-estrategias/3-modificacion/2-0-modificacion-fichero-py.PNG"
+        alt="Pestaña de subida de fichero .py.">
+      <p>
+        Subida de un fichero con extensión ".py".
+      </p>
+      <img src="assets/images/3-estrategias/3-modificacion/2-1-subida-del-fichero.PNG" alt="Selección del fichero.">
+      <p>
+        Subida correcta del fichero.
+      </p>
+      <img src="assets/images/3-estrategias/3-modificacion/2-2-resultado-subida.PNG" alt="Subida del fichero exitosa.">
+    </section>
+  </main>
+</div>

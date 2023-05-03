@@ -12,6 +12,12 @@ import { NewStrategyPageComponent } from './pages/strategy-pages/new-strategy-pa
 import { ViewStrategiesPageComponent } from './pages/strategy-pages/view-strategies-page/view-strategies-page.component';
 import { TestingPageComponent } from './pages/testing-page/testing-page.component';
 import { UserManagementPageComponent } from './pages/user-management-page/user-management-page.component';
+import { IntroductionPageComponent } from './pages/documentation_pages/introduction/introduction-page/introduction-page.component';
+import { StrategyGuidePageComponent } from './pages/documentation_pages/guides/strategy-guide-page/strategy-guide-page.component';
+import { RecordsGuidePageComponent } from './pages/documentation_pages/guides/records-guide-page/records-guide-page.component';
+import { PipelineGuidePageComponent } from './pages/documentation_pages/guides/pipeline-guide-page/pipeline-guide-page.component';
+import { DocumentationTestPageComponent } from './pages/documentation_pages/code_pages/documentation-test-page/documentation-test-page.component';
+import { ImportantCodePageComponent } from './pages/documentation_pages/code_pages/important-code-page/important-code-page.component';
 
 const routes: Routes = [
   {
@@ -65,6 +71,31 @@ const routes: Routes = [
   {
     path: "view_strategies",
     component: ViewStrategiesPageComponent
+  },
+  {
+    path: "docs/introduction",
+    component: IntroductionPageComponent
+  },
+  {
+    path: "docs/guides/strategy",
+    component: StrategyGuidePageComponent
+  },
+  {
+    path: "docs/guides/record",
+    component: RecordsGuidePageComponent,
+
+  },
+  {
+    path: "docs/guides/pipeline",
+    component: PipelineGuidePageComponent
+  },
+  {
+    path: "docs/code",
+    component: ImportantCodePageComponent
+  },
+  {
+    path: "docs/tests",
+    component: DocumentationTestPageComponent
   }
 ];
 
