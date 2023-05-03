@@ -6,7 +6,8 @@
 
   <div class="mat-elevation-z8" id="table-wrapper">
     <mat-radio-group [(ngModel)]="selectedStrategy">
-      <table mat-table [dataSource]="dataSource" [hidden]="!dataSource.data" matSort>
+      <table mat-table [dataSource]="dataSource" [hidden]="!dataSource.data" matSort matSortActive="stage"
+      matSortDisableClear matSortDirection="desc">
 
         <!-- Selected Column -->
         <ng-container matColumnDef="selected">

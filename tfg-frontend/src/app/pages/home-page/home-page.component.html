@@ -2,7 +2,7 @@
   <h1>Audio diagnóstico</h1>
   <h2>Sistema de gestión de registros en audio de consultas médicas procesados con técnicas de inteligencia artificial
   </h2>
-  <a mat-raised-button color="primary">
+  <a mat-raised-button color="primary" routerLink="/login">
     Comenzar
   </a>
 </mat-card>
@@ -18,7 +18,7 @@
           <h3>Graba en audio el resultado de una consulta</h3>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button color="primary">
+          <a mat-raised-button color="primary" routerLink="/new_record">
             <span>Realizar grabación</span>
             <mat-icon>mic</mat-icon>
           </a>
@@ -35,7 +35,7 @@
           <h3>Selecciona el cauce de etapas que procesarán el audio grabado</h3>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button color="primary">
+          <a mat-raised-button color="primary" routerLink="/new_record">
             <span>Selecciona un cauce con el que procesar tu grabación</span>
             <mat-icon>mic</mat-icon>
             <mat-icon>arrow_right_alt</mat-icon>
@@ -59,7 +59,7 @@
           <h3>Observa la lista de registros y también un registro específico en detalle</h3>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button color="primary">
+          <a mat-raised-button color="primary" routerLink="/view_records">
             <span>Observar registros</span>
             <mat-icon>visibility</mat-icon>
           </a>
@@ -75,7 +75,7 @@
           <h3>Modifica el contenido de un registro</h3>
         </mat-card-content>
         <mat-card-actions>
-          <a mat-raised-button color="primary">
+          <a mat-raised-button color="primary" routerLink="/new_record_from_record">
             <span>Modificar registros</span>
             <mat-icon>edit</mat-icon>
           </a>
