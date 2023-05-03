@@ -77,7 +77,7 @@
     </ng-template>
     <div class="last-step-container">
       <!-- Before record creating process -->
-      <div class="before-processing-container" *ngIf="!isProcessing && !isFinished">
+      <div class="before-processing-container" *ngIf="usageStage != '3'">
         <h2 style="margin-top: 1em;">Transcripción</h2>
         <div *ngIf="selectedRecord">
           <span>{{selectedRecord.transcription}}</span>
@@ -91,19 +91,29 @@
             </div>
           </div>
         </div>
-        <div *ngIf="selectedRecord && selectedPipeline">
-          <button mat-raised-button color="primary" (click)="createRecord()" *ngIf="!isProcessing && !isFinished">
-            Crear Registro
-          </button>
-        </div>
       </div>
-      <!-- Processing spinner -->
-      <div class="wait-for-results" *ngIf="isProcessing">
-        <h2>Procesando...</h2>
-        <mat-spinner></mat-spinner>
+      <!-- Submit button -->
+      <div class="submit-stage-section">
+        <!-- First stage creation button -->
+        <button mat-raised-button color="primary" (click)="createRecord()" [disabled]="!(selectedRecord && selectedPipeline)"
+          *ngIf="usageStage == '1'">
+          Crear Registro
+        </button>
+
+        <!-- Second stage progress bar -->
+        <app-progress-bar-section [text]="processingStage" *ngIf="usageStage == '2'"></app-progress-bar-section>
+
+        <!-- Third stage modification button -->
+        <button mat-raised-button color="accent" (click)="createRecord()" [disabled]="!(selectedRecord && selectedPipeline)"
+          *ngIf="usageStage == '3' && result == false">Reintentar la creación del registro</button>
+        <a mat-raised-button color="accent" *ngIf="usageStage == '3' && result == true" routerLink="/view_records">
+          Ver registros</a>
+        <app-backend-results-section *ngIf="usageStage == '3'" [result]="result" [errorMessage]="backendErrorMessage"
+          [successfullText]="'Registro creado correctamente!'"
+          [unsuccessfullText]="failureErrorStage"></app-backend-results-section>
       </div>
       <!-- Final record -->
-      <div *ngIf="!isProcessing && isFinished" class="finished-recording">
+      <div *ngIf="usageStage == '3' && result" class="finished-recording">
         <mat-card class="record-card">
           <mat-card-header>
             <mat-card-title>

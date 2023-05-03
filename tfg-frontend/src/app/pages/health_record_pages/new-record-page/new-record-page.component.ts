@@ -20,8 +20,6 @@ export class NewRecordPageComponent {
   pipelineName: any;
   pipeline: any;
 
-  isProcessing: boolean = false;
-  isFinished: boolean = false;
   createdRecord: HealthRecord = {
     recording_path: '',
     transcription: '',
@@ -37,6 +35,12 @@ export class NewRecordPageComponent {
   }
 
   debug: boolean = false;
+
+  usageStage: "1" | "2" | "3" = "1";
+  result: boolean = false;
+  backendErrorMessage: string = "Unknown Error";
+  failureErrorStage: string = "";
+  processingStage: string = "Creando registro...";
 
   constructor(
     public globalService: GlobalService,
@@ -84,11 +88,13 @@ export class NewRecordPageComponent {
   createRecord() {
     let formData = new FormData();
     formData.append('audio', this.teste.blob, this.teste.title)
+    this.processingStage = "Subiendo audio...";
+    this.usageStage = '2';
     // First upload file
     this.fileService.uploadFile('/health_records/save_audio', formData).subscribe({
       // Then create record
       next: audio_saving_response => {
-        this.isProcessing = true;
+        this.processingStage = "Creando registro...";
         this.ehrAPIService.createRecordFromAudio(audio_saving_response.audio_file_path, this.pipelineId).subscribe({
           next: (health_record_response) => {
             if (this.debug) {
@@ -96,10 +102,11 @@ export class NewRecordPageComponent {
               console.log(health_record_response)
               console.log("*---*");
             }
-            if (health_record_response.result == true) {
-              this.isFinished = true
+            this.usageStage = '3';
+            this.result = health_record_response.result;
+            if (!health_record_response.result) {
+              this.backendErrorMessage = health_record_response.message;
             }
-            this.isProcessing = false;
             this.createdRecord = health_record_response.healthRecord
           }
         })

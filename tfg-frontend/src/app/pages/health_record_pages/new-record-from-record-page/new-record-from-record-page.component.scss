@@ -58,3 +58,25 @@
     flex-flow: column nowrap;
     align-items: center;
 }
+
+
+.submit-stage-section {
+    margin-top: 2em;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}
+
+.submit-stage-section button {
+    align-self: center;
+    margin: 1em;
+    font-size: 1.2em;
+    padding: 0.7em;
+}
+
+.submit-stage-section a {
+    align-self: center;
+    margin: 1em;
+    font-size: 1.2em;
+    padding: 0.7em;
+}

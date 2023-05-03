@@ -15,12 +15,16 @@ export class NewRecordFromRecordPageComponent {
   strategyInput: any;
   pipelineStage: any;
   pipelineName: any;
-  isProcessing: boolean = false;
-  isFinished: boolean = false;
   createdRecord: any;
   processingSteps: any;
 
   debug: boolean = false;
+
+  usageStage: "1" | "2" | "3" = "1";
+  result: boolean = false;
+  backendErrorMessage: string = "Unknown Error";
+  failureErrorStage: string = "";
+  processingStage: string = "Creando registro...";
 
   constructor(
     public globalService: GlobalService,
@@ -74,7 +78,8 @@ export class NewRecordFromRecordPageComponent {
   }
 
   createRecord() {
-    this.isProcessing = true;
+    this.processingStage = "Creando registro...";
+    this.usageStage = '2';
     this.ehrAPIService.createRecordFromRecord(
       this.selectedRecord.id,
       this.selectedRecord.recording_path,
@@ -89,10 +94,11 @@ export class NewRecordFromRecordPageComponent {
           console.log(health_record_response)
           console.log("*---*");
         }
-        if (health_record_response.result == true) {
-          this.isFinished = true
+        this.usageStage = '3';
+        this.result = health_record_response.result;
+        if (!health_record_response.result) {
+          this.backendErrorMessage = health_record_response.message;
         }
-        this.isProcessing = false;
         this.createdRecord = health_record_response.healthRecord;
       }
     })

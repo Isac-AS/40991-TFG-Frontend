@@ -1,4 +1,4 @@
-.stepper-action-buttons button{
+.stepper-action-buttons button {
     margin: 0.5em 2em;
 }
 
@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-.last-step-container button{
+.last-step-container button {
     font-size: 1.5em;
     padding: 1em;
     margin: 0.5em;
@@ -33,7 +33,7 @@
     align-items: center;
 }
 
-.strategy-name-container{
+.strategy-name-container {
     display: flex;
     flex-flow: row wrap;
 }
@@ -45,8 +45,31 @@
     margin: 1em;
 }
 
-.finished-recording{
+.finished-recording {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+}
+
+
+
+.submit-stage-section {
+    margin-top: 2em;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1em;
+}
+
+.submit-stage-section button {
+    align-self: center;
+    margin: 1em;
+    font-size: 1.2em;
+    padding: 0.7em;
+}
+
+.submit-stage-section a {
+    align-self: center;
+    margin: 1em;
+    font-size: 1.2em;
+    padding: 0.7em;
 }
