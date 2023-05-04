@@ -8,15 +8,9 @@
       </mat-card-header>
       <mat-card-content>
         <ol>
-          <li><a href="/docs/guides/record#1">Creación de registros</a></li>
-          <li>
-            <a href="/docs/guides/record#2">Vista</a>
-            <ul>
-              <li><a href="/docs/guides/record#2-1">Tabla de registros</a></li>
-              <li><a href="/docs/guides/record#2-2">Vista de un registro concreto</a></li>
-            </ul>
-          </li>
-          <li><a href="/docs/guides/record#3">Modificación de registros</a></li>
+          <li><a href="/docs/code#1">Introducción</a></li>
+          <li><a href="/docs/code#2">Creación de registros</a></li>
+          <li><a href="/docs/code#3">Creación de estrategias</a></li>
         </ol>
       </mat-card-content>
     </mat-card>
@@ -24,36 +18,222 @@
 
   <main>
     <section id="1">
-      <h1>1. Creación </h1>
+      <h1>1. Introducción </h1>
       <p>
-        mejorar la tecnología.
+        El objetivo de esta página es mostrar el funcionamiento interno de dos de las funcionalidades disponibles: la
+        creación de registros y estrategias.
       </p>
     </section>
     <mat-divider></mat-divider>
     <section id="2">
-      <h1>2. Vista</h1>
+      <h1>2. Creación de registros</h1>
       <p>
-        A continuación, se realiza una descripción breve de los elementos.
+        La creación de registros, en sus dos modalidades, con sus respectivas rutas, realizan llamadas a una función
+        denominada "run_pipeline(pipeline_id, skip_steps, strategy_input)", encargada de ejecutar las estrategias
+        concretas de un pipeline. El parámetro skip_steps indica la etapa a partir de la cual se realiza la ejecución y
+        strategy_input se corresponde con la primera entrada al pipeline.
       </p>
-      <section id="2-1">
-        <h2>2.1. Registros</h2>
-        <p>
-          puede ver las etapas de procesamiento implicadas en la creación del registro y su salida.
-        </p>
-      </section>
-      <section id="2-2">
-        <h2>2.2 Estrategias</h2>
-        <p>
-          tecnología en concreto y su implementación conforman el concepto de estrategia.
-        </p>
-      </section>
+      <pre>
+        <code id="python_code">
+          def run_pipeline(pipeline_id, skip_steps, strategy_input):
+          """Will run a stored pipeline from the database
+      
+          :param pipeline_id: Unique id of the pipeline
+          :type pipeline_id: int
+          :param skip_steps: Whether certain steps of the pipeline should be skipped and how many
+          :type skip_steps: int
+          :param strategy_input: Input for the first strategy
+          :type strategy_input: string
+          :return: Dictionary with the strategy name and output
+          :rtype: dict
+          """
+          # Find the pipeline in the database
+          pipeline: Pipeline = db.session.execute(
+              db.select(Pipeline).filter_by(id=pipeline_id)).scalar_one()
+          # Step skipping
+          strategies_to_run = pipeline.strategies[skip_steps:]
+          print(f"[DEBUG] - Strategies to run: &#123;strategies_to_run&#125;")
+          # Get first input
+          pipeline_output = []
+          for strategy in strategies_to_run:
+              # Run strategy
+              strategy_output = run_strategy(
+                  strategy_input=strategy_input, strategy_id=strategy["id"])
+      
+              # Build output dict
+              current_output = &#123;
+                  'strategy_id': strategy["id"],
+                  'strategy_name': strategy["name"],
+                  'strategy_output': strategy_output,
+              &#125;
+              # Add output dict to the pipeline output
+              pipeline_output.append(current_output)
+      
+              # Prepare current output as next input
+              strategy_input = strategy_output['output']
+          return pipeline_output
+        </code>
+      </pre>
+      <p>
+        La función encargada de la ejecución de estrategias es la siguiente. Cada una de las estrategias, como se ha
+        visto en las guías cuenta con un fichero ".py" y un "requirements.txt" con las dependencias. Por lo tanto, cada
+        estrategia cuenta con su propio entorno virtual. Cada entorno virtual tiene un fichero que hace referencia al
+        intérprete de python del entorno. El ejecutar un script con este intérprete, se ejecuta en el contexto de
+        instalación de las dependencias del entorno. La ejecución de estrategias se lleva a cabo a través de la librería
+        subprocess de Python. Tras especificar el intérprete que se usará y el archivo a ejecutar, se determina el dato
+        de entrada y se espera a que termine la ejecución del subproceso. La comunicación en ambas direcciones debe ser
+        serialziada para poder usar tipos de datos de Python, como diccionarios en entornos de ejecución. La
+        serialziación se hace con la librería "json" y se fuerza a que las comunicaciones sean en texto, es decir con
+        strings y no el tipo de dato "bytes".
+      </p>
+      <pre>
+        <code>
+          def run_strategy(strategy_input, strategy_id):
+          """Will run a single strategy as a subprocess and return the output
+
+          :param strategy_input: Input data to the strategy
+          :type strategy_input: any | string
+          :param strategy_id: Unique identifier of the strategy
+          :type strategy_id: int
+          :return: Output of the strategy
+          :rtype: any
+          """
+          # Get strategy information from the database
+          strategy: Strategy = db.session.execute(
+              db.select(Strategy).filter_by(id=strategy_id)).scalar_one()
+
+          # Run strategy as subprocess
+          # As JSON will be used to pass dictionary objects, the text_mode of the underlying object is true.
+          process = subprocess.Popen([strategy.env_path, strategy.python_file_path],
+                                    stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+          # Prepare the strategy input
+          strategy_input_dict = &#123;'input': strategy_input&#125;
+          serialized_input_dict = json.dumps(strategy_input_dict)
+
+          # Wait for the process to finish
+          stdout, stderr = process.communicate(input=serialized_input_dict)
+
+          try:
+              strategy_output = json.loads(stdout)
+          except Exception:
+              print(
+                  f"\n\n[ERROR] - Couldn't load output of the strategy: '&#123;strategy.as_dict()['name']&#125;'")
+              print(f"[ERROR] - Traceback:")
+              print(traceback.print_exc())
+              print(f"\n[ERROR] - Stderr:\n&#123;stderr&#125;")
+              strategy_output = &#123;'output': 'Error durante esta estrategia'&#125;
+
+          # Print debugging info
+          if debug:
+              print(f"\n\n\n[DEBUG] - Current strategy:\n&#123;strategy.as_dict()&#125;")
+              print(f"\n[DEBUG] - Strategy input:\n&#123;strategy_input&#125;")
+              print(f"\n[DEBUG] - Stdout:\n&#123;stdout&#125;")
+              # print(f"\n[DEBUG] - Serialized output:\n&#123;serialized_output&#125;")
+              print(f"\n[DEBUG] - Strategy output:\n&#123;strategy_output&#125;")
+          return strategy_output
+        </code>
+      </pre>
+      <p>
+        En ambos casos, se acaba construyendo el registro a partir de la salida de las etapas de procesamiento del
+        pipeline.
+      </p>
+      <pre>
+        <code>
+          @health_record_bp.route("/health_records/create_from_audio", methods=["POST"])
+          def create_health_record_from_audio():
+              """API method to add a new electronic health record to the database.
+
+              The record is new and an audio file will be received from the 
+              frontend, and it will be stored and used as the first input of the
+              pipeline.
+
+              :param pipeline_id: Unique identifier of the pipeline to be run
+              :type pipeline_id: int
+              :param audio_file_path: Path to audio file
+              :type audio_file_path: string
+              :return: Standard response
+              :rtype: http_response
+              """
+              # Request information extraction
+              pipeline_id = request.json.get("pipeline_id")
+              audio_file_path = request.json.get("audio_file_path")
+
+              # Run the pipeline to create the record
+              pipeline_output = run_pipeline(
+                  pipeline_id=pipeline_id, skip_steps=0, strategy_input=audio_file_path)
+
+              # Create the record object. As it is a new record from audio, it is assumed
+              # that the first output is the transcription and the last output the EHR.
+              new_record = HealthRecord(
+                  recording_path=audio_file_path,
+                  transcription=pipeline_output[0]['strategy_output']['output'],
+                  health_record=pipeline_output[-1]['strategy_output']['output'],
+                  processing_outputs=pipeline_output,
+                  parent_id=None,
+                  created_by=current_user.username,
+                  last_modified_by=current_user.username
+              )
+
+              try:
+                  db.session.add(new_record)
+                  db.session.commit()
+              except:
+                  print(traceback.print_exc())
+                  print("\nPipeline output:")
+                  print(pipeline_output)
+                  print(json.dumps(pipeline_output))
+                  return jsonify(
+                      &#123;'result': False, 'message': '¡Error durante el acceso a la base de datos!', 'healthRecord': None&#125;)
+
+              response = jsonify(
+                  &#123;'result': True, 'message': '¡Registro creado con éxito!', 'healthRecord': new_record.as_dict()&#125;)
+              return response
+        </code>
+      </pre>
     </section>
     <mat-divider></mat-divider>
     <section id="3">
-      <h1>3. Modificación</h1>
+      <h1>3. Creación de estrategias</h1>
       <p>
-        A continuación, se realiza una descripción breve de los elementos.
+        La creación de estrategias tiene varias etapas, entre las que destacan la creación de directorios,
+        almacenamiento de los ficheros ".py" y "requirements.txt" y la creación de un entorno virtual e instalación de
+        sus dependencias. La etapa de creación de directorios se lleva a cabo con mkdir y el guardado de ficheros, con
+        un método ".save("path")" ya provisto. Es por ello por lo que se presenta únicamente el código relativo a la
+        creación de un entorno virtual y la instalación de sus dependencias.
       </p>
+      <p>
+        Se hace uso de la librería venv nativa de Python para crear el entorno virtual y se vuelve a usar la librería
+        subprocess para instalar sus dependencias, llamando al ejecutable pip del entorno.
+      </p>
+      <pre>
+        <code>
+          def create_virtual_env(strategy):
+          # Venv path
+          env_dir = f'/opt/40991-TFG-Backend/src/strategies_implementations/&#123;strategy.name&#125;-strategy/&#123;strategy.name&#125;-venv'
+          # Requirements file
+          requirements_file = f'/opt/40991-TFG-Backend/src/strategies_implementations/&#123;strategy.name&#125;-strategy/requirements.txt'
+
+          try:
+              print("[DEBUG] - [VENV CREATION]: About to venv.create()")
+              # Virtual environment creation
+              venv.create(env_dir, with_pip=True)
+          except Exception as e:
+              print(f"[ERROR] - [ATTEMPTING VIRTUAL ENV CREATION]:\n&#123;e&#125;")
+              return &#123;'result': False, 'message': "Error during virtual environment creation"&#125;
+
+          try:
+              print("[DEBUG] - [DEPENDENCY INSTALL]: About to subprocess.run")
+              # Install dependencies
+              subprocess.run([f"&#123;env_dir&#125;/bin/pip", "install",
+                            "-r", requirements_file], check=True)
+          except Exception as e:
+              print(f"[ERROR] - [ATTEMPTING DEPENDENCY INSTALLATION]:\n&#123;e&#125;")
+              return &#123;'result': False, 'message': "Error during dependency installation"&#125;
+
+          return &#123;'result': True, 'message': "Virtual environment created successfully!"&#125;
+        </code>
+      </pre>
     </section>
   </main>
 </div>

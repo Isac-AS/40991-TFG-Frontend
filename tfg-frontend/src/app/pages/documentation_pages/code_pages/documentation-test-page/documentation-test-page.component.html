@@ -8,15 +8,16 @@
       </mat-card-header>
       <mat-card-content>
         <ol>
-          <li><a href="/docs/guides/record#1">Creación de registros</a></li>
+          <li><a href="/docs/tests#1">Introducción</a></li>
+          <li><a href="/docs/tests#2">Estructura</a></li>
           <li>
-            <a href="/docs/guides/record#2">Vista</a>
+            <a href="/docs/tests#3">Creación y ejecución de tests</a>
             <ul>
-              <li><a href="/docs/guides/record#2-1">Tabla de registros</a></li>
-              <li><a href="/docs/guides/record#2-2">Vista de un registro concreto</a></li>
+              <li><a href="/docs/tests#3-1">Fixtures</a></li>
+              <li><a href="/docs/tests#3-2">Creación</a></li>
+              <li><a href="/docs/tests#3-3">Ejecución</a></li>
             </ul>
           </li>
-          <li><a href="/docs/guides/record#3">Modificación de registros</a></li>
         </ol>
       </mat-card-content>
     </mat-card>
@@ -24,36 +25,141 @@
 
   <main>
     <section id="1">
-      <h1>1. Creación </h1>
+      <h1>1. Introducción </h1>
       <p>
-        mejorar la tecnología.
+        En esta página proporciona información acerca de la batería de tests creada en el backend. Se hace uso de la
+        librería <a href="https://docs.pytest.org/en/7.1.x/contents.html">pytest</a> recomendada en la <a
+          href="https://flask.palletsprojects.com/en/2.2.x/testing/">documentación oficial de Flask</a>. Pytest es un
+        de realización de pruebas en Python, usado para crear, organizar y ejecutar tests.
       </p>
     </section>
     <mat-divider></mat-divider>
     <section id="2">
-      <h1>2. Vista</h1>
+      <h1>2. Estructura</h1>
       <p>
-        A continuación, se realiza una descripción breve de los elementos.
+        A continuación, se muestra la estructura de ficheros y directorios bajo el directorio de nombre "tests".
       </p>
-      <section id="2-1">
-        <h2>2.1. Registros</h2>
-        <p>
-          puede ver las etapas de procesamiento implicadas en la creación del registro y su salida.
-        </p>
-      </section>
-      <section id="2-2">
-        <h2>2.2 Estrategias</h2>
-        <p>
-          tecnología en concreto y su implementación conforman el concepto de estrategia.
-        </p>
-      </section>
+
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+        <!-- This is the tree node template for leaf nodes -->
+        <!-- There is inline padding applied to this node using styles.
+          This padding value depends on the mat-icon-button width. -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+          <div class="mat-tree-node">
+            <mat-icon class="mat-icon-rtl-mirror">
+              description
+            </mat-icon>
+            <p>
+              &#123;&#123;node.name&#125;&#125;
+            </p>
+          </div>
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+          <div class="mat-tree-node">
+            <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+              <mat-icon class="mat-icon-rtl-mirror">
+                &#123;&#123;treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'&#125;&#125;
+              </mat-icon>
+            </button>
+            <mat-icon class="mat-icon-rtl-mirror">
+              folder
+            </mat-icon>
+            <p>
+              &#123;&#123;node.name&#125;&#125;
+            </p>
+          </div>
+          <!-- There is inline padding applied to this div using styles.
+                This padding value depends on the mat-icon-button width.  -->
+          <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+            <ng-container matTreeNodeOutlet></ng-container>
+          </div>
+        </mat-nested-tree-node>
+      </mat-tree>
+      <p>Al ejecutar el comando <code>python -m pytest</code>, automáticamente, se busca un directorio de nombre tests,
+        con la configuración en un fichero conftest.py. Posteriormente, se procede a buscar todos aquellos ficheros cuyo
+        nombre empiece por "test" y a su vez, se ejecutan las funciones que también empiecen por "test_".</p>
     </section>
     <mat-divider></mat-divider>
     <section id="3">
-      <h1>3. Modificación</h1>
+      <h1>3. Creación y ejecución de tests</h1>
       <p>
-        A continuación, se realiza una descripción breve de los elementos.
+        A continuación, se realiza una descripción breve de la operación de los tests, introduciendo el concepto de
       </p>
+      <!-- Section 3-1 -->
+      <section id="3-1">
+        <h2>3.1. Fixtures</h2>
+        <p>
+          Las "fixtures" (artículos fijos) son funciones que se ejecutan en función de un alcance con el objetivo de
+          preparar el entorno de ejecución de un test. Pueden ser definidos tanto en el fichero "conftest.py" como en
+          los ficheros de pruebas. El alcance determina el orden de ejecución. Por ejemplo, a continuación, se presenta
+          un ejemplo de fixture empleado en el fichero "test_pipelines.py" que tiene como objetivo crear un pipeline de
+          prueba y devolverlo.
+        </p>
+        <pre>
+          <code>
+            @pytest.fixture(scope="module")
+            def test_pipeline():
+                pipeline = Pipeline(
+                    name="test_pipeline",
+                    description="test_pipeline_description",
+                    strategies=[],
+                    created_by="test",
+                    last_modified_by="test"
+                )
+                return pipeline
+          </code>
+        </pre>
+        <p>
+          Al ejecutarse con el alcance de módulo, se ejecutará antes que otros fixtures. La ejecución de fixtures se
+          puede hacer visible ejecutando los tests con <code>python -m pytest --setup show</code>.
+        </p>
+        <img alt="Ejecución fixtures" src="assets/images/7-tests/2-ejecucion-fixtures-pipeline.PNG">
+        <p>
+          Como se observa en la imagen, se ejecuta el fixture "test_pipeline" con alcance de módulo antes que los
+          fixtures antes que los fixtures con alcance de función de "app", "client" y "register". En consecuencia, su
+          "TEARDOWN" ocurre al final de la ejecución de los tests del módulo, no tras ejecutar una función.
+        </p>
+        <img alt="Ejecución fixtures" src="assets/images/7-tests/3-ejecucion-fixtures-teardown.PNG">
+      </section>
+      <!-- Section 3-2 -->
+      <section id="3-2">
+        <h2>3.2 Creación</h2>
+        <p>
+          La creación de tests es bastante sencilla, la librería "pytest" permite abstraer y simplificar enormemente la
+          sintaxis con respecto a la valización de condiciones. Todo se reduce a emplear la directiva "assert" seguida
+          de una condición. A continuación, se muestra de un ejemplo de test, donde se indican las fixtures empleadas
+          como parámetros del test, una descripción a modo de docstring y la lógica de comprobación del test.
+        </p>
+        <pre>
+          <code>
+            def test_pipeline_creation(client, test_pipeline: Pipeline, register):
+            """
+            GIVEN a Flask application configured for testing
+            WHEN a new Pipeline is created
+            THEN check the name and description fields are defined correctly
+            """
+            response = client.post("/pipelines/create", json=&#123;
+                "pipeline": test_pipeline.as_dict()
+            &#125;)
+            parsed_response = json.loads(response.data)
+            result = parsed_response["result"]
+            response_pipeline = parsed_response["pipeline"]
+            assert True == result
+            assert response_pipeline["name"] == "test_pipeline"
+          </code>
+        </pre>
+      </section>
+      <!-- Section 3-3 -->
+      <section id="3-2">
+        <h2>3.3 Ejecución</h2>
+        <p>
+          Para ejecutar los tests, basta con lanzar el comando <code>python -m pytest</code>. Adicionalmente, como se ha
+          comentado, se puede ver el orden de ejecución de las "fixtures" con
+          <code>python -m pytest --setup show</code>.
+        </p>
+        <img alt="Ejecución fixtures" src="assets/images/7-tests/1-ejecucion-normal.PNG">
+      </section>
     </section>
   </main>
 </div>
